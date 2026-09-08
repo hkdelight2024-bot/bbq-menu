@@ -1,796 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-  >
-
-  <title>港式燒味 | BBQ Roast Meats</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #111;
-    }
-
-    body {
-      font-family:
-        Arial,
-        "Microsoft JhengHei",
-        "PingFang TC",
-        "Noto Sans CJK TC",
-        sans-serif;
-    }
-
-    #viewport {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: #111;
-    }
-
-    #menu {
-      position: absolute;
-
-      width: 1366px;
-      height: 768px;
-
-      left: 50%;
-      top: 50%;
-
-      transform-origin: center center;
-
-      overflow: hidden;
+<meta charset="UTF-8">
 
-      background:
-        linear-gradient(
-          180deg,
-          #fbf7ec 0%,
-          #f4ead5 100%
-        );
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
 
-      border: 2px solid #8d1414;
-    }
+<title>港式燒味 | BBQ Roast Meats</title>
 
-    /* =========================
-       HEADER
-       ========================= */
+<style>
 
-    .header {
-      height: 110px;
+* {
+  box-sizing: border-box;
+}
 
-      display: grid;
-      grid-template-columns:
-        115px
-        1fr
-        1px
-        1fr
-        85px;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #111;
+}
 
-      align-items: center;
+body {
+  font-family:
+    Arial,
+    "Microsoft JhengHei",
+    "PingFang TC",
+    "Noto Sans CJK TC",
+    sans-serif;
+}
 
-      padding: 0 30px;
 
-      background:
-        linear-gradient(
-          90deg,
-          #721010 0%,
-          #951616 52%,
-          #711010 100%
-        );
+/* ========================================
+   VIEWPORT
+   ======================================== */
 
-      color: #f3deb0;
+#viewport {
+  position: fixed;
+  inset: 0;
 
-      border-bottom: 4px solid #c59b4c;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .seal-wrap {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-    }
+  overflow: hidden;
 
-    .seal {
-      width: 54px;
-      height: 78px;
+  background: #111;
+}
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
-      border: 2px solid #d9b86d;
-      border-radius: 10px;
+#menu {
+  position: absolute;
 
-      color: #f3deb0;
+  width: 1366px;
+  height: 768px;
 
-      font-size: 22px;
-      font-weight: 800;
-      line-height: 1.05;
+  left: 50%;
+  top: 50%;
 
-      text-align: center;
-    }
+  transform-origin: center center;
 
-    .title-cn {
-      font-size: 55px;
-      font-weight: 900;
+  overflow: hidden;
 
-      letter-spacing: 5px;
+  background:
+    linear-gradient(
+      180deg,
+      #fbf7ec 0%,
+      #f4ead5 100%
+    );
 
-      text-align: center;
+  border: 2px solid #8d1414;
+}
 
-      white-space: nowrap;
-    }
 
-    .header-divider {
-      height: 66px;
+/* ========================================
+   HEADER
+   ======================================== */
 
-      background: rgba(236, 210, 154, 0.7);
-    }
+.header {
+  height: 110px;
 
-    .title-en {
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+  position: relative;
 
-      font-size: 41px;
-      font-weight: 700;
+  display: grid;
 
-      letter-spacing: 1.5px;
+  grid-template-columns:
+    1fr
+    2px
+    1fr;
 
-      text-align: center;
+  align-items: center;
 
-      white-space: nowrap;
-    }
+  padding:
+    0 65px;
 
-    .corner {
-      position: relative;
+  background:
+    linear-gradient(
+      90deg,
+      #751010 0%,
+      #9b1118 50%,
+      #751010 100%
+    );
 
-      width: 54px;
-      height: 54px;
+  color: #f3deb0;
 
-      margin-left: auto;
-    }
+  border-bottom:
+    4px solid #c59b4c;
+}
 
-    .corner::before,
-    .corner::after {
-      content: "";
 
-      position: absolute;
+.title-cn {
+  text-align: center;
 
-      right: 0;
-      top: 0;
+  font-size: 56px;
+  font-weight: 900;
 
-      border-color: #d9b86d;
-      border-style: solid;
-    }
+  letter-spacing: 6px;
 
-    .corner::before {
-      width: 48px;
-      height: 48px;
+  white-space: nowrap;
+}
 
-      border-width: 2px 2px 0 0;
-    }
 
-    .corner::after {
-      width: 28px;
-      height: 28px;
+.header-divider {
+  height: 65px;
 
-      right: 10px;
-      top: 10px;
+  background:
+    rgba(
+      236,
+      210,
+      154,
+      0.72
+    );
+}
 
-      border-width: 2px 2px 0 0;
-    }
 
-    /* =========================
-       BODY
-       ========================= */
+.title-en {
+  text-align: center;
 
-    .menu-body {
-      height: 522px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
-      display: grid;
-      grid-template-columns:
-        1fr
-        2px
-        1fr;
+  font-size: 41px;
+  font-weight: 700;
 
-      padding: 12px 36px 8px 36px;
-    }
+  letter-spacing: 2px;
 
-    .divider {
-      background: rgba(145, 24, 24, 0.72);
-    }
+  white-space: nowrap;
+}
 
-    .column {
-      min-width: 0;
-    }
 
-    .left {
-      padding-right: 26px;
-    }
+/* Decorative corners */
 
-    .right {
-      padding-left: 26px;
-    }
+.header::before,
+.header::after {
+  content: "";
 
-    /* =========================
-       ROWS
-       ========================= */
+  position: absolute;
 
-    .row {
-      height: 62px;
+  top: 20px;
 
-      display: grid;
-      align-items: center;
+  width: 36px;
+  height: 36px;
 
-      border-bottom: 1px solid #cbbda3;
-    }
+  border-top:
+    3px solid #d9b86d;
+}
 
-    .cn-row {
-      grid-template-columns:
-        minmax(0, 1fr)
-        150px
-        200px;
-    }
 
-    .en-row {
-      grid-template-columns:
-        minmax(0, 1fr)
-        210px;
-    }
+.header::before {
+  left: 26px;
 
-    .cn-name {
-      font-size: 34px;
-      font-weight: 800;
+  border-left:
+    3px solid #d9b86d;
+}
 
-      color: #171717;
 
-      white-space: nowrap;
-    }
+.header::after {
+  right: 26px;
 
-    .cn-sub {
-      font-size: 23px;
-      font-weight: 600;
+  border-right:
+    3px solid #d9b86d;
+}
 
-      color: #272727;
 
-      white-space: nowrap;
-    }
+/* ========================================
+   MENU BODY
+   ======================================== */
 
-    .en-main {
-      min-width: 0;
-    }
+.menu-body {
+  height: 522px;
 
-    .en-name {
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+  display: grid;
 
-      font-size: 31px;
-      font-weight: 700;
+  grid-template-columns:
+    minmax(0, 1fr)
+    2px
+    minmax(0, 1fr);
 
-      color: #181818;
+  padding:
+    12px 36px
+    8px 36px;
+}
 
-      line-height: 1.02;
 
-      white-space: nowrap;
-    }
+.middle-divider {
+  background:
+    rgba(
+      145,
+      24,
+      24,
+      0.72
+    );
+}
 
-    .en-sub {
-      margin-top: 2px;
 
-      font-size: 21px;
-      font-weight: 600;
+.column {
+  min-width: 0;
+}
 
-      color: #333;
 
-      white-space: nowrap;
-    }
+.left {
+  padding-right: 30px;
+}
 
-    .price {
-      text-align: right;
 
-      color: #a41010;
+.right {
+  padding-left: 30px;
+}
 
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
 
-      font-size: 37px;
-      font-weight: 800;
+/* ========================================
+   STANDARD ROWS
+   ======================================== */
 
-      white-space: nowrap;
-    }
+.row {
+  height: 62px;
 
-    .unit {
-      font-size: 24px;
-      font-weight: 700;
-    }
+  display: grid;
 
-    /* =========================
-       RICE SECTION
-       ========================= */
+  align-items: center;
 
-    .rice-start {
-      margin-top: 7px;
+  border-bottom:
+    1px solid #cbbda3;
 
-      border-top: 4px solid #9f1919;
-    }
+  overflow: hidden;
+}
 
-    .rice-row {
-      height: 62px;
 
-      background:
-        linear-gradient(
-          90deg,
-          rgba(214, 180, 102, 0.12),
-          rgba(214, 180, 102, 0.25),
-          rgba(214, 180, 102, 0.12)
-        );
-    }
+/*
+  Chinese half:
 
-    .rice-row .cn-name {
-      font-size: 32px;
-    }
+  name | descriptor | price
+*/
 
-    .rice-row .en-name {
-      font-size: 29px;
-    }
+.cn-row {
+  grid-template-columns:
+    minmax(190px, 1fr)
+    120px
+    220px;
+}
 
-    .rice-row .price {
-      font-size: 36px;
-    }
 
-    /* =========================
-       BOTTOM STRIP
-       ========================= */
+/*
+  English half:
 
-    .food-strip {
-      position: relative;
+  item | price
+*/
 
-      height: 136px;
+.en-row {
+  grid-template-columns:
+    minmax(0, 1fr)
+    205px;
+}
 
-      overflow: hidden;
 
-      border-top: 4px solid #8e1414;
+.cn-name {
+  font-size: 33px;
+  font-weight: 800;
 
-      background:
-        linear-gradient(
-          90deg,
-          #3b1511 0%,
-          #642016 18%,
-          #8c3020 36%,
-          #7a2518 58%,
-          #591a14 78%,
-          #35100e 100%
-        );
-    }
+  color: #171717;
 
-    .food-strip::before {
-      content: "";
+  white-space: nowrap;
+}
 
-      position: absolute;
-      inset: 0;
 
-      background:
-        radial-gradient(
-          ellipse at 14% 88%,
-          rgba(245, 167, 64, 0.40),
-          transparent 32%
-        ),
-        radial-gradient(
-          ellipse at 35% 88%,
-          rgba(202, 65, 28, 0.42),
-          transparent 34%
-        ),
-        radial-gradient(
-          ellipse at 60% 88%,
-          rgba(232, 117, 35, 0.38),
-          transparent 34%
-        ),
-        radial-gradient(
-          ellipse at 84% 88%,
-          rgba(244, 181, 82, 0.34),
-          transparent 34%
-        );
-    }
+.cn-sub {
+  font-size: 21px;
+  font-weight: 600;
 
-    .strip-copy {
-      position: absolute;
-      z-index: 2;
+  color: #292929;
 
-      bottom: 15px;
+  text-align: center;
 
-      color: #f6e4bd;
-    }
+  white-space: nowrap;
+}
 
-    .strip-left {
-      left: 32px;
-    }
 
-    .strip-right {
-      right: 32px;
+.en-main {
+  min-width: 0;
+}
 
-      text-align: right;
-    }
 
-    .strip-cn {
-      font-size: 25px;
-      font-weight: 800;
+.en-name {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
-      letter-spacing: 2px;
-    }
+  font-size: 30px;
+  font-weight: 700;
 
-    .strip-en {
-      margin-top: 4px;
+  line-height: 1;
 
-      font-size: 15px;
-      font-weight: 700;
+  color: #181818;
 
-      letter-spacing: 2px;
+  white-space: nowrap;
+}
 
-      color: #dabb78;
-    }
-  </style>
+
+.en-sub {
+  margin-top: 3px;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  color: #333;
+
+  white-space: nowrap;
+}
+
+
+.price {
+  text-align: right;
+
+  color: #a41010;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 36px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+.unit {
+  font-size: 23px;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   WHOLE / HALF ROWS
+
+   These need more horizontal room because
+   two full prices are displayed together.
+   ======================================== */
+
+.cn-row.combo {
+  grid-template-columns:
+    minmax(175px, 1fr)
+    110px
+    245px;
+}
+
+
+.en-row.combo {
+  grid-template-columns:
+    minmax(0, 1fr)
+    250px;
+}
+
+
+.combo .price {
+  font-size: 32px;
+  letter-spacing: -1px;
+}
+
+
+/* ========================================
+   RICE SECTION
+   ======================================== */
+
+.rice-start {
+  margin-top: 7px;
+
+  border-top:
+    4px solid #9f1919;
+}
+
+
+.rice-row {
+  height: 62px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(214,180,102,0.10),
+      rgba(214,180,102,0.22),
+      rgba(214,180,102,0.10)
+    );
+}
+
+
+.rice-row .cn-name {
+  font-size: 32px;
+}
+
+
+.rice-row .en-name {
+  font-size: 28px;
+}
+
+
+.rice-row .price {
+  font-size: 36px;
+}
+
+
+/* ========================================
+   FOOD IMAGE AREA
+
+   Placeholder for now.
+   ======================================== */
+
+.food-strip {
+  position: relative;
+
+  height: 136px;
+
+  overflow: hidden;
+
+  border-top:
+    4px solid #8e1414;
+
+  background:
+    linear-gradient(
+      180deg,
+      #66150f 0%,
+      #8b2416 42%,
+      #40100d 100%
+    );
+}
+
+
+.food-strip::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at 18% 100%,
+      rgba(245,150,45,0.48),
+      transparent 35%
+    ),
+
+    radial-gradient(
+      ellipse at 48% 100%,
+      rgba(194,54,24,0.50),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      ellipse at 78% 100%,
+      rgba(245,162,50,0.42),
+      transparent 35%
+    );
+}
+
+
+/*
+  This text is deliberately subtle.
+  Eventually this entire area becomes
+  roast-meat photography.
+*/
+
+.food-placeholder {
+  position: absolute;
+
+  left: 50%;
+  bottom: 18px;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    rgba(247,224,178,0.75);
+
+  font-size: 17px;
+  font-weight: 700;
+
+  letter-spacing: 4px;
+
+  white-space: nowrap;
+}
+
+</style>
 </head>
+
 
 <body>
 
 <div id="viewport">
 
-  <div id="menu">
+<div id="menu">
 
-    <!-- HEADER -->
 
-    <div class="header">
+<!-- =====================================
+     HEADER
+     ===================================== -->
 
-      <div class="seal-wrap">
-        <div class="seal">
-          港<br>式
-        </div>
-      </div>
+<div class="header">
 
-      <div class="title-cn">
-        港式燒味
-      </div>
+  <div class="title-cn">
+    港式燒味
+  </div>
 
-      <div class="header-divider"></div>
+  <div class="header-divider"></div>
 
-      <div class="title-en">
-        BBQ ROAST MEATS
-      </div>
+  <div class="title-en">
+    BBQ ROAST MEATS
+  </div>
 
-      <div class="corner"></div>
+</div>
 
+
+<!-- =====================================
+     MENU
+     ===================================== -->
+
+<div class="menu-body">
+
+
+<!-- =====================================
+     CHINESE HALF
+     ===================================== -->
+
+<div class="column left">
+
+
+  <!-- DUCK -->
+
+  <div class="row cn-row combo">
+
+    <div class="cn-name">
+      明爐燒鴨
     </div>
 
-
-    <!-- MAIN MENU -->
-
-    <div class="menu-body">
-
-      <!-- CHINESE -->
-
-      <div class="column left">
-
-        <div class="row cn-row">
-
-          <div class="cn-name">
-            明爐燒鴨
-          </div>
-
-          <div class="cn-sub">
-            整隻 / 半隻
-          </div>
-
-          <div class="price">
-            $<span id="duckWhole">39</span>
-            /
-            $<span id="duckHalf">20</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row">
-
-          <div class="cn-name">
-            玫瑰油雞
-          </div>
-
-          <div class="cn-sub">
-            整隻 / 半隻
-          </div>
-
-          <div class="price">
-            $<span id="soyChickenWhole">23</span>
-            /
-            $<span id="soyChickenHalf">12</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row">
-
-          <div class="cn-name">
-            脆皮燒肉
-          </div>
-
-          <div></div>
-
-          <div class="price">
-            $<span id="crispyPorkKg">41</span>
-            <span class="unit">/kg</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row">
-
-          <div class="cn-name">
-            蜜汁叉燒
-          </div>
-
-          <div></div>
-
-          <div class="price">
-            $<span id="bbqPorkKg">39</span>
-            <span class="unit">/kg</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row">
-
-          <div class="cn-name">
-            香燒紅腸
-          </div>
-
-          <div></div>
-
-          <div class="price">
-            $<span id="bbqSausageKg">39</span>
-            <span class="unit">/kg</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row rice-start rice-row">
-
-          <div class="cn-name">
-            燒味飯
-          </div>
-
-          <div></div>
-
-          <div class="price">
-            $<span id="bbqRice">15.50</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row rice-row">
-
-          <div class="cn-name">
-            燒味雙拼飯
-          </div>
-
-          <div></div>
-
-          <div class="price">
-            $<span id="doubleRice">17</span>
-          </div>
-
-        </div>
-
-
-        <div class="row cn-row rice-row">
-
-          <div class="cn-name">
-            燒味三拼飯
-          </div>
-
-          <div></div>
-
-          <div class="price">
-            $<span id="tripleRice">19</span>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="divider"></div>
-
-
-      <!-- ENGLISH -->
-
-      <div class="column right">
-
-        <div class="row en-row">
-
-          <div class="en-main">
-
-            <div class="en-name">
-              Roast Duck
-            </div>
-
-            <div class="en-sub">
-              Whole / Half
-            </div>
-
-          </div>
-
-          <div class="price">
-            $<span data-price="duckWhole">39</span>
-            /
-            $<span data-price="duckHalf">20</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row">
-
-          <div class="en-main">
-
-            <div class="en-name">
-              Soy Sauce Chicken
-            </div>
-
-            <div class="en-sub">
-              Whole / Half
-            </div>
-
-          </div>
-
-          <div class="price">
-            $<span data-price="soyChickenWhole">23</span>
-            /
-            $<span data-price="soyChickenHalf">12</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row">
-
-          <div class="en-name">
-            Crispy Roast Pork
-          </div>
-
-          <div class="price">
-            $<span data-price="crispyPorkKg">41</span>
-            <span class="unit">/kg</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row">
-
-          <div class="en-name">
-            BBQ Pork
-          </div>
-
-          <div class="price">
-            $<span data-price="bbqPorkKg">39</span>
-            <span class="unit">/kg</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row">
-
-          <div class="en-name">
-            BBQ Sausage
-          </div>
-
-          <div class="price">
-            $<span data-price="bbqSausageKg">39</span>
-            <span class="unit">/kg</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row rice-start rice-row">
-
-          <div class="en-name">
-            BBQ &amp; Rice
-          </div>
-
-          <div class="price">
-            $<span data-price="bbqRice">15.50</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row rice-row">
-
-          <div class="en-name">
-            Double Mixed BBQ With Rice
-          </div>
-
-          <div class="price">
-            $<span data-price="doubleRice">17</span>
-          </div>
-
-        </div>
-
-
-        <div class="row en-row rice-row">
-
-          <div class="en-name">
-            Triple Mixed BBQ With Rice
-          </div>
-
-          <div class="price">
-            $<span data-price="tripleRice">19</span>
-          </div>
-
-        </div>
-
-      </div>
-
+    <div class="cn-sub">
+      整隻 / 半隻
     </div>
 
+    <div class="price">
+      $<span id="duckWhole">39.00</span>
+      /
+      $<span id="duckHalf">20.00</span>
+    </div>
 
-    <!-- BOTTOM STRIP -->
-
-    <div class="food-strip">
-
-      <div class="strip-copy strip-left">
-
-        <div class="strip-cn">
-          真材實料 · 每日新鮮
-        </div>
-
-        <div class="strip-en">
-          QUALITY INGREDIENTS · FRESH DAILY
-        </div>
-
-      </div>
+  </div>
 
 
-      <div class="strip-copy strip-right">
+  <!-- CHICKEN -->
 
-        <div class="strip-cn">
-          香港風味 · 用心製作
-        </div>
+  <div class="row cn-row combo">
 
-        <div class="strip-en">
-          HONG KONG STYLE · MADE WITH CARE
-        </div>
+    <div class="cn-name">
+      玫瑰油雞
+    </div>
 
-      </div>
+    <div class="cn-sub">
+      整隻 / 半隻
+    </div>
 
+    <div class="price">
+      $<span id="soyChickenWhole">23.00</span>
+      /
+      $<span id="soyChickenHalf">12.00</span>
+    </div>
+
+  </div>
+
+
+  <!-- CRISPY PORK -->
+
+  <div class="row cn-row">
+
+    <div class="cn-name">
+      脆皮燒肉
+    </div>
+
+    <div></div>
+
+    <div class="price">
+      $<span id="crispyPorkKg">41.00</span>
+      <span class="unit">/kg</span>
+    </div>
+
+  </div>
+
+
+  <!-- BBQ PORK -->
+
+  <div class="row cn-row">
+
+    <div class="cn-name">
+      蜜汁叉燒
+    </div>
+
+    <div></div>
+
+    <div class="price">
+      $<span id="bbqPorkKg">39.00</span>
+      <span class="unit">/kg</span>
+    </div>
+
+  </div>
+
+
+  <!-- SAUSAGE -->
+
+  <div class="row cn-row">
+
+    <div class="cn-name">
+      香燒紅腸
+    </div>
+
+    <div></div>
+
+    <div class="price">
+      $<span id="bbqSausageKg">39.00</span>
+      <span class="unit">/kg</span>
+    </div>
+
+  </div>
+
+
+  <!-- BBQ RICE -->
+
+  <div class="row cn-row rice-start rice-row">
+
+    <div class="cn-name">
+      燒味飯
+    </div>
+
+    <div></div>
+
+    <div class="price">
+      $<span id="bbqRice">15.50</span>
+    </div>
+
+  </div>
+
+
+  <!-- DOUBLE -->
+
+  <div class="row cn-row rice-row">
+
+    <div class="cn-name">
+      燒味雙拼飯
+    </div>
+
+    <div></div>
+
+    <div class="price">
+      $<span id="doubleRice">17.00</span>
+    </div>
+
+  </div>
+
+
+  <!-- TRIPLE -->
+
+  <div class="row cn-row rice-row">
+
+    <div class="cn-name">
+      燒味三拼飯
+    </div>
+
+    <div></div>
+
+    <div class="price">
+      $<span id="tripleRice">19.00</span>
     </div>
 
   </div>
@@ -798,191 +702,373 @@
 </div>
 
 
+<!-- CENTER -->
+
+<div class="middle-divider"></div>
+
+
+<!-- =====================================
+     ENGLISH HALF
+     ===================================== -->
+
+<div class="column right">
+
+
+  <!-- DUCK -->
+
+  <div class="row en-row combo">
+
+    <div class="en-main">
+
+      <div class="en-name">
+        Roast Duck
+      </div>
+
+      <div class="en-sub">
+        Whole / Half
+      </div>
+
+    </div>
+
+    <div class="price">
+      $<span data-price="duckWhole">39.00</span>
+      /
+      $<span data-price="duckHalf">20.00</span>
+    </div>
+
+  </div>
+
+
+  <!-- CHICKEN -->
+
+  <div class="row en-row combo">
+
+    <div class="en-main">
+
+      <div class="en-name">
+        Soy Sauce Chicken
+      </div>
+
+      <div class="en-sub">
+        Whole / Half
+      </div>
+
+    </div>
+
+    <div class="price">
+      $<span data-price="soyChickenWhole">23.00</span>
+      /
+      $<span data-price="soyChickenHalf">12.00</span>
+    </div>
+
+  </div>
+
+
+  <!-- CRISPY PORK -->
+
+  <div class="row en-row">
+
+    <div class="en-name">
+      Crispy Roast Pork
+    </div>
+
+    <div class="price">
+      $<span data-price="crispyPorkKg">41.00</span>
+      <span class="unit">/kg</span>
+    </div>
+
+  </div>
+
+
+  <!-- BBQ PORK -->
+
+  <div class="row en-row">
+
+    <div class="en-name">
+      BBQ Pork
+    </div>
+
+    <div class="price">
+      $<span data-price="bbqPorkKg">39.00</span>
+      <span class="unit">/kg</span>
+    </div>
+
+  </div>
+
+
+  <!-- SAUSAGE -->
+
+  <div class="row en-row">
+
+    <div class="en-name">
+      BBQ Sausage
+    </div>
+
+    <div class="price">
+      $<span data-price="bbqSausageKg">39.00</span>
+      <span class="unit">/kg</span>
+    </div>
+
+  </div>
+
+
+  <!-- BBQ RICE -->
+
+  <div class="row en-row rice-start rice-row">
+
+    <div class="en-name">
+      BBQ &amp; Rice
+    </div>
+
+    <div class="price">
+      $<span data-price="bbqRice">15.50</span>
+    </div>
+
+  </div>
+
+
+  <!-- DOUBLE -->
+
+  <div class="row en-row rice-row">
+
+    <div class="en-name">
+      Double Mixed BBQ With Rice
+    </div>
+
+    <div class="price">
+      $<span data-price="doubleRice">17.00</span>
+    </div>
+
+  </div>
+
+
+  <!-- TRIPLE -->
+
+  <div class="row en-row rice-row">
+
+    <div class="en-name">
+      Triple Mixed BBQ With Rice
+    </div>
+
+    <div class="price">
+      $<span data-price="tripleRice">19.00</span>
+    </div>
+
+  </div>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================
+     FOOD STRIP
+     ===================================== -->
+
+<div class="food-strip">
+
+  <div class="food-placeholder">
+    HONG KONG BBQ
+  </div>
+
+</div>
+
+
+</div>
+</div>
+
+
 <script>
 
-  /*
-    ============================================
-    FIT THE 1366 × 768 MENU TO THE BROWSER
-    ============================================
-  */
+/* ==========================================
+   FIT 1366 × 768 DESIGN TO SCREEN
+   ========================================== */
 
-  function fitMenu() {
+function fitMenu() {
 
-    const menu =
-      document.getElementById("menu");
+  const menu =
+    document.getElementById("menu");
 
-    const designWidth = 1366;
-    const designHeight = 768;
+  const designWidth =
+    1366;
 
-    const availableWidth =
-      window.innerWidth;
+  const designHeight =
+    768;
 
-    const availableHeight =
-      window.innerHeight;
+  const scaleX =
+    window.innerWidth /
+    designWidth;
 
-    const scaleX =
-      availableWidth / designWidth;
+  const scaleY =
+    window.innerHeight /
+    designHeight;
 
-    const scaleY =
-      availableHeight / designHeight;
+  const scale =
+    Math.min(
+      scaleX,
+      scaleY
+    );
 
-    const scale =
-      Math.min(scaleX, scaleY);
+  menu.style.transform =
+    "translate(-50%, -50%) scale(" +
+    scale +
+    ")";
+}
 
-    menu.style.transform =
-      "translate(-50%, -50%) scale(" +
-      scale +
-      ")";
+
+fitMenu();
+
+
+window.addEventListener(
+  "resize",
+  fitMenu
+);
+
+
+window.addEventListener(
+  "orientationchange",
+  function() {
+
+    setTimeout(
+      fitMenu,
+      300
+    );
+
+  }
+);
+
+
+/* ==========================================
+   UPDATE BOTH SIDES
+   ========================================== */
+
+function setPrice(
+  key,
+  value
+) {
+
+  const chinese =
+    document.getElementById(
+      key
+    );
+
+  if (chinese) {
+
+    chinese.textContent =
+      value;
+
   }
 
 
-  fitMenu();
+  const english =
+    document.querySelectorAll(
+      '[data-price="' +
+      key +
+      '"]'
+    );
 
 
-  window.addEventListener(
-    "resize",
-    fitMenu
-  );
+  for (
+    let i = 0;
+    i < english.length;
+    i++
+  ) {
 
+    english[i].textContent =
+      value;
 
-  window.addEventListener(
-    "orientationchange",
-    function() {
-
-      setTimeout(
-        fitMenu,
-        300
-      );
-
-    }
-  );
-
-
-  /*
-    ============================================
-    UPDATE BOTH CHINESE AND ENGLISH PRICES
-    ============================================
-  */
-
-  function setPrice(key, value) {
-
-    const chinesePrice =
-      document.getElementById(key);
-
-    if (chinesePrice) {
-      chinesePrice.textContent = value;
-    }
-
-
-    const englishPrices =
-      document.querySelectorAll(
-        '[data-price="' +
-        key +
-        '"]'
-      );
-
-    for (
-      let i = 0;
-      i < englishPrices.length;
-      i++
-    ) {
-
-      englishPrices[i].textContent =
-        value;
-
-    }
   }
 
-
-  /*
-    ============================================
-    LOAD menu-data.json
-    ============================================
-  */
-
-  async function loadPrices() {
-
-    try {
-
-      const response =
-        await fetch(
-          "menu-data.json?t=" +
-          Date.now(),
-          {
-            cache: "no-store"
-          }
-        );
+}
 
 
-      if (!response.ok) {
+/* ==========================================
+   LOAD PRICES
+   ========================================== */
 
-        throw new Error(
-          "HTTP " +
-          response.status
-        );
+async function loadPrices() {
 
-      }
+  try {
 
-
-      const data =
-        await response.json();
-
-
-      if (!data.bbq) {
-
-        throw new Error(
-          "BBQ data missing"
-        );
-
-      }
-
-
-      const bbq =
-        data.bbq;
-
-
-      Object.keys(bbq).forEach(
-        function(key) {
-
-          setPrice(
-            key,
-            bbq[key]
-          );
-
+    const response =
+      await fetch(
+        "menu-data.json?t=" +
+        Date.now(),
+        {
+          cache:
+            "no-store"
         }
       );
 
-    }
 
-    catch (error) {
+    if (!response.ok) {
 
-      /*
-        The HTML contains fallback prices,
-        so the menu remains usable even if
-        the JSON request fails.
-      */
-
-      console.log(
-        "Price loading failed:",
-        error
+      throw new Error(
+        "HTTP " +
+        response.status
       );
 
     }
 
+
+    const data =
+      await response.json();
+
+
+    if (!data.bbq) {
+
+      throw new Error(
+        "BBQ data missing"
+      );
+
+    }
+
+
+    Object.keys(
+      data.bbq
+    ).forEach(
+      function(key) {
+
+        setPrice(
+          key,
+          data.bbq[key]
+        );
+
+      }
+    );
+
   }
 
+  catch (error) {
 
-  loadPrices();
+    /*
+      Fallback prices remain
+      visible if JSON fails.
+    */
+
+    console.log(
+      "Price loading failed:",
+      error
+    );
+
+  }
+
+}
 
 
-  /*
-    Refresh prices every 5 minutes.
-  */
+loadPrices();
 
-  setInterval(
-    loadPrices,
-    300000
-  );
+
+/*
+  Check for updated prices
+  every 5 minutes.
+*/
+
+setInterval(
+  loadPrices,
+  300000
+);
 
 </script>
 

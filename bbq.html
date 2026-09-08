@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BBQ Menu</title>
+
+  <link rel="stylesheet" href="menu.css">
+
+  <style>
+    .title {
+      height: 110px;
+      background: #990000;
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 54px;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 30px 60px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 220px;
+      align-items: center;
+
+      min-height: 75px;
+
+      border-bottom: 1px solid #aaa;
+
+      font-size: 34px;
+    }
+
+    .price {
+      font-size: 42px;
+      font-weight: bold;
+      color: #a00000;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="menu">
+
+  <div class="title">
+    港式燒味 &nbsp; | &nbsp; BBQ ROAST MEATS
+  </div>
+
+  <div class="content">
+
+    <div class="row">
+      <div>明爐燒鴨</div>
+      <div>Roast Duck — Whole / Half</div>
+      <div class="price">
+        $<span id="duckWhole"></span> / $<span id="duckHalf"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>玫瑰油雞</div>
+      <div>Soy Sauce Chicken — Whole / Half</div>
+      <div class="price">
+        $<span id="soyChickenWhole"></span> / $<span id="soyChickenHalf"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>脆皮燒肉</div>
+      <div>Crispy Roast Pork</div>
+      <div class="price">
+        $<span id="crispyPorkKg"></span>/kg
+      </div>
+    </div>
+
+    <div class="row">
+      <div>蜜汁叉燒</div>
+      <div>BBQ Pork</div>
+      <div class="price">
+        $<span id="bbqPorkKg"></span>/kg
+      </div>
+    </div>
+
+    <div class="row">
+      <div>香燒紅腸</div>
+      <div>BBQ Sausage</div>
+      <div class="price">
+        $<span id="bbqSausageKg"></span>/kg
+      </div>
+    </div>
+
+    <div class="row">
+      <div>燒味飯</div>
+      <div>BBQ & Rice</div>
+      <div class="price">
+        $<span id="bbqRice"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>燒味雙拼飯</div>
+      <div>Double Mixed BBQ With Rice</div>
+      <div class="price">
+        $<span id="doubleRice"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>燒味三拼飯</div>
+      <div>Triple Mixed BBQ With Rice</div>
+      <div class="price">
+        $<span id="tripleRice"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+function updateOpeningState() {
+  const now = new Date();
+  const hour = now.getHours();
+
+  // Menu visible 9:00 AM – 8:59 PM
+  const closed = hour >= 21 || hour < 9;
+
+  document.body.classList.toggle("closed", closed);
+}
+
+async function loadPrices() {
+  try {
+
+    // Timestamp prevents stale TV-browser caching
+    const response = await fetch(
+      "menu-data.json?t=" + Date.now()
+    );
+
+    const data = await response.json();
+    const bbq = data.bbq;
+
+    for (const [key, value] of Object.entries(bbq)) {
+      const element = document.getElementById(key);
+
+      if (element) {
+        element.textContent = value;
+      }
+    }
+
+  } catch (error) {
+    console.log("Could not update menu prices.");
+  }
+}
+
+updateOpeningState();
+loadPrices();
+
+/* Check opening hours every 30 seconds */
+setInterval(updateOpeningState, 30000);
+
+/* Check for price changes every 5 minutes */
+setInterval(loadPrices, 300000);
+
+</script>
+
+</body>
+</html>

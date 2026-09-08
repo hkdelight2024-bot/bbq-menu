@@ -1,0 +1,30 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #f7f0df;
+  font-family: Arial, "Noto Sans CJK TC", "Microsoft JhengHei", sans-serif;
+}
+
+#menu {
+  width: 1366px;
+  height: 768px;
+  box-sizing: border-box;
+  transform-origin: top left;
+}
+
+/* Overnight black screen */
+
+body.closed {
+  background: #000 !important;
+}
+
+body.closed #menu {
+  display: none !important;
+}

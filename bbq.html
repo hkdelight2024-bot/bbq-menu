@@ -1,114 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
 
-  <title>BBQ Menu</title>
+<title>BBQ Menu</title>
 
-  <link rel="stylesheet" href="menu.css">
+<style>
 
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      background: #f7f0df;
-      font-family:
-        Arial,
-        "Microsoft JhengHei",
-        "Noto Sans CJK TC",
-        sans-serif;
-    }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
 
-    /* Designed for the Hisense 32A4QAU at 1366 × 768 */
-    #menu {
-      width: 1366px;
-      height: 768px;
-      box-sizing: border-box;
-      background: #f7f0df;
-    }
+/*
+  VIEWPORT
+  The 1366x768 menu is scaled down automatically
+  to fit whatever space the TV browser provides.
+*/
 
-    .title {
-      height: 105px;
+#viewport {
+  position: absolute;
+  inset: 0;
 
-      background: #990000;
-      color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
 
-      font-size: 52px;
-      font-weight: bold;
-    }
+#menu {
+  position: absolute;
 
-    .content {
-      padding: 20px 55px;
-    }
+  width: 1366px;
+  height: 768px;
 
-    .row {
-      display: grid;
+  left: 50%;
+  top: 50%;
 
-      grid-template-columns:
-        300px
-        1fr
-        280px;
+  transform-origin: center center;
 
-      align-items: center;
+  background: #f7f0df;
 
-      min-height: 72px;
+  font-family:
+    Arial,
+    "Microsoft JhengHei",
+    "Noto Sans CJK TC",
+    sans-serif;
+}
 
-      border-bottom: 1px solid #aaa;
 
-      font-size: 32px;
-    }
+/* HEADER */
 
-    .chinese {
-      font-size: 36px;
-      font-weight: bold;
-    }
+.title {
+  height: 100px;
 
-    .english {
-      font-size: 32px;
-      font-weight: bold;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .price {
-      font-size: 39px;
-      font-weight: bold;
-      color: #a00000;
-      text-align: right;
-    }
+  background: #930000;
+  color: white;
 
-    /*
-      BLACK SCREEN MODE
-    */
+  font-size: 50px;
+  font-weight: 700;
+}
 
-    body.closed {
-      background: #000 !important;
-    }
 
-    body.closed #menu {
-      display: none !important;
-    }
-  </style>
+/* MENU AREA */
+
+.content {
+  padding: 14px 40px 20px 40px;
+}
+
+
+/* EACH MENU ROW */
+
+.row {
+  display: grid;
+
+  /*
+    Chinese | English | Price
+
+    Price column gets a guaranteed 300px.
+  */
+
+  grid-template-columns:
+    270px
+    minmax(0, 1fr)
+    300px;
+
+  align-items: center;
+
+  height: 79px;
+
+  border-bottom: 1px solid #aaa;
+}
+
+
+/* CHINESE */
+
+.chinese {
+  font-size: 34px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+/* ENGLISH */
+
+.english {
+  font-size: 31px;
+  font-weight: 700;
+
+  padding-right: 20px;
+
+  white-space: nowrap;
+}
+
+
+/* PRICES */
+
+.price {
+  font-size: 39px;
+  font-weight: 700;
+
+  color: #a00000;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+
+/*
+  BLACK SCREEN
+*/
+
+body.closed #viewport {
+  display: none;
+}
+
+body.closed {
+  background: #000;
+}
+
+</style>
 </head>
 
 
 <body>
 
+<div id="viewport">
+
 <div id="menu">
+
 
   <div class="title">
     港式燒味 &nbsp; | &nbsp; BBQ ROAST MEATS
@@ -117,7 +178,9 @@
 
   <div class="content">
 
+
     <div class="row">
+
       <div class="chinese">
         明爐燒鴨
       </div>
@@ -131,10 +194,12 @@
         /
         $<span id="duckHalf">20.00</span>
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         玫瑰油雞
       </div>
@@ -148,10 +213,12 @@
         /
         $<span id="soyChickenHalf">12.00</span>
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         脆皮燒肉
       </div>
@@ -163,10 +230,12 @@
       <div class="price">
         $<span id="crispyPorkKg">41.00</span>/kg
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         蜜汁叉燒
       </div>
@@ -178,10 +247,12 @@
       <div class="price">
         $<span id="bbqPorkKg">39.00</span>/kg
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         香燒紅腸
       </div>
@@ -193,10 +264,12 @@
       <div class="price">
         $<span id="bbqSausageKg">39.00</span>/kg
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         燒味飯
       </div>
@@ -208,10 +281,12 @@
       <div class="price">
         $<span id="bbqRice">15.50</span>
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         燒味雙拼飯
       </div>
@@ -223,10 +298,12 @@
       <div class="price">
         $<span id="doubleRice">17.00</span>
       </div>
+
     </div>
 
 
     <div class="row">
+
       <div class="chinese">
         燒味三拼飯
       </div>
@@ -238,167 +315,192 @@
       <div class="price">
         $<span id="tripleRice">19.00</span>
       </div>
+
     </div>
 
+
   </div>
+
+</div>
 
 </div>
 
 
 <script>
 
+/*
+==================================================
+FIT 1366x768 MENU INTO ACTUAL BROWSER WINDOW
+==================================================
+*/
+
+function fitMenu() {
+
+  const menu =
+    document.getElementById("menu");
+
+  const designWidth = 1366;
+  const designHeight = 768;
+
+  const availableWidth =
+    window.innerWidth;
+
+  const availableHeight =
+    window.innerHeight;
+
+  const scaleX =
+    availableWidth / designWidth;
+
+  const scaleY =
+    availableHeight / designHeight;
+
   /*
-    ==========================================
-    PRICE LOADING
-    ==========================================
-
-    Prices are loaded from menu-data.json.
-
-    Prices are also written directly into the
-    HTML above as fallbacks. Therefore, if the
-    JSON request ever fails, the TV will still
-    display a usable menu instead of blank prices.
+    Use the smaller scale so NOTHING gets cut off.
   */
 
-  async function loadPrices() {
+  const scale =
+    Math.min(scaleX, scaleY);
 
-    try {
+  menu.style.transform =
+    "translate(-50%, -50%) scale(" +
+    scale +
+    ")";
 
-      const response = await fetch(
-        "menu-data.json?t=" + Date.now(),
-        {
-          cache: "no-store"
-        }
+}
+
+
+/*
+Run immediately.
+*/
+
+fitMenu();
+
+
+/*
+Run again if TV/browser changes dimensions.
+*/
+
+window.addEventListener(
+  "resize",
+  fitMenu
+);
+
+
+/*
+==================================================
+LOAD PRICES
+==================================================
+*/
+
+async function loadPrices() {
+
+  try {
+
+    const response = await fetch(
+      "menu-data.json?t=" + Date.now(),
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "HTTP " + response.status
       );
+    }
 
-      if (!response.ok) {
-        throw new Error(
-          "HTTP error " + response.status
-        );
-      }
+    const data =
+      await response.json();
 
-      const data = await response.json();
+    const bbq =
+      data.bbq;
 
-      if (!data.bbq) {
-        throw new Error(
-          "BBQ data missing from menu-data.json"
-        );
-      }
+    if (!bbq) {
+      return;
+    }
 
-      const bbq = data.bbq;
 
-      Object.keys(bbq).forEach(function(key) {
+    Object.keys(bbq).forEach(
+      function(key) {
 
         const element =
           document.getElementById(key);
 
         if (element) {
-          element.textContent = bbq[key];
+
+          element.textContent =
+            bbq[key];
+
         }
 
-      });
-
-      console.log(
-        "Menu prices updated:",
-        new Date()
-      );
-
-    }
-
-    catch (error) {
-
-      /*
-        Do NOT erase the fallback prices.
-        Just keep displaying the existing values.
-      */
-
-      console.log(
-        "Could not update prices:",
-        error
-      );
-
-    }
+      }
+    );
 
   }
 
+  catch (error) {
 
-  /*
-    ==========================================
-    10-SECOND BLACK SCREEN TEST
-    ==========================================
+    /*
+      Leave fallback HTML prices visible.
+    */
 
-    TEST ONLY:
-
-    Menu visible for 10 seconds
-    Black for 10 seconds
-    Menu visible for 10 seconds
-    etc.
-  */
-
-  let menuVisible = true;
-
-  function updateDisplay() {
-
-    if (menuVisible) {
-
-      document.body.classList.remove(
-        "closed"
-      );
-
-    }
-
-    else {
-
-      document.body.classList.add(
-        "closed"
-      );
-
-    }
+    console.log(
+      "Price update failed:",
+      error
+    );
 
   }
 
-
-  function toggleDisplay() {
-
-    menuVisible = !menuVisible;
-
-    updateDisplay();
-
-  }
+}
 
 
-  /*
-    Start with menu visible.
-  */
+/*
+Load prices immediately.
+*/
 
-  updateDisplay();
+loadPrices();
 
 
-  /*
-    Change state every 10 seconds.
-  */
+/*
+Check JSON for new prices every 5 minutes.
+*/
 
-  setInterval(
-    toggleDisplay,
-    10000
+setInterval(
+  loadPrices,
+  300000
+);
+
+
+/*
+==================================================
+10 SECOND BLACK-SCREEN TEST
+==================================================
+*/
+
+let menuVisible = true;
+
+
+function toggleDisplay() {
+
+  menuVisible =
+    !menuVisible;
+
+  document.body.classList.toggle(
+    "closed",
+    !menuVisible
   );
 
+}
 
-  /*
-    ==========================================
-    PRICE REFRESH
-    ==========================================
 
-    Load immediately, then check GitHub
-    for price changes every 5 minutes.
-  */
+/*
+Switch every 10 seconds.
+*/
 
-  loadPrices();
-
-  setInterval(
-    loadPrices,
-    300000
-  );
+setInterval(
+  toggleDisplay,
+  10000
+);
 
 </script>
 

@@ -35,6 +35,11 @@ body {
     sans-serif;
 }
 
+
+/* =========================
+   VIEWPORT
+   ========================= */
+
 #viewport {
   position: fixed;
   inset: 0;
@@ -44,7 +49,6 @@ body {
   justify-content: center;
 
   overflow: hidden;
-
   background: #111;
 }
 
@@ -71,7 +75,10 @@ body {
   border: 2px solid #8d1414;
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+   ========================= */
 
 .header {
   height: 110px;
@@ -87,8 +94,7 @@ body {
 
   align-items: center;
 
-  padding:
-    0 65px;
+  padding: 0 65px;
 
   background:
     linear-gradient(
@@ -143,6 +149,9 @@ body {
   white-space: nowrap;
 }
 
+
+/* HEADER CORNERS */
+
 .header::before,
 .header::after {
   content: "";
@@ -172,7 +181,10 @@ body {
     3px solid #d9b86d;
 }
 
-/* MENU BODY */
+
+/* =========================
+   MENU BODY
+   ========================= */
 
 .menu-body {
   height: 522px;
@@ -211,13 +223,15 @@ body {
   padding-left: 30px;
 }
 
-/* ROWS */
+
+/* =========================
+   ROWS
+   ========================= */
 
 .row {
   height: 62px;
 
   display: grid;
-
   align-items: center;
 
   border-bottom:
@@ -226,11 +240,6 @@ body {
   overflow: hidden;
 }
 
-/*
-  Chinese:
-  name | whole/half | price
-*/
-
 .cn-row {
   grid-template-columns:
     minmax(230px, 1fr)
@@ -238,16 +247,14 @@ body {
     218px;
 }
 
-/*
-  English:
-  item | price
-*/
-
 .en-row {
   grid-template-columns:
     minmax(0, 1fr)
     205px;
 }
+
+
+/* CHINESE */
 
 .cn-name {
   font-size: 40px;
@@ -259,10 +266,6 @@ body {
 
   line-height: 1;
 }
-
-/*
-  WHOLE / HALF CHINESE TEXT
-*/
 
 .cn-sub {
   font-size: 29px;
@@ -276,6 +279,9 @@ body {
 
   line-height: 1;
 }
+
+
+/* ENGLISH */
 
 .en-main {
   min-width: 0;
@@ -310,6 +316,9 @@ body {
   white-space: nowrap;
 }
 
+
+/* PRICES */
+
 .price {
   text-align: right;
 
@@ -331,7 +340,10 @@ body {
   font-weight: 700;
 }
 
-/* WHOLE / HALF ROWS */
+
+/* =========================
+   WHOLE / HALF
+   ========================= */
 
 .cn-row.combo {
   grid-template-columns:
@@ -351,7 +363,10 @@ body {
   letter-spacing: -1px;
 }
 
-/* RICE SECTION */
+
+/* =========================
+   RICE SECTION
+   ========================= */
 
 .rice-start {
   margin-top: 7px;
@@ -384,11 +399,15 @@ body {
   font-size: 36px;
 }
 
-/* FOOD STRIP */
+
+/* =========================
+   ROAST MEAT IMAGE STRIP
+   ========================= */
 
 .food-strip {
   position: relative;
 
+  width: 100%;
   height: 136px;
 
   overflow: hidden;
@@ -396,59 +415,55 @@ body {
   border-top:
     4px solid #8e1414;
 
-  background:
-    linear-gradient(
-      180deg,
-      #66150f 0%,
-      #8b2416 42%,
-      #40100d 100%
-    );
+  background: #45100d;
 }
 
-.food-strip::before {
+
+/*
+  The image fills the entire strip.
+
+  object-fit: cover means it will fill
+  the 1366 × 136 area without stretching.
+*/
+
+.food-strip img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  /*
+    Show the visually useful centre/lower
+    part of the generated food image.
+  */
+
+  object-position: center 58%;
+}
+
+
+/*
+  Very light darkening at the edges helps
+  integrate the photo with the red menu.
+*/
+
+.food-strip::after {
   content: "";
 
   position: absolute;
   inset: 0;
 
+  pointer-events: none;
+
   background:
-    radial-gradient(
-      ellipse at 18% 100%,
-      rgba(245,150,45,0.48),
-      transparent 35%
-    ),
-
-    radial-gradient(
-      ellipse at 48% 100%,
-      rgba(194,54,24,0.50),
-      transparent 38%
-    ),
-
-    radial-gradient(
-      ellipse at 78% 100%,
-      rgba(245,162,50,0.42),
-      transparent 35%
+    linear-gradient(
+      90deg,
+      rgba(70,10,8,0.18) 0%,
+      transparent 15%,
+      transparent 85%,
+      rgba(70,10,8,0.18) 100%
     );
-}
-
-.food-placeholder {
-  position: absolute;
-
-  left: 50%;
-  bottom: 18px;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    rgba(247,224,178,0.75);
-
-  font-size: 17px;
-  font-weight: 700;
-
-  letter-spacing: 4px;
-
-  white-space: nowrap;
 }
 
 </style>
@@ -461,6 +476,10 @@ body {
 
 <div id="menu">
 
+
+<!-- =========================
+     HEADER
+     ========================= -->
 
 <div class="header">
 
@@ -477,8 +496,14 @@ body {
 </div>
 
 
+<!-- =========================
+     MENU BODY
+     ========================= -->
+
 <div class="menu-body">
 
+
+<!-- CHINESE -->
 
 <div class="column left">
 
@@ -616,8 +641,12 @@ body {
 </div>
 
 
+<!-- CENTER DIVIDER -->
+
 <div class="middle-divider"></div>
 
+
+<!-- ENGLISH -->
 
 <div class="column right">
 
@@ -754,11 +783,16 @@ body {
 </div>
 
 
+<!-- =========================
+     FOOD PHOTO
+     ========================= -->
+
 <div class="food-strip">
 
-  <div class="food-placeholder">
-    HONG KONG BBQ
-  </div>
+  <img
+    src="images/bbq-strip.png"
+    alt=""
+  >
 
 </div>
 
@@ -769,16 +803,15 @@ body {
 
 <script>
 
+/* FIT THE 1366 × 768 MENU TO ANY SCREEN */
+
 function fitMenu() {
 
   const menu =
     document.getElementById("menu");
 
-  const designWidth =
-    1366;
-
-  const designHeight =
-    768;
+  const designWidth = 1366;
+  const designHeight = 768;
 
   const scaleX =
     window.innerWidth /
@@ -823,21 +856,15 @@ window.addEventListener(
 );
 
 
-function setPrice(
-  key,
-  value
-) {
+/* UPDATE PRICE ON BOTH LANGUAGE SIDES */
+
+function setPrice(key, value) {
 
   const chinese =
-    document.getElementById(
-      key
-    );
+    document.getElementById(key);
 
   if (chinese) {
-
-    chinese.textContent =
-      value;
-
+    chinese.textContent = value;
   }
 
 
@@ -863,6 +890,8 @@ function setPrice(
 }
 
 
+/* LOAD PRICE DATA */
+
 async function loadPrices() {
 
   try {
@@ -872,8 +901,7 @@ async function loadPrices() {
         "menu-data.json?t=" +
         Date.now(),
         {
-          cache:
-            "no-store"
+          cache: "no-store"
         }
       );
 
@@ -930,6 +958,8 @@ async function loadPrices() {
 
 loadPrices();
 
+
+/* CHECK FOR PRICE CHANGES EVERY 5 MINUTES */
 
 setInterval(
   loadPrices,

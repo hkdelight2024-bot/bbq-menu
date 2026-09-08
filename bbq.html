@@ -35,11 +35,6 @@ body {
     sans-serif;
 }
 
-
-/* ========================================
-   VIEWPORT
-   ======================================== */
-
 #viewport {
   position: fixed;
   inset: 0;
@@ -52,7 +47,6 @@ body {
 
   background: #111;
 }
-
 
 #menu {
   position: absolute;
@@ -77,10 +71,7 @@ body {
   border: 2px solid #8d1414;
 }
 
-
-/* ========================================
-   HEADER
-   ======================================== */
+/* HEADER */
 
 .header {
   height: 110px;
@@ -113,7 +104,6 @@ body {
     4px solid #c59b4c;
 }
 
-
 .title-cn {
   text-align: center;
 
@@ -124,7 +114,6 @@ body {
 
   white-space: nowrap;
 }
-
 
 .header-divider {
   height: 65px;
@@ -137,7 +126,6 @@ body {
       0.72
     );
 }
-
 
 .title-en {
   text-align: center;
@@ -155,9 +143,6 @@ body {
   white-space: nowrap;
 }
 
-
-/* Decorative corners */
-
 .header::before,
 .header::after {
   content: "";
@@ -173,14 +158,12 @@ body {
     3px solid #d9b86d;
 }
 
-
 .header::before {
   left: 26px;
 
   border-left:
     3px solid #d9b86d;
 }
-
 
 .header::after {
   right: 26px;
@@ -189,10 +172,7 @@ body {
     3px solid #d9b86d;
 }
 
-
-/* ========================================
-   MENU BODY
-   ======================================== */
+/* MENU BODY */
 
 .menu-body {
   height: 522px;
@@ -209,7 +189,6 @@ body {
     8px 36px;
 }
 
-
 .middle-divider {
   background:
     rgba(
@@ -220,25 +199,19 @@ body {
     );
 }
 
-
 .column {
   min-width: 0;
 }
-
 
 .left {
   padding-right: 30px;
 }
 
-
 .right {
   padding-left: 30px;
 }
 
-
-/* ========================================
-   STANDARD ROWS
-   ======================================== */
+/* ROWS */
 
 .row {
   height: 62px;
@@ -253,22 +226,20 @@ body {
   overflow: hidden;
 }
 
-
 /*
-  Chinese half:
-  larger name column, still enough room for price.
+  Chinese:
+  name | whole/half | price
 */
 
 .cn-row {
   grid-template-columns:
     minmax(230px, 1fr)
-    112px
+    128px
     218px;
 }
 
-
 /*
-  English half:
+  English:
   item | price
 */
 
@@ -277,9 +248,6 @@ body {
     minmax(0, 1fr)
     205px;
 }
-
-
-/* MAIN CHINESE ITEM NAME */
 
 .cn-name {
   font-size: 40px;
@@ -292,25 +260,26 @@ body {
   line-height: 1;
 }
 
-
-/* WHOLE / HALF CHINESE SUBTEXT */
+/*
+  WHOLE / HALF CHINESE TEXT
+*/
 
 .cn-sub {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 29px;
+  font-weight: 800;
 
   color: #292929;
 
   text-align: center;
 
   white-space: nowrap;
-}
 
+  line-height: 1;
+}
 
 .en-main {
   min-width: 0;
 }
-
 
 .en-name {
   font-family:
@@ -328,7 +297,6 @@ body {
   white-space: nowrap;
 }
 
-
 .en-sub {
   margin-top: 3px;
 
@@ -341,7 +309,6 @@ body {
 
   white-space: nowrap;
 }
-
 
 .price {
   text-align: right;
@@ -359,24 +326,19 @@ body {
   white-space: nowrap;
 }
 
-
 .unit {
   font-size: 23px;
   font-weight: 700;
 }
 
-
-/* ========================================
-   WHOLE / HALF ROWS
-   ======================================== */
+/* WHOLE / HALF ROWS */
 
 .cn-row.combo {
   grid-template-columns:
-    minmax(220px, 1fr)
-    105px
-    245px;
+    minmax(215px, 1fr)
+    125px
+    250px;
 }
-
 
 .en-row.combo {
   grid-template-columns:
@@ -384,16 +346,12 @@ body {
     250px;
 }
 
-
 .combo .price {
   font-size: 32px;
   letter-spacing: -1px;
 }
 
-
-/* ========================================
-   RICE SECTION
-   ======================================== */
+/* RICE SECTION */
 
 .rice-start {
   margin-top: 7px;
@@ -401,7 +359,6 @@ body {
   border-top:
     4px solid #9f1919;
 }
-
 
 .rice-row {
   height: 62px;
@@ -415,25 +372,19 @@ body {
     );
 }
 
-
 .rice-row .cn-name {
   font-size: 38px;
 }
-
 
 .rice-row .en-name {
   font-size: 28px;
 }
 
-
 .rice-row .price {
   font-size: 36px;
 }
 
-
-/* ========================================
-   FOOD IMAGE AREA
-   ======================================== */
+/* FOOD STRIP */
 
 .food-strip {
   position: relative;
@@ -453,7 +404,6 @@ body {
       #40100d 100%
     );
 }
-
 
 .food-strip::before {
   content: "";
@@ -480,7 +430,6 @@ body {
       transparent 35%
     );
 }
-
 
 .food-placeholder {
   position: absolute;
@@ -513,8 +462,6 @@ body {
 <div id="menu">
 
 
-<!-- HEADER -->
-
 <div class="header">
 
   <div class="title-cn">
@@ -530,12 +477,8 @@ body {
 </div>
 
 
-<!-- MENU -->
-
 <div class="menu-body">
 
-
-<!-- CHINESE HALF -->
 
 <div class="column left">
 
@@ -673,12 +616,8 @@ body {
 </div>
 
 
-<!-- CENTER -->
-
 <div class="middle-divider"></div>
 
-
-<!-- ENGLISH HALF -->
 
 <div class="column right">
 
@@ -814,8 +753,6 @@ body {
 
 </div>
 
-
-<!-- FOOD STRIP -->
 
 <div class="food-strip">
 

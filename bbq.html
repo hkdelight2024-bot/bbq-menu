@@ -112,3 +112,295 @@
 
   <div class="title">
     港式燒味 &nbsp; | &nbsp; BBQ ROAST MEATS
+  </div>
+
+
+  <div class="content">
+
+    <div class="row">
+      <div class="chinese">
+        明爐燒鴨
+      </div>
+
+      <div class="english">
+        Roast Duck — Whole / Half
+      </div>
+
+      <div class="price">
+        $<span id="duckWhole">39.00</span>
+        /
+        $<span id="duckHalf">20.00</span>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        玫瑰油雞
+      </div>
+
+      <div class="english">
+        Soy Sauce Chicken — Whole / Half
+      </div>
+
+      <div class="price">
+        $<span id="soyChickenWhole">23.00</span>
+        /
+        $<span id="soyChickenHalf">12.00</span>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        脆皮燒肉
+      </div>
+
+      <div class="english">
+        Crispy Roast Pork
+      </div>
+
+      <div class="price">
+        $<span id="crispyPorkKg">41.00</span>/kg
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        蜜汁叉燒
+      </div>
+
+      <div class="english">
+        BBQ Pork
+      </div>
+
+      <div class="price">
+        $<span id="bbqPorkKg">39.00</span>/kg
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        香燒紅腸
+      </div>
+
+      <div class="english">
+        BBQ Sausage
+      </div>
+
+      <div class="price">
+        $<span id="bbqSausageKg">39.00</span>/kg
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        燒味飯
+      </div>
+
+      <div class="english">
+        BBQ &amp; Rice
+      </div>
+
+      <div class="price">
+        $<span id="bbqRice">15.50</span>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        燒味雙拼飯
+      </div>
+
+      <div class="english">
+        Double Mixed BBQ With Rice
+      </div>
+
+      <div class="price">
+        $<span id="doubleRice">17.00</span>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="chinese">
+        燒味三拼飯
+      </div>
+
+      <div class="english">
+        Triple Mixed BBQ With Rice
+      </div>
+
+      <div class="price">
+        $<span id="tripleRice">19.00</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  /*
+    ==========================================
+    PRICE LOADING
+    ==========================================
+
+    Prices are loaded from menu-data.json.
+
+    Prices are also written directly into the
+    HTML above as fallbacks. Therefore, if the
+    JSON request ever fails, the TV will still
+    display a usable menu instead of blank prices.
+  */
+
+  async function loadPrices() {
+
+    try {
+
+      const response = await fetch(
+        "menu-data.json?t=" + Date.now(),
+        {
+          cache: "no-store"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "HTTP error " + response.status
+        );
+      }
+
+      const data = await response.json();
+
+      if (!data.bbq) {
+        throw new Error(
+          "BBQ data missing from menu-data.json"
+        );
+      }
+
+      const bbq = data.bbq;
+
+      Object.keys(bbq).forEach(function(key) {
+
+        const element =
+          document.getElementById(key);
+
+        if (element) {
+          element.textContent = bbq[key];
+        }
+
+      });
+
+      console.log(
+        "Menu prices updated:",
+        new Date()
+      );
+
+    }
+
+    catch (error) {
+
+      /*
+        Do NOT erase the fallback prices.
+        Just keep displaying the existing values.
+      */
+
+      console.log(
+        "Could not update prices:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+    ==========================================
+    10-SECOND BLACK SCREEN TEST
+    ==========================================
+
+    TEST ONLY:
+
+    Menu visible for 10 seconds
+    Black for 10 seconds
+    Menu visible for 10 seconds
+    etc.
+  */
+
+  let menuVisible = true;
+
+  function updateDisplay() {
+
+    if (menuVisible) {
+
+      document.body.classList.remove(
+        "closed"
+      );
+
+    }
+
+    else {
+
+      document.body.classList.add(
+        "closed"
+      );
+
+    }
+
+  }
+
+
+  function toggleDisplay() {
+
+    menuVisible = !menuVisible;
+
+    updateDisplay();
+
+  }
+
+
+  /*
+    Start with menu visible.
+  */
+
+  updateDisplay();
+
+
+  /*
+    Change state every 10 seconds.
+  */
+
+  setInterval(
+    toggleDisplay,
+    10000
+  );
+
+
+  /*
+    ==========================================
+    PRICE REFRESH
+    ==========================================
+
+    Load immediately, then check GitHub
+    for price changes every 5 minutes.
+  */
+
+  loadPrices();
+
+  setInterval(
+    loadPrices,
+    300000
+  );
+
+</script>
+
+</body>
+</html>

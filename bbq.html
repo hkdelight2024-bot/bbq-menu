@@ -34,18 +34,12 @@
         sans-serif;
     }
 
-    /* =========================
-       VIEWPORT / SCALING
-       ========================= */
-
     #viewport {
       position: fixed;
       inset: 0;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       overflow: hidden;
       background: #111;
     }
@@ -66,11 +60,11 @@
       background:
         linear-gradient(
           180deg,
-          #fbf7eb 0%,
-          #f4ecd7 100%
+          #fbf7ec 0%,
+          #f4ead5 100%
         );
 
-      border: 2px solid #9b1c1c;
+      border: 2px solid #8d1414;
     }
 
     /* =========================
@@ -78,64 +72,61 @@
        ========================= */
 
     .header {
-      height: 116px;
+      height: 110px;
 
       display: grid;
-      grid-template-columns: 150px 1fr 1px 1.15fr 90px;
+      grid-template-columns:
+        115px
+        1fr
+        1px
+        1fr
+        85px;
 
       align-items: center;
 
-      padding: 0 32px;
+      padding: 0 30px;
 
       background:
         linear-gradient(
           90deg,
           #721010 0%,
-          #8e1111 45%,
-          #761010 100%
+          #951616 52%,
+          #711010 100%
         );
 
-      color: #f5e3b2;
+      color: #f3deb0;
 
-      border-bottom: 4px solid #c9a156;
+      border-bottom: 4px solid #c59b4c;
     }
 
-    .corner-box {
+    .seal-wrap {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
     }
 
     .seal {
       width: 54px;
-      height: 82px;
-
-      border: 2px solid #d5b46f;
-      border-radius: 12px;
+      height: 78px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      padding: 7px;
+      border: 2px solid #d9b86d;
+      border-radius: 10px;
 
-      color: #f5e3b2;
+      color: #f3deb0;
 
-      font-size: 23px;
-      line-height: 1.05;
+      font-size: 22px;
       font-weight: 800;
+      line-height: 1.05;
 
       text-align: center;
     }
 
     .title-cn {
-      font-family:
-        "Microsoft JhengHei",
-        "PingFang TC",
-        "Noto Sans CJK TC",
-        serif;
-
-      font-size: 56px;
+      font-size: 55px;
       font-weight: 900;
 
       letter-spacing: 5px;
@@ -146,53 +137,57 @@
     }
 
     .header-divider {
-      height: 70px;
-      background: rgba(231, 204, 143, 0.75);
+      height: 66px;
+
+      background: rgba(236, 210, 154, 0.7);
     }
 
     .title-en {
-      font-family: Georgia, "Times New Roman", serif;
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-      font-size: 42px;
+      font-size: 41px;
       font-weight: 700;
 
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
 
       text-align: center;
 
       white-space: nowrap;
     }
 
-    .corner-decoration {
+    .corner {
       position: relative;
 
-      width: 58px;
-      height: 58px;
+      width: 54px;
+      height: 54px;
 
       margin-left: auto;
     }
 
-    .corner-decoration::before,
-    .corner-decoration::after {
+    .corner::before,
+    .corner::after {
       content: "";
 
       position: absolute;
 
-      border-color: #d5b46f;
+      right: 0;
+      top: 0;
+
+      border-color: #d9b86d;
       border-style: solid;
     }
 
-    .corner-decoration::before {
+    .corner::before {
       width: 48px;
       height: 48px;
-
-      right: 0;
-      top: 0;
 
       border-width: 2px 2px 0 0;
     }
 
-    .corner-decoration::after {
+    .corner::after {
       width: 28px;
       height: 28px;
 
@@ -203,75 +198,68 @@
     }
 
     /* =========================
-       MAIN AREA
+       BODY
        ========================= */
 
     .menu-body {
-      height: 528px;
+      height: 522px;
 
       display: grid;
-      grid-template-columns: 1fr 1px 1fr;
+      grid-template-columns:
+        1fr
+        2px
+        1fr;
 
-      padding: 16px 42px 6px 42px;
+      padding: 12px 36px 8px 36px;
     }
 
-    .vertical-divider {
-      background: #9f2b2b;
-      opacity: 0.75;
+    .divider {
+      background: rgba(145, 24, 24, 0.72);
     }
 
     .column {
-      padding: 0 18px;
+      min-width: 0;
     }
 
-    .left-column {
-      padding-left: 5px;
-      padding-right: 28px;
+    .left {
+      padding-right: 26px;
     }
 
-    .right-column {
-      padding-left: 28px;
-      padding-right: 5px;
+    .right {
+      padding-left: 26px;
     }
 
     /* =========================
-       MENU ROWS
+       ROWS
        ========================= */
 
     .row {
-      height: 65px;
+      height: 62px;
 
       display: grid;
-
       align-items: center;
 
-      border-bottom: 1px solid #c9bca1;
+      border-bottom: 1px solid #cbbda3;
     }
 
-    .row-left {
+    .cn-row {
       grid-template-columns:
         minmax(0, 1fr)
-        175px
+        150px
         200px;
     }
 
-    .row-right {
+    .en-row {
       grid-template-columns:
         minmax(0, 1fr)
-        205px;
+        210px;
     }
 
     .cn-name {
-      font-family:
-        "Microsoft JhengHei",
-        "PingFang TC",
-        "Noto Sans CJK TC",
-        serif;
-
       font-size: 34px;
       font-weight: 800;
 
-      color: #151515;
+      color: #171717;
 
       white-space: nowrap;
     }
@@ -280,26 +268,27 @@
       font-size: 23px;
       font-weight: 600;
 
-      color: #282828;
+      color: #272727;
 
       white-space: nowrap;
-
-      text-align: left;
     }
 
-    .en-block {
+    .en-main {
       min-width: 0;
     }
 
     .en-name {
-      font-family: Georgia, "Times New Roman", serif;
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-      font-size: 30px;
+      font-size: 31px;
       font-weight: 700;
 
-      line-height: 1.02;
+      color: #181818;
 
-      color: #191919;
+      line-height: 1.02;
 
       white-space: nowrap;
     }
@@ -307,31 +296,32 @@
     .en-sub {
       margin-top: 2px;
 
-      font-family: Arial, sans-serif;
-
       font-size: 21px;
-      font-weight: 500;
+      font-weight: 600;
 
-      color: #2c2c2c;
+      color: #333;
 
-      line-height: 1;
+      white-space: nowrap;
     }
 
     .price {
       text-align: right;
 
-      color: #a51212;
+      color: #a41010;
 
-      font-family: Georgia, "Times New Roman", serif;
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-      font-size: 36px;
+      font-size: 37px;
       font-weight: 800;
 
       white-space: nowrap;
     }
 
-    .kg {
-      font-size: 25px;
+    .unit {
+      font-size: 24px;
       font-weight: 700;
     }
 
@@ -339,14 +329,22 @@
        RICE SECTION
        ========================= */
 
-    .rice-top {
-      margin-top: 5px;
+    .rice-start {
+      margin-top: 7px;
 
-      border-top: 3px solid #9d1616;
+      border-top: 4px solid #9f1919;
     }
 
     .rice-row {
       height: 62px;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(214, 180, 102, 0.12),
+          rgba(214, 180, 102, 0.25),
+          rgba(214, 180, 102, 0.12)
+        );
     }
 
     .rice-row .cn-name {
@@ -354,51 +352,37 @@
     }
 
     .rice-row .en-name {
-      font-size: 28px;
+      font-size: 29px;
     }
 
     .rice-row .price {
-      font-size: 35px;
+      font-size: 36px;
     }
 
     /* =========================
-       FOOD STRIP
+       BOTTOM STRIP
        ========================= */
 
     .food-strip {
-      height: 124px;
-
       position: relative;
+
+      height: 136px;
 
       overflow: hidden;
 
-      border-top: 4px solid #8f1111;
+      border-top: 4px solid #8e1414;
 
       background:
         linear-gradient(
           90deg,
-          #431313 0%,
-          #7b2017 20%,
-          #9b321e 45%,
-          #7b2017 72%,
-          #431313 100%
+          #3b1511 0%,
+          #642016 18%,
+          #8c3020 36%,
+          #7a2518 58%,
+          #591a14 78%,
+          #35100e 100%
         );
     }
-
-    /*
-      Later, once you upload a food strip image
-      into /images/bbq-strip.jpg, uncomment this:
-
-      background-image:
-        linear-gradient(
-          rgba(0,0,0,0.08),
-          rgba(0,0,0,0.08)
-        ),
-        url("images/bbq-strip.jpg");
-
-      background-size: cover;
-      background-position: center;
-    */
 
     .food-strip::before {
       content: "";
@@ -408,85 +392,63 @@
 
       background:
         radial-gradient(
-          ellipse at 15% 80%,
-          rgba(255, 176, 65, 0.34),
-          transparent 35%
+          ellipse at 14% 88%,
+          rgba(245, 167, 64, 0.40),
+          transparent 32%
         ),
         radial-gradient(
-          ellipse at 50% 65%,
-          rgba(255, 79, 30, 0.28),
-          transparent 35%
+          ellipse at 35% 88%,
+          rgba(202, 65, 28, 0.42),
+          transparent 34%
         ),
         radial-gradient(
-          ellipse at 82% 70%,
-          rgba(255, 194, 86, 0.28),
+          ellipse at 60% 88%,
+          rgba(232, 117, 35, 0.38),
+          transparent 34%
+        ),
+        radial-gradient(
+          ellipse at 84% 88%,
+          rgba(244, 181, 82, 0.34),
           transparent 34%
         );
     }
 
-    .food-label-left,
-    .food-label-right {
+    .strip-copy {
       position: absolute;
-
-      bottom: 13px;
-
-      color: #f8e7c1;
-
       z-index: 2;
+
+      bottom: 15px;
+
+      color: #f6e4bd;
     }
 
-    .food-label-left {
-      left: 34px;
+    .strip-left {
+      left: 32px;
     }
 
-    .food-label-right {
-      right: 34px;
+    .strip-right {
+      right: 32px;
+
       text-align: right;
     }
 
-    .food-cn {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-
-    .food-en {
-      margin-top: 3px;
-
-      font-size: 14px;
-      font-weight: 700;
+    .strip-cn {
+      font-size: 25px;
+      font-weight: 800;
 
       letter-spacing: 2px;
-
-      color: #e1c482;
     }
 
-    /* =========================
-       PHONE PREVIEW
-       ========================= */
+    .strip-en {
+      margin-top: 4px;
 
-    #debug {
-      position: fixed;
+      font-size: 15px;
+      font-weight: 700;
 
-      left: 8px;
-      bottom: 8px;
+      letter-spacing: 2px;
 
-      z-index: 999;
-
-      padding: 5px 8px;
-
-      border-radius: 4px;
-
-      background: rgba(0, 0, 0, 0.65);
-      color: #fff;
-
-      font: 11px Arial, sans-serif;
-
-      pointer-events: none;
-
-      opacity: 0.7;
+      color: #dabb78;
     }
-
   </style>
 </head>
 
@@ -496,13 +458,11 @@
 
   <div id="menu">
 
-    <!-- =====================
-         HEADER
-         ===================== -->
+    <!-- HEADER -->
 
     <div class="header">
 
-      <div class="corner-box">
+      <div class="seal-wrap">
         <div class="seal">
           港<br>式
         </div>
@@ -518,23 +478,20 @@
         BBQ ROAST MEATS
       </div>
 
-      <div class="corner-decoration"></div>
+      <div class="corner"></div>
 
     </div>
 
 
-    <!-- =====================
-         MAIN MENU
-         ===================== -->
+    <!-- MAIN MENU -->
 
     <div class="menu-body">
 
-      <!-- CHINESE COLUMN -->
+      <!-- CHINESE -->
 
-      <div class="column left-column">
+      <div class="column left">
 
-
-        <div class="row row-left">
+        <div class="row cn-row">
 
           <div class="cn-name">
             明爐燒鴨
@@ -553,7 +510,7 @@
         </div>
 
 
-        <div class="row row-left">
+        <div class="row cn-row">
 
           <div class="cn-name">
             玫瑰油雞
@@ -572,7 +529,7 @@
         </div>
 
 
-        <div class="row row-left">
+        <div class="row cn-row">
 
           <div class="cn-name">
             脆皮燒肉
@@ -582,13 +539,13 @@
 
           <div class="price">
             $<span id="crispyPorkKg">41</span>
-            <span class="kg">/kg</span>
+            <span class="unit">/kg</span>
           </div>
 
         </div>
 
 
-        <div class="row row-left">
+        <div class="row cn-row">
 
           <div class="cn-name">
             蜜汁叉燒
@@ -598,13 +555,13 @@
 
           <div class="price">
             $<span id="bbqPorkKg">39</span>
-            <span class="kg">/kg</span>
+            <span class="unit">/kg</span>
           </div>
 
         </div>
 
 
-        <div class="row row-left">
+        <div class="row cn-row">
 
           <div class="cn-name">
             香燒紅腸
@@ -614,13 +571,13 @@
 
           <div class="price">
             $<span id="bbqSausageKg">39</span>
-            <span class="kg">/kg</span>
+            <span class="unit">/kg</span>
           </div>
 
         </div>
 
 
-        <div class="row row-left rice-top rice-row">
+        <div class="row cn-row rice-start rice-row">
 
           <div class="cn-name">
             燒味飯
@@ -635,7 +592,7 @@
         </div>
 
 
-        <div class="row row-left rice-row">
+        <div class="row cn-row rice-row">
 
           <div class="cn-name">
             燒味雙拼飯
@@ -650,7 +607,7 @@
         </div>
 
 
-        <div class="row row-left rice-row">
+        <div class="row cn-row rice-row">
 
           <div class="cn-name">
             燒味三拼飯
@@ -667,19 +624,17 @@
       </div>
 
 
-      <!-- MIDDLE DIVIDER -->
-
-      <div class="vertical-divider"></div>
+      <div class="divider"></div>
 
 
-      <!-- ENGLISH COLUMN -->
+      <!-- ENGLISH -->
 
-      <div class="column right-column">
+      <div class="column right">
 
+        <div class="row en-row">
 
-        <div class="row row-right">
+          <div class="en-main">
 
-          <div class="en-block">
             <div class="en-name">
               Roast Duck
             </div>
@@ -687,6 +642,7 @@
             <div class="en-sub">
               Whole / Half
             </div>
+
           </div>
 
           <div class="price">
@@ -698,9 +654,10 @@
         </div>
 
 
-        <div class="row row-right">
+        <div class="row en-row">
 
-          <div class="en-block">
+          <div class="en-main">
+
             <div class="en-name">
               Soy Sauce Chicken
             </div>
@@ -708,6 +665,7 @@
             <div class="en-sub">
               Whole / Half
             </div>
+
           </div>
 
           <div class="price">
@@ -719,7 +677,7 @@
         </div>
 
 
-        <div class="row row-right">
+        <div class="row en-row">
 
           <div class="en-name">
             Crispy Roast Pork
@@ -727,13 +685,13 @@
 
           <div class="price">
             $<span data-price="crispyPorkKg">41</span>
-            <span class="kg">/kg</span>
+            <span class="unit">/kg</span>
           </div>
 
         </div>
 
 
-        <div class="row row-right">
+        <div class="row en-row">
 
           <div class="en-name">
             BBQ Pork
@@ -741,13 +699,13 @@
 
           <div class="price">
             $<span data-price="bbqPorkKg">39</span>
-            <span class="kg">/kg</span>
+            <span class="unit">/kg</span>
           </div>
 
         </div>
 
 
-        <div class="row row-right">
+        <div class="row en-row">
 
           <div class="en-name">
             BBQ Sausage
@@ -755,13 +713,13 @@
 
           <div class="price">
             $<span data-price="bbqSausageKg">39</span>
-            <span class="kg">/kg</span>
+            <span class="unit">/kg</span>
           </div>
 
         </div>
 
 
-        <div class="row row-right rice-top rice-row">
+        <div class="row en-row rice-start rice-row">
 
           <div class="en-name">
             BBQ &amp; Rice
@@ -774,7 +732,7 @@
         </div>
 
 
-        <div class="row row-right rice-row">
+        <div class="row en-row rice-row">
 
           <div class="en-name">
             Double Mixed BBQ With Rice
@@ -787,7 +745,7 @@
         </div>
 
 
-        <div class="row row-right rice-row">
+        <div class="row en-row rice-row">
 
           <div class="en-name">
             Triple Mixed BBQ With Rice
@@ -804,31 +762,33 @@
     </div>
 
 
-    <!-- =====================
-         BOTTOM FOOD STRIP
-         ===================== -->
+    <!-- BOTTOM STRIP -->
 
     <div class="food-strip">
 
-      <div class="food-label-left">
-        <div class="food-cn">
+      <div class="strip-copy strip-left">
+
+        <div class="strip-cn">
           真材實料 · 每日新鮮
         </div>
 
-        <div class="food-en">
+        <div class="strip-en">
           QUALITY INGREDIENTS · FRESH DAILY
         </div>
+
       </div>
 
 
-      <div class="food-label-right">
-        <div class="food-cn">
+      <div class="strip-copy strip-right">
+
+        <div class="strip-cn">
           香港風味 · 用心製作
         </div>
 
-        <div class="food-en">
-          HONG KONG STYLE
+        <div class="strip-en">
+          HONG KONG STYLE · MADE WITH CARE
         </div>
+
       </div>
 
     </div>
@@ -838,14 +798,11 @@
 </div>
 
 
-<div id="debug"></div>
-
-
 <script>
 
   /*
     ============================================
-    FIT 1366x768 DESIGN TO PHONE / TV
+    FIT THE 1366 × 768 MENU TO THE BROWSER
     ============================================
   */
 
@@ -876,16 +833,6 @@
       "translate(-50%, -50%) scale(" +
       scale +
       ")";
-
-    const debug =
-      document.getElementById("debug");
-
-    debug.textContent =
-      availableWidth +
-      " × " +
-      availableHeight +
-      " | scale " +
-      scale.toFixed(3);
   }
 
 
@@ -901,56 +848,57 @@
   window.addEventListener(
     "orientationchange",
     function() {
+
       setTimeout(
         fitMenu,
         300
       );
+
     }
   );
 
 
   /*
     ============================================
-    PRICE LOADER
+    UPDATE BOTH CHINESE AND ENGLISH PRICES
     ============================================
   */
 
   function setPrice(key, value) {
 
-    /*
-      Update Chinese-side price.
-    */
-
-    const mainElement =
+    const chinesePrice =
       document.getElementById(key);
 
-    if (mainElement) {
-      mainElement.textContent = value;
+    if (chinesePrice) {
+      chinesePrice.textContent = value;
     }
 
 
-    /*
-      Update matching English-side price(s).
-    */
-
-    const matching =
+    const englishPrices =
       document.querySelectorAll(
-        '[data-price="' + key + '"]'
+        '[data-price="' +
+        key +
+        '"]'
       );
 
     for (
       let i = 0;
-      i < matching.length;
+      i < englishPrices.length;
       i++
     ) {
 
-      matching[i].textContent =
+      englishPrices[i].textContent =
         value;
 
     }
-
   }
 
+
+  /*
+    ============================================
+    LOAD menu-data.json
+    ============================================
+  */
 
   async function loadPrices() {
 
@@ -1009,8 +957,9 @@
     catch (error) {
 
       /*
-        Fallback prices remain visible
-        if JSON loading fails.
+        The HTML contains fallback prices,
+        so the menu remains usable even if
+        the JSON request fails.
       */
 
       console.log(
@@ -1027,8 +976,7 @@
 
 
   /*
-    Check for price updates
-    every 5 minutes.
+    Refresh prices every 5 minutes.
   */
 
   setInterval(

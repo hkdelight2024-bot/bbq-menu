@@ -117,7 +117,7 @@ body {
 .title-cn {
   text-align: center;
 
-  font-size: 56px;
+  font-size: 60px;
   font-weight: 900;
 
   letter-spacing: 6px;
@@ -256,21 +256,19 @@ body {
 
 /*
   Chinese half:
-
-  name | descriptor | price
+  larger name column, still enough room for price.
 */
 
 .cn-row {
   grid-template-columns:
-    minmax(190px, 1fr)
-    120px
-    220px;
+    minmax(230px, 1fr)
+    112px
+    218px;
 }
 
 
 /*
   English half:
-
   item | price
 */
 
@@ -281,19 +279,25 @@ body {
 }
 
 
+/* MAIN CHINESE ITEM NAME */
+
 .cn-name {
-  font-size: 33px;
-  font-weight: 800;
+  font-size: 40px;
+  font-weight: 900;
 
   color: #171717;
 
   white-space: nowrap;
+
+  line-height: 1;
 }
 
 
+/* WHOLE / HALF CHINESE SUBTEXT */
+
 .cn-sub {
-  font-size: 21px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
 
   color: #292929;
 
@@ -364,15 +368,12 @@ body {
 
 /* ========================================
    WHOLE / HALF ROWS
-
-   These need more horizontal room because
-   two full prices are displayed together.
    ======================================== */
 
 .cn-row.combo {
   grid-template-columns:
-    minmax(175px, 1fr)
-    110px
+    minmax(220px, 1fr)
+    105px
     245px;
 }
 
@@ -416,7 +417,7 @@ body {
 
 
 .rice-row .cn-name {
-  font-size: 32px;
+  font-size: 38px;
 }
 
 
@@ -432,8 +433,6 @@ body {
 
 /* ========================================
    FOOD IMAGE AREA
-
-   Placeholder for now.
    ======================================== */
 
 .food-strip {
@@ -483,12 +482,6 @@ body {
 }
 
 
-/*
-  This text is deliberately subtle.
-  Eventually this entire area becomes
-  roast-meat photography.
-*/
-
 .food-placeholder {
   position: absolute;
 
@@ -520,9 +513,7 @@ body {
 <div id="menu">
 
 
-<!-- =====================================
-     HEADER
-     ===================================== -->
+<!-- HEADER -->
 
 <div class="header">
 
@@ -539,21 +530,15 @@ body {
 </div>
 
 
-<!-- =====================================
-     MENU
-     ===================================== -->
+<!-- MENU -->
 
 <div class="menu-body">
 
 
-<!-- =====================================
-     CHINESE HALF
-     ===================================== -->
+<!-- CHINESE HALF -->
 
 <div class="column left">
 
-
-  <!-- DUCK -->
 
   <div class="row cn-row combo">
 
@@ -574,8 +559,6 @@ body {
   </div>
 
 
-  <!-- CHICKEN -->
-
   <div class="row cn-row combo">
 
     <div class="cn-name">
@@ -595,8 +578,6 @@ body {
   </div>
 
 
-  <!-- CRISPY PORK -->
-
   <div class="row cn-row">
 
     <div class="cn-name">
@@ -612,8 +593,6 @@ body {
 
   </div>
 
-
-  <!-- BBQ PORK -->
 
   <div class="row cn-row">
 
@@ -631,8 +610,6 @@ body {
   </div>
 
 
-  <!-- SAUSAGE -->
-
   <div class="row cn-row">
 
     <div class="cn-name">
@@ -649,8 +626,6 @@ body {
   </div>
 
 
-  <!-- BBQ RICE -->
-
   <div class="row cn-row rice-start rice-row">
 
     <div class="cn-name">
@@ -666,8 +641,6 @@ body {
   </div>
 
 
-  <!-- DOUBLE -->
-
   <div class="row cn-row rice-row">
 
     <div class="cn-name">
@@ -682,8 +655,6 @@ body {
 
   </div>
 
-
-  <!-- TRIPLE -->
 
   <div class="row cn-row rice-row">
 
@@ -707,14 +678,10 @@ body {
 <div class="middle-divider"></div>
 
 
-<!-- =====================================
-     ENGLISH HALF
-     ===================================== -->
+<!-- ENGLISH HALF -->
 
 <div class="column right">
 
-
-  <!-- DUCK -->
 
   <div class="row en-row combo">
 
@@ -739,8 +706,6 @@ body {
   </div>
 
 
-  <!-- CHICKEN -->
-
   <div class="row en-row combo">
 
     <div class="en-main">
@@ -764,8 +729,6 @@ body {
   </div>
 
 
-  <!-- CRISPY PORK -->
-
   <div class="row en-row">
 
     <div class="en-name">
@@ -779,8 +742,6 @@ body {
 
   </div>
 
-
-  <!-- BBQ PORK -->
 
   <div class="row en-row">
 
@@ -796,8 +757,6 @@ body {
   </div>
 
 
-  <!-- SAUSAGE -->
-
   <div class="row en-row">
 
     <div class="en-name">
@@ -812,8 +771,6 @@ body {
   </div>
 
 
-  <!-- BBQ RICE -->
-
   <div class="row en-row rice-start rice-row">
 
     <div class="en-name">
@@ -827,8 +784,6 @@ body {
   </div>
 
 
-  <!-- DOUBLE -->
-
   <div class="row en-row rice-row">
 
     <div class="en-name">
@@ -841,8 +796,6 @@ body {
 
   </div>
 
-
-  <!-- TRIPLE -->
 
   <div class="row en-row rice-row">
 
@@ -862,9 +815,7 @@ body {
 </div>
 
 
-<!-- =====================================
-     FOOD STRIP
-     ===================================== -->
+<!-- FOOD STRIP -->
 
 <div class="food-strip">
 
@@ -880,10 +831,6 @@ body {
 
 
 <script>
-
-/* ==========================================
-   FIT 1366 × 768 DESIGN TO SCREEN
-   ========================================== */
 
 function fitMenu() {
 
@@ -939,10 +886,6 @@ window.addEventListener(
 );
 
 
-/* ==========================================
-   UPDATE BOTH SIDES
-   ========================================== */
-
 function setPrice(
   key,
   value
@@ -982,10 +925,6 @@ function setPrice(
 
 }
 
-
-/* ==========================================
-   LOAD PRICES
-   ========================================== */
 
 async function loadPrices() {
 
@@ -1042,11 +981,6 @@ async function loadPrices() {
 
   catch (error) {
 
-    /*
-      Fallback prices remain
-      visible if JSON fails.
-    */
-
     console.log(
       "Price loading failed:",
       error
@@ -1059,11 +993,6 @@ async function loadPrices() {
 
 loadPrices();
 
-
-/*
-  Check for updated prices
-  every 5 minutes.
-*/
 
 setInterval(
   loadPrices,

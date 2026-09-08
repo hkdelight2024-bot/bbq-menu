@@ -1,508 +1,626 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
 
-<title>BBQ Menu</title>
+  <title>Hong Kong BBQ Menu</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #000;
-}
+    body {
+      font-family:
+        Arial,
+        "Microsoft JhengHei",
+        "Noto Sans CJK TC",
+        sans-serif;
+    }
 
-/*
-  VIEWPORT
-  The 1366x768 menu is scaled down automatically
-  to fit whatever space the TV browser provides.
-*/
+    #viewport {
+      position: fixed;
+      inset: 0;
 
-#viewport {
-  position: absolute;
-  inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      background: #000;
+      overflow: hidden;
+    }
 
-  overflow: hidden;
-  background: #000;
-}
+    #menu {
+      position: absolute;
 
-#menu {
-  position: absolute;
+      width: 1366px;
+      height: 768px;
 
-  width: 1366px;
-  height: 768px;
+      left: 50%;
+      top: 50%;
 
-  left: 50%;
-  top: 50%;
+      transform-origin: center center;
 
-  transform-origin: center center;
+      background: #f6f0df;
 
-  background: #f7f0df;
+      overflow: hidden;
 
-  font-family:
-    Arial,
-    "Microsoft JhengHei",
-    "Noto Sans CJK TC",
-    sans-serif;
-}
+      border: 0;
+    }
 
+    /* =========================
+       HEADER
+       ========================= */
 
-/* HEADER */
+    .header {
+      height: 96px;
 
-.title {
-  height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      background: #8d1111;
+      color: #fff;
 
-  background: #930000;
-  color: white;
+      border-bottom: 5px solid #c49a45;
+    }
 
-  font-size: 50px;
-  font-weight: 700;
-}
+    .header-cn {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
 
+    .header-divider {
+      margin: 0 24px;
+      font-size: 40px;
+      opacity: 0.65;
+    }
 
-/* MENU AREA */
+    .header-en {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
 
-.content {
-  padding: 14px 40px 20px 40px;
-}
+    /* =========================
+       MAIN MENU AREA
+       ========================= */
 
+    .main {
+      height: 566px;
+      padding: 14px 42px 10px 42px;
+    }
 
-/* EACH MENU ROW */
+    .section-label {
+      height: 38px;
 
-.row {
-  display: grid;
+      display: flex;
+      align-items: center;
 
-  /*
-    Chinese | English | Price
+      color: #8d1111;
 
-    Price column gets a guaranteed 300px.
-  */
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
 
-  grid-template-columns:
-    270px
-    minmax(0, 1fr)
-    300px;
+      border-bottom: 2px solid #cdbf9d;
+    }
 
-  align-items: center;
+    .row {
+      display: grid;
 
-  height: 79px;
+      grid-template-columns:
+        260px
+        minmax(0, 1fr)
+        300px;
 
-  border-bottom: 1px solid #aaa;
-}
+      align-items: center;
 
+      height: 62px;
 
-/* CHINESE */
+      border-bottom: 1px solid #cfc7b6;
+    }
 
-.chinese {
-  font-size: 34px;
-  font-weight: 700;
-  white-space: nowrap;
-}
+    .chinese {
+      font-size: 33px;
+      font-weight: 800;
 
+      color: #1c1c1c;
 
-/* ENGLISH */
+      white-space: nowrap;
+    }
 
-.english {
-  font-size: 31px;
-  font-weight: 700;
+    .english {
+      font-size: 30px;
+      font-weight: 700;
 
-  padding-right: 20px;
+      color: #252525;
 
-  white-space: nowrap;
-}
+      white-space: nowrap;
 
+      padding-right: 20px;
+    }
 
-/* PRICES */
+    .price {
+      text-align: right;
 
-.price {
-  font-size: 39px;
-  font-weight: 700;
+      font-size: 38px;
+      font-weight: 900;
 
-  color: #a00000;
+      color: #a41313;
 
-  text-align: right;
+      white-space: nowrap;
+    }
 
-  white-space: nowrap;
-}
+    .unit {
+      font-size: 26px;
+      font-weight: 700;
+    }
 
+    /* =========================
+       RICE SECTION
+       ========================= */
 
-/*
-  BLACK SCREEN
-*/
+    .rice-section {
+      margin-top: 8px;
 
-body.closed #viewport {
-  display: none;
-}
+      background: #efe2c3;
 
-body.closed {
-  background: #000;
-}
+      border-top: 3px solid #c49a45;
+      border-bottom: 3px solid #c49a45;
+    }
 
-</style>
+    .rice-section .row {
+      height: 62px;
+
+      border-bottom: 1px solid #d6c79f;
+    }
+
+    .rice-section .row:last-child {
+      border-bottom: 0;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    .footer {
+      height: 106px;
+
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
+      background:
+        linear-gradient(
+          90deg,
+          #711010 0%,
+          #8d1111 50%,
+          #711010 100%
+        );
+
+      color: white;
+
+      border-top: 4px solid #c49a45;
+    }
+
+    .footer-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-direction: column;
+
+      text-align: center;
+    }
+
+    .footer-cn {
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .footer-en {
+      margin-top: 4px;
+
+      font-size: 18px;
+      font-weight: 700;
+
+      opacity: 0.92;
+    }
+
+    .footer-middle {
+      border-left: 1px solid rgba(255,255,255,0.25);
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* =========================
+       SMALL DECORATIVE DETAILS
+       ========================= */
+
+    .gold-line {
+      width: 70px;
+      height: 3px;
+
+      margin: 6px auto 0 auto;
+
+      background: #d5ad55;
+    }
+  </style>
 </head>
-
 
 <body>
 
-<div id="viewport">
+  <div id="viewport">
 
-<div id="menu">
+    <div id="menu">
+
+      <header class="header">
+        <div class="header-cn">
+          港式燒味
+        </div>
+
+        <div class="header-divider">
+          |
+        </div>
+
+        <div class="header-en">
+          BBQ ROAST MEATS
+        </div>
+      </header>
 
 
-  <div class="title">
-    港式燒味 &nbsp; | &nbsp; BBQ ROAST MEATS
+      <main class="main">
+
+        <div class="section-label">
+          燒味 · ROAST MEATS
+        </div>
+
+
+        <div class="row">
+
+          <div class="chinese">
+            明爐燒鴨
+          </div>
+
+          <div class="english">
+            Roast Duck — Whole / Half
+          </div>
+
+          <div class="price">
+            $<span id="duckWhole">39.00</span>
+            /
+            $<span id="duckHalf">20.00</span>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="chinese">
+            玫瑰油雞
+          </div>
+
+          <div class="english">
+            Soy Sauce Chicken — Whole / Half
+          </div>
+
+          <div class="price">
+            $<span id="soyChickenWhole">23.00</span>
+            /
+            $<span id="soyChickenHalf">12.00</span>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="chinese">
+            脆皮燒肉
+          </div>
+
+          <div class="english">
+            Crispy Roast Pork
+          </div>
+
+          <div class="price">
+            $<span id="crispyPorkKg">41.00</span>
+            <span class="unit">/kg</span>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="chinese">
+            蜜汁叉燒
+          </div>
+
+          <div class="english">
+            BBQ Pork
+          </div>
+
+          <div class="price">
+            $<span id="bbqPorkKg">39.00</span>
+            <span class="unit">/kg</span>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="chinese">
+            香燒紅腸
+          </div>
+
+          <div class="english">
+            BBQ Sausage
+          </div>
+
+          <div class="price">
+            $<span id="bbqSausageKg">39.00</span>
+            <span class="unit">/kg</span>
+          </div>
+
+        </div>
+
+
+        <div class="rice-section">
+
+          <div class="row">
+
+            <div class="chinese">
+              燒味飯
+            </div>
+
+            <div class="english">
+              BBQ &amp; Rice
+            </div>
+
+            <div class="price">
+              $<span id="bbqRice">15.50</span>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="chinese">
+              燒味雙拼飯
+            </div>
+
+            <div class="english">
+              Double Mixed BBQ With Rice
+            </div>
+
+            <div class="price">
+              $<span id="doubleRice">17.00</span>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="chinese">
+              燒味三拼飯
+            </div>
+
+            <div class="english">
+              Triple Mixed BBQ With Rice
+            </div>
+
+            <div class="price">
+              $<span id="tripleRice">19.00</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+
+      <footer class="footer">
+
+        <div class="footer-block">
+          <div class="footer-cn">
+            每日新鮮
+          </div>
+
+          <div class="gold-line"></div>
+
+          <div class="footer-en">
+            FRESH DAILY
+          </div>
+        </div>
+
+
+        <div class="footer-block footer-middle">
+          <div class="footer-cn">
+            真材實料
+          </div>
+
+          <div class="gold-line"></div>
+
+          <div class="footer-en">
+            QUALITY INGREDIENTS
+          </div>
+        </div>
+
+
+        <div class="footer-block">
+          <div class="footer-cn">
+            港式風味
+          </div>
+
+          <div class="gold-line"></div>
+
+          <div class="footer-en">
+            HONG KONG STYLE
+          </div>
+        </div>
+
+      </footer>
+
+    </div>
+
   </div>
 
 
-  <div class="content">
-
-
-    <div class="row">
-
-      <div class="chinese">
-        明爐燒鴨
-      </div>
-
-      <div class="english">
-        Roast Duck — Whole / Half
-      </div>
-
-      <div class="price">
-        $<span id="duckWhole">39.00</span>
-        /
-        $<span id="duckHalf">20.00</span>
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        玫瑰油雞
-      </div>
-
-      <div class="english">
-        Soy Sauce Chicken — Whole / Half
-      </div>
-
-      <div class="price">
-        $<span id="soyChickenWhole">23.00</span>
-        /
-        $<span id="soyChickenHalf">12.00</span>
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        脆皮燒肉
-      </div>
-
-      <div class="english">
-        Crispy Roast Pork
-      </div>
-
-      <div class="price">
-        $<span id="crispyPorkKg">41.00</span>/kg
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        蜜汁叉燒
-      </div>
-
-      <div class="english">
-        BBQ Pork
-      </div>
-
-      <div class="price">
-        $<span id="bbqPorkKg">39.00</span>/kg
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        香燒紅腸
-      </div>
-
-      <div class="english">
-        BBQ Sausage
-      </div>
-
-      <div class="price">
-        $<span id="bbqSausageKg">39.00</span>/kg
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        燒味飯
-      </div>
-
-      <div class="english">
-        BBQ &amp; Rice
-      </div>
-
-      <div class="price">
-        $<span id="bbqRice">15.50</span>
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        燒味雙拼飯
-      </div>
-
-      <div class="english">
-        Double Mixed BBQ With Rice
-      </div>
-
-      <div class="price">
-        $<span id="doubleRice">17.00</span>
-      </div>
-
-    </div>
-
-
-    <div class="row">
-
-      <div class="chinese">
-        燒味三拼飯
-      </div>
-
-      <div class="english">
-        Triple Mixed BBQ With Rice
-      </div>
-
-      <div class="price">
-        $<span id="tripleRice">19.00</span>
-      </div>
-
-    </div>
-
-
-  </div>
-
-</div>
-
-</div>
-
-
-<script>
-
-/*
-==================================================
-FIT 1366x768 MENU INTO ACTUAL BROWSER WINDOW
-==================================================
-*/
-
-function fitMenu() {
-
-  const menu =
-    document.getElementById("menu");
-
-  const designWidth = 1366;
-  const designHeight = 768;
-
-  const availableWidth =
-    window.innerWidth;
-
-  const availableHeight =
-    window.innerHeight;
-
-  const scaleX =
-    availableWidth / designWidth;
-
-  const scaleY =
-    availableHeight / designHeight;
-
-  /*
-    Use the smaller scale so NOTHING gets cut off.
-  */
-
-  const scale =
-    Math.min(scaleX, scaleY);
-
-  menu.style.transform =
-    "translate(-50%, -50%) scale(" +
-    scale +
-    ")";
-
-}
-
-
-/*
-Run immediately.
-*/
-
-fitMenu();
-
-
-/*
-Run again if TV/browser changes dimensions.
-*/
-
-window.addEventListener(
-  "resize",
-  fitMenu
-);
-
-
-/*
-==================================================
-LOAD PRICES
-==================================================
-*/
-
-async function loadPrices() {
-
-  try {
-
-    const response = await fetch(
-      "menu-data.json?t=" + Date.now(),
-      {
-        cache: "no-store"
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        "HTTP " + response.status
-      );
-    }
-
-    const data =
-      await response.json();
-
-    const bbq =
-      data.bbq;
-
-    if (!bbq) {
-      return;
-    }
-
-
-    Object.keys(bbq).forEach(
-      function(key) {
-
-        const element =
-          document.getElementById(key);
-
-        if (element) {
-
-          element.textContent =
-            bbq[key];
-
-        }
-
-      }
-    );
-
-  }
-
-  catch (error) {
-
+  <script>
     /*
-      Leave fallback HTML prices visible.
+      ============================================
+      FIT THE 1366 × 768 DESIGN TO THE TV BROWSER
+      ============================================
     */
 
-    console.log(
-      "Price update failed:",
-      error
+    function fitMenu() {
+
+      const menu =
+        document.getElementById("menu");
+
+      const designWidth = 1366;
+      const designHeight = 768;
+
+      const availableWidth =
+        window.innerWidth;
+
+      const availableHeight =
+        window.innerHeight;
+
+      const scaleX =
+        availableWidth / designWidth;
+
+      const scaleY =
+        availableHeight / designHeight;
+
+      const scale =
+        Math.min(scaleX, scaleY);
+
+      menu.style.transform =
+        "translate(-50%, -50%) scale(" +
+        scale +
+        ")";
+    }
+
+
+    fitMenu();
+
+
+    window.addEventListener(
+      "resize",
+      fitMenu
     );
 
-  }
 
-}
+    /*
+      ============================================
+      LOAD PRICES FROM menu-data.json
+      ============================================
+    */
 
+    async function loadPrices() {
 
-/*
-Load prices immediately.
-*/
+      try {
 
-loadPrices();
+        const response = await fetch(
+          "menu-data.json?t=" + Date.now(),
+          {
+            cache: "no-store"
+          }
+        );
 
+        if (!response.ok) {
+          throw new Error(
+            "HTTP " + response.status
+          );
+        }
 
-/*
-Check JSON for new prices every 5 minutes.
-*/
+        const data =
+          await response.json();
 
-setInterval(
-  loadPrices,
-  300000
-);
+        if (!data.bbq) {
+          throw new Error(
+            "BBQ data missing"
+          );
+        }
 
-
-/*
-==================================================
-10 SECOND BLACK-SCREEN TEST
-==================================================
-*/
-
-let menuVisible = true;
-
-
-function toggleDisplay() {
-
-  menuVisible =
-    !menuVisible;
-
-  document.body.classList.toggle(
-    "closed",
-    !menuVisible
-  );
-
-}
+        const bbq =
+          data.bbq;
 
 
-/*
-Switch every 10 seconds.
-*/
+        Object.keys(bbq).forEach(
+          function(key) {
 
-setInterval(
-  toggleDisplay,
-  10000
-);
+            const element =
+              document.getElementById(key);
 
-</script>
+            if (element) {
+
+              element.textContent =
+                bbq[key];
+
+            }
+
+          }
+        );
+
+      }
+
+      catch (error) {
+
+        /*
+          If loading fails, the fallback prices
+          already written into the HTML remain visible.
+        */
+
+        console.log(
+          "Price update failed:",
+          error
+        );
+
+      }
+
+    }
+
+
+    loadPrices();
+
+
+    /*
+      Check GitHub for price updates every 5 minutes.
+    */
+
+    setInterval(
+      loadPrices,
+      300000
+    );
+
+  </script>
 
 </body>
 </html>

@@ -125,16 +125,19 @@
 </div>
 
 <script>
+let menuVisible = true;
 
-function updateOpeningState() {
-  const now = new Date();
-  const hour = now.getHours();
-
-  // Menu visible 9:00 AM – 8:59 PM
-  const closed = hour >= 21 || hour < 9;
-
-  document.body.classList.toggle("closed", closed);
+function toggleMenu() {
+  menuVisible = !menuVisible;
+  document.body.classList.toggle("closed", !menuVisible);
 }
+
+// Start with menu visible
+document.body.classList.remove("closed");
+
+// Switch between menu and black every 10 seconds
+setInterval(toggleMenu, 10000);
+</script>
 
 async function loadPrices() {
   try {

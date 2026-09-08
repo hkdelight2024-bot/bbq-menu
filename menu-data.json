@@ -1,0 +1,22 @@
+{
+  "bbq": {
+    "duckWhole": "39.00",
+    "duckHalf": "20.00",
+    "soyChickenWhole": "23.00",
+    "soyChickenHalf": "12.00",
+    "crispyPorkKg": "41.00",
+    "bbqPorkKg": "39.00",
+    "bbqSausageKg": "39.00",
+    "bbqRice": "15.50",
+    "doubleRice": "17.00",
+    "tripleRice": "19.00"
+  },
+  "lunchbox": {
+    "twoDishes": "14.50",
+    "threeDishes": "16.50",
+    "sideSmall": "8.80",
+    "sideLarge": "15.50",
+    "premiumSmall": "9.20",
+    "premiumLarge": "16.00"
+  }
+}

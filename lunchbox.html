@@ -49,7 +49,6 @@ body {
   justify-content: center;
 
   overflow: hidden;
-
   background: #111;
 }
 
@@ -73,8 +72,7 @@ body {
       #f4ead5 100%
     );
 
-  border:
-    2px solid #8d1414;
+  border: 2px solid #8d1414;
 }
 
 
@@ -83,7 +81,7 @@ body {
    ========================= */
 
 .menu-body {
-  height: 643px;
+  height: 600px;
 
   display: grid;
 
@@ -93,8 +91,8 @@ body {
     1fr;
 
   padding:
-    18px 30px
-    12px 30px;
+    16px 30px
+    10px 30px;
 }
 
 .middle-divider {
@@ -103,11 +101,11 @@ body {
 }
 
 .left {
-  padding-right: 28px;
+  padding-right: 26px;
 }
 
 .right {
-  padding-left: 28px;
+  padding-left: 26px;
 }
 
 
@@ -116,13 +114,13 @@ body {
    ========================= */
 
 .panel-header {
-  height: 94px;
+  height: 88px;
 
   display: flex;
   align-items: center;
 
   padding:
-    0 25px;
+    0 22px;
 
   background:
     linear-gradient(
@@ -139,7 +137,7 @@ body {
 }
 
 .panel-header-cn {
-  font-size: 55px;
+  font-size: 52px;
   font-weight: 900;
 
   white-space: nowrap;
@@ -147,17 +145,17 @@ body {
 
 .panel-header-divider {
   width: 2px;
-  height: 52px;
+  height: 48px;
 
   margin:
-    0 22px;
+    0 20px;
 
   background:
     rgba(255,255,255,0.55);
 }
 
 .panel-header-en {
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 900;
 
   line-height: 1;
@@ -168,9 +166,9 @@ body {
 .panel-header-en small {
   display: block;
 
-  margin-top: 6px;
+  margin-top: 5px;
 
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 700;
 }
 
@@ -180,25 +178,25 @@ body {
    ========================= */
 
 .lunch-row {
-  min-height: 113px;
+  min-height: 108px;
 
   display: grid;
 
   grid-template-columns:
     minmax(0,1fr)
-    180px;
+    175px;
 
   align-items: center;
 
   padding:
-    8px 16px;
+    7px 14px;
 
   border-bottom:
     1px solid #cbbda3;
 }
 
 .lunch-cn {
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 900;
 
   line-height: 1.05;
@@ -207,9 +205,9 @@ body {
 }
 
 .lunch-en {
-  margin-top: 7px;
+  margin-top: 6px;
 
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 800;
 
   line-height: 1.05;
@@ -225,7 +223,7 @@ body {
     "Times New Roman",
     serif;
 
-  font-size: 49px;
+  font-size: 47px;
   font-weight: 800;
 
   color: #a41010;
@@ -239,15 +237,15 @@ body {
    ========================= */
 
 .dishes-header {
-  height: 82px;
+  height: 76px;
 
-  margin-top: 18px;
+  margin-top: 14px;
 
   display: flex;
   align-items: center;
 
   padding:
-    0 24px;
+    0 22px;
 
   background:
     linear-gradient(
@@ -261,16 +259,16 @@ body {
 }
 
 .dishes-cn {
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 900;
 
   white-space: nowrap;
 }
 
 .dishes-en {
-  margin-left: 28px;
+  margin-left: 24px;
 
-  font-size: 34px;
+  font-size: 31px;
   font-weight: 900;
 
   line-height: 1;
@@ -283,56 +281,71 @@ body {
 
   margin-top: 5px;
 
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 700;
 }
 
+
+/* =========================
+   SMALL / LARGE PRICE AREA
+   ========================= */
+
 .size-area {
-  height: 120px;
+  height: 126px;
 
   display: grid;
 
   grid-template-columns:
     1fr
-    1px
+    2px
     1fr;
 
-  align-items: center;
+  align-items: stretch;
 
   padding:
-    4px 20px;
+    10px 8px 0 8px;
 }
 
 .size-divider {
-  height: 70px;
+  width: 2px;
+  height: 84px;
+
+  align-self: center;
 
   background:
-    rgba(145,24,24,0.55);
+    rgba(145,24,24,0.50);
 }
 
 .size-box {
   display: grid;
 
   grid-template-columns:
-    auto
-    1fr;
+    110px
+    minmax(0,1fr);
 
   align-items: center;
 
-  column-gap: 15px;
+  padding:
+    0 14px;
+
+  column-gap: 12px;
+}
+
+.size-copy {
+  min-width: 0;
 }
 
 .size-name-cn {
-  font-size: 40px;
+  font-size: 38px;
   font-weight: 900;
 
   line-height: 1;
 }
 
 .size-name-en {
-  margin-top: 5px;
+  margin-top: 6px;
 
-  font-size: 25px;
+  font-size: 24px;
   font-weight: 800;
 }
 
@@ -344,7 +357,7 @@ body {
     "Times New Roman",
     serif;
 
-  font-size: 48px;
+  font-size: 43px;
   font-weight: 800;
 
   color: #a41010;
@@ -358,26 +371,26 @@ body {
    ========================= */
 
 .premium-row {
-  height: 147px;
+  height: 140px;
 
   display: grid;
 
   grid-template-columns:
     minmax(0,1fr)
-    135px
-    135px;
+    132px
+    132px;
 
   align-items: center;
 
   padding:
-    8px 14px;
+    8px 12px;
 
   border-bottom:
     1px solid #cbbda3;
 }
 
 .premium-name-cn {
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 900;
 
   line-height: 1;
@@ -386,7 +399,7 @@ body {
 .premium-name-en {
   margin-top: 8px;
 
-  font-size: 29px;
+  font-size: 27px;
   font-weight: 800;
 
   line-height: 1.05;
@@ -405,7 +418,7 @@ body {
     "Times New Roman",
     serif;
 
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 800;
 
   color: #a41010;
@@ -416,18 +429,18 @@ body {
 .premium-price-label {
   margin-top: 6px;
 
-  font-size: 23px;
+  font-size: 22px;
   font-weight: 800;
 }
 
 
 /* =========================
-   IMAGE STRIP PLACEHOLDER
+   BOTTOM STRIP
    ========================= */
 
 .food-strip {
   width: 100%;
-  height: 125px;
+  height: 168px;
 
   border-top:
     4px solid #8e1414;
@@ -567,7 +580,7 @@ body {
 
   <div class="size-box">
 
-    <div>
+    <div class="size-copy">
 
       <div class="size-name-cn">
         小份
@@ -591,7 +604,7 @@ body {
 
   <div class="size-box">
 
-    <div>
+    <div class="size-copy">
 
       <div class="size-name-cn">
         大份
@@ -782,7 +795,7 @@ body {
 </div>
 
 
-<!-- IMAGE STRIP -->
+<!-- BOTTOM STRIP -->
 
 <div class="food-strip"></div>
 
@@ -848,7 +861,7 @@ window.addEventListener(
 
 
 /* =========================
-   UPDATE PRICES
+   PRICE HELPERS
    ========================= */
 
 function setSinglePrice(
@@ -896,7 +909,7 @@ function setRepeatedPrice(
 
 
 /* =========================
-   LOAD menu-data.json
+   LOAD PRICES
    ========================= */
 
 async function loadPrices() {

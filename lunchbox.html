@@ -35,6 +35,7 @@ body {
     sans-serif;
 }
 
+
 /* ========================================
    1366 × 768 DISPLAY CANVAS
    ======================================== */
@@ -74,8 +75,10 @@ body {
   border: 2px solid #8d1414;
 }
 
+
 /* ========================================
    MAIN MENU AREA
+   643 + 125 = 768
    ======================================== */
 
 .menu-body {
@@ -107,6 +110,7 @@ body {
   min-width: 0;
   padding-left: 20px;
 }
+
 
 /* ========================================
    MAIN RED HEADERS
@@ -181,10 +185,8 @@ body {
   font-weight: 800;
 }
 
-/*
-  Right-side title gets its own sizing
-  so "PREMIUM DISHES" fits cleanly.
-*/
+
+/* Right header slightly tighter */
 
 .right .panel-header {
   padding-left: 18px;
@@ -208,6 +210,7 @@ body {
 .right .panel-header-en small {
   font-size: 25px;
 }
+
 
 /* ========================================
    LUNCH BOX OPTIONS
@@ -277,6 +280,7 @@ body {
   white-space: nowrap;
 }
 
+
 /* ========================================
    DISHES ONLY HEADER
    ======================================== */
@@ -333,6 +337,7 @@ body {
   font-size: 25px;
   font-weight: 800;
 }
+
 
 /* ========================================
    SMALL / LARGE
@@ -415,8 +420,9 @@ body {
   white-space: nowrap;
 }
 
+
 /* ========================================
-   PREMIUM DISH ROWS
+   PREMIUM DISHES
    ======================================== */
 
 .premium-row {
@@ -499,8 +505,10 @@ body {
   line-height: 1;
 }
 
+
 /* ========================================
-   BOTTOM STRIP
+   LUNCH FOOTER IMAGE
+   EXACTLY 125px TO MATCH BBQ PAGE
    ======================================== */
 
 .food-strip {
@@ -514,35 +522,38 @@ body {
   border-top:
     4px solid #8e1414;
 
-  background:
-    linear-gradient(
-      90deg,
-      #55110e,
-      #8b2416,
-      #55110e
-    );
+  background-color:
+    #65110f;
+
+  background-image:
+    url("images/lunch-strip.png");
+
+  background-repeat:
+    no-repeat;
+
+  background-size:
+    cover;
+
+  background-position:
+    center center;
 }
 
 .food-strip::after {
-  content: "HOT BAR · DAILY DISHES";
+  content: "";
 
   position: absolute;
+  inset: 0;
 
-  left: 50%;
-  top: 50%;
+  pointer-events: none;
 
-  transform:
-    translate(-50%, -50%);
-
-  color:
-    rgba(247,224,178,0.72);
-
-  font-size: 22px;
-  font-weight: 900;
-
-  letter-spacing: 5px;
-
-  white-space: nowrap;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(70,10,8,0.08) 0%,
+      transparent 12%,
+      transparent 88%,
+      rgba(70,10,8,0.08) 100%
+    );
 }
 
 </style>
@@ -693,7 +704,7 @@ body {
 </div>
 
 
-<!-- MIDDLE -->
+<!-- CENTER -->
 
 <div class="middle-divider"></div>
 
@@ -850,6 +861,8 @@ body {
 
 </div>
 
+
+<!-- FOOTER IMAGE -->
 
 <div class="food-strip"></div>
 

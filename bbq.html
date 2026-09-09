@@ -46,6 +46,7 @@ body {
   justify-content: center;
 
   overflow: hidden;
+
   background: #111;
 }
 
@@ -343,7 +344,7 @@ body {
 }
 
 
-/* RICE SECTION */
+/* RICE */
 
 .rice-start {
   margin-top: 5px;
@@ -406,26 +407,9 @@ body {
     center 58%;
 }
 
-.food-strip::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(70,10,8,0.12) 0%,
-      transparent 14%,
-      transparent 86%,
-      rgba(70,10,8,0.12) 100%
-    );
-}
-
 </style>
 </head>
+
 
 <body>
 
@@ -455,135 +439,135 @@ body {
 <div class="column left">
 
 
-  <div class="row cn-row combo">
+<div class="row cn-row combo">
 
-    <div class="cn-name">
-      明爐燒鴨
-    </div>
-
-    <div class="cn-sub">
-      整隻 / 半隻
-    </div>
-
-    <div class="price">
-      $<span id="duckWhole">39</span>
-      /
-      $<span id="duckHalf">20</span>
-    </div>
-
+  <div class="cn-name">
+    明爐燒鴨
   </div>
 
-
-  <div class="row cn-row combo">
-
-    <div class="cn-name">
-      玫瑰油雞
-    </div>
-
-    <div class="cn-sub">
-      整隻 / 半隻
-    </div>
-
-    <div class="price">
-      $<span id="soyChickenWhole">23</span>
-      /
-      $<span id="soyChickenHalf">12</span>
-    </div>
-
+  <div class="cn-sub">
+    整隻 / 半隻
   </div>
 
-
-  <div class="row cn-row">
-
-    <div class="cn-name">
-      脆皮燒肉
-    </div>
-
-    <div></div>
-
-    <div class="price">
-      $<span id="crispyPorkKg">41</span>
-      <span class="unit">/kg</span>
-    </div>
-
+  <div class="price">
+    $<span id="duckWhole">39</span>
+    /
+    $<span id="duckHalf">20</span>
   </div>
 
+</div>
 
-  <div class="row cn-row">
 
-    <div class="cn-name">
-      蜜汁叉燒
-    </div>
+<div class="row cn-row combo">
 
-    <div></div>
-
-    <div class="price">
-      $<span id="bbqPorkKg">39</span>
-      <span class="unit">/kg</span>
-    </div>
-
+  <div class="cn-name">
+    玫瑰油雞
   </div>
 
-
-  <div class="row cn-row">
-
-    <div class="cn-name">
-      香燒紅腸
-    </div>
-
-    <div></div>
-
-    <div class="price">
-      $<span id="bbqSausageKg">39</span>
-      <span class="unit">/kg</span>
-    </div>
-
+  <div class="cn-sub">
+    整隻 / 半隻
   </div>
 
-
-  <div class="row cn-row rice-start rice-row">
-
-    <div class="cn-name">
-      燒味飯
-    </div>
-
-    <div></div>
-
-    <div class="price">
-      $<span id="bbqRice">15.50</span>
-    </div>
-
+  <div class="price">
+    $<span id="soyChickenWhole">23</span>
+    /
+    $<span id="soyChickenHalf">12</span>
   </div>
 
+</div>
 
-  <div class="row cn-row rice-row">
 
-    <div class="cn-name">
-      燒味雙拼飯
-    </div>
+<div class="row cn-row">
 
-    <div></div>
-
-    <div class="price">
-      $<span id="doubleRice">17</span>
-    </div>
-
+  <div class="cn-name">
+    脆皮燒肉
   </div>
 
+  <div></div>
 
-  <div class="row cn-row rice-row">
-
-    <div class="cn-name">
-      燒味三拼飯
-    </div>
-
-    <div></div>
-
-    <div class="price">
-      $<span id="tripleRice">19</span>
-    </div>
-
+  <div class="price">
+    $<span id="crispyPorkKg">41</span>
+    <span class="unit">/kg</span>
   </div>
+
+</div>
+
+
+<div class="row cn-row">
+
+  <div class="cn-name">
+    蜜汁叉燒
+  </div>
+
+  <div></div>
+
+  <div class="price">
+    $<span id="bbqPorkKg">39</span>
+    <span class="unit">/kg</span>
+  </div>
+
+</div>
+
+
+<div class="row cn-row">
+
+  <div class="cn-name">
+    香燒紅腸
+  </div>
+
+  <div></div>
+
+  <div class="price">
+    $<span id="bbqSausageKg">39</span>
+    <span class="unit">/kg</span>
+  </div>
+
+</div>
+
+
+<div class="row cn-row rice-start rice-row">
+
+  <div class="cn-name">
+    燒味飯
+  </div>
+
+  <div></div>
+
+  <div class="price">
+    $<span id="bbqRice">15.50</span>
+  </div>
+
+</div>
+
+
+<div class="row cn-row rice-row">
+
+  <div class="cn-name">
+    燒味雙拼飯
+  </div>
+
+  <div></div>
+
+  <div class="price">
+    $<span id="doubleRice">17</span>
+  </div>
+
+</div>
+
+
+<div class="row cn-row rice-row">
+
+  <div class="cn-name">
+    燒味三拼飯
+  </div>
+
+  <div></div>
+
+  <div class="price">
+    $<span id="tripleRice">19</span>
+  </div>
+
+</div>
 
 
 </div>
@@ -595,131 +579,131 @@ body {
 <div class="column right">
 
 
-  <div class="row en-row combo">
+<div class="row en-row combo">
 
-    <div class="en-main">
-
-      <div class="en-name">
-        Roast Duck
-      </div>
-
-      <div class="en-sub">
-        Whole / Half
-      </div>
-
-    </div>
-
-    <div class="price">
-      $<span data-price="duckWhole">39</span>
-      /
-      $<span data-price="duckHalf">20</span>
-    </div>
-
-  </div>
-
-
-  <div class="row en-row combo">
-
-    <div class="en-main">
-
-      <div class="en-name">
-        Soy Sauce Chicken
-      </div>
-
-      <div class="en-sub">
-        Whole / Half
-      </div>
-
-    </div>
-
-    <div class="price">
-      $<span data-price="soyChickenWhole">23</span>
-      /
-      $<span data-price="soyChickenHalf">12</span>
-    </div>
-
-  </div>
-
-
-  <div class="row en-row">
+  <div class="en-main">
 
     <div class="en-name">
-      Crispy Roast Pork
+      Roast Duck
     </div>
 
-    <div class="price">
-      $<span data-price="crispyPorkKg">41</span>
-      <span class="unit">/kg</span>
+    <div class="en-sub">
+      Whole / Half
     </div>
 
   </div>
 
+  <div class="price">
+    $<span data-price="duckWhole">39</span>
+    /
+    $<span data-price="duckHalf">20</span>
+  </div>
 
-  <div class="row en-row">
+</div>
+
+
+<div class="row en-row combo">
+
+  <div class="en-main">
 
     <div class="en-name">
-      BBQ Pork
+      Soy Sauce Chicken
     </div>
 
-    <div class="price">
-      $<span data-price="bbqPorkKg">39</span>
-      <span class="unit">/kg</span>
-    </div>
-
-  </div>
-
-
-  <div class="row en-row">
-
-    <div class="en-name">
-      BBQ Sausage
-    </div>
-
-    <div class="price">
-      $<span data-price="bbqSausageKg">39</span>
-      <span class="unit">/kg</span>
+    <div class="en-sub">
+      Whole / Half
     </div>
 
   </div>
 
-
-  <div class="row en-row rice-start rice-row">
-
-    <div class="en-name">
-      BBQ &amp; Rice
-    </div>
-
-    <div class="price">
-      $<span data-price="bbqRice">15.50</span>
-    </div>
-
+  <div class="price">
+    $<span data-price="soyChickenWhole">23</span>
+    /
+    $<span data-price="soyChickenHalf">12</span>
   </div>
 
+</div>
 
-  <div class="row en-row rice-row">
 
-    <div class="en-name">
-      Double Mixed BBQ With Rice
-    </div>
+<div class="row en-row">
 
-    <div class="price">
-      $<span data-price="doubleRice">17</span>
-    </div>
-
+  <div class="en-name">
+    Crispy Roast Pork
   </div>
 
-
-  <div class="row en-row rice-row">
-
-    <div class="en-name">
-      Triple Mixed BBQ With Rice
-    </div>
-
-    <div class="price">
-      $<span data-price="tripleRice">19</span>
-    </div>
-
+  <div class="price">
+    $<span data-price="crispyPorkKg">41</span>
+    <span class="unit">/kg</span>
   </div>
+
+</div>
+
+
+<div class="row en-row">
+
+  <div class="en-name">
+    BBQ Pork
+  </div>
+
+  <div class="price">
+    $<span data-price="bbqPorkKg">39</span>
+    <span class="unit">/kg</span>
+  </div>
+
+</div>
+
+
+<div class="row en-row">
+
+  <div class="en-name">
+    BBQ Sausage
+  </div>
+
+  <div class="price">
+    $<span data-price="bbqSausageKg">39</span>
+    <span class="unit">/kg</span>
+  </div>
+
+</div>
+
+
+<div class="row en-row rice-start rice-row">
+
+  <div class="en-name">
+    BBQ &amp; Rice
+  </div>
+
+  <div class="price">
+    $<span data-price="bbqRice">15.50</span>
+  </div>
+
+</div>
+
+
+<div class="row en-row rice-row">
+
+  <div class="en-name">
+    Double Mixed BBQ With Rice
+  </div>
+
+  <div class="price">
+    $<span data-price="doubleRice">17</span>
+  </div>
+
+</div>
+
+
+<div class="row en-row rice-row">
+
+  <div class="en-name">
+    Triple Mixed BBQ With Rice
+  </div>
+
+  <div class="price">
+    $<span data-price="tripleRice">19</span>
+  </div>
+
+</div>
 
 
 </div>
@@ -741,25 +725,17 @@ function fitMenu() {
   const menu =
     document.getElementById("menu");
 
-  const designWidth = 1366;
-  const designHeight = 768;
-
-  const scaleX =
-    window.innerWidth / designWidth;
-
-  const scaleY =
-    window.innerHeight / designHeight;
-
   const scale =
     Math.min(
-      scaleX,
-      scaleY
+      window.innerWidth / 1366,
+      window.innerHeight / 768
     );
 
   menu.style.transform =
     "translate(-50%, -50%) scale(" +
     scale +
     ")";
+
 }
 
 fitMenu();
@@ -769,20 +745,11 @@ window.addEventListener(
   fitMenu
 );
 
-window.addEventListener(
-  "orientationchange",
-  function() {
 
-    setTimeout(
-      fitMenu,
-      300
-    );
-
-  }
-);
-
-
-function formatPrice(key, value) {
+function formatPrice(
+  key,
+  value
+) {
 
   const number =
     Number(value);
@@ -804,10 +771,14 @@ function formatPrice(key, value) {
   }
 
   return number.toFixed(2);
+
 }
 
 
-function setPrice(key, value) {
+function setPrice(
+  key,
+  value
+) {
 
   const formatted =
     formatPrice(
@@ -815,10 +786,12 @@ function setPrice(key, value) {
       value
     );
 
+
   const chinese =
     document.getElementById(
       key
     );
+
 
   if (chinese) {
 
@@ -836,16 +809,14 @@ function setPrice(key, value) {
     );
 
 
-  for (
-    let i = 0;
-    i < english.length;
-    i++
-  ) {
+  english.forEach(
+    function(element) {
 
-    english[i].textContent =
-      formatted;
+      element.textContent =
+        formatted;
 
-  }
+    }
+  );
 
 }
 
@@ -859,33 +830,13 @@ async function loadPrices() {
         "menu-data.json?t=" +
         Date.now(),
         {
-          cache:
-            "no-store"
+          cache: "no-store"
         }
       );
 
 
-    if (!response.ok) {
-
-      throw new Error(
-        "HTTP " +
-        response.status
-      );
-
-    }
-
-
     const data =
       await response.json();
-
-
-    if (!data.bbq) {
-
-      throw new Error(
-        "BBQ data missing"
-      );
-
-    }
 
 
     Object.keys(
@@ -906,8 +857,7 @@ async function loadPrices() {
   catch (error) {
 
     console.log(
-      "Price loading failed:",
-      error
+      "Using cached/default prices."
     );
 
   }
@@ -917,16 +867,13 @@ async function loadPrices() {
 
 loadPrices();
 
-
 setInterval(
   loadPrices,
   300000
 );
 
 
-/* ========================================
-   LOAD LATEST SHARED SCREENSAVER SCRIPT
-   ======================================== */
+/* LOAD SHARED SCREENSAVER */
 
 const sharedScript =
   document.createElement(
@@ -941,8 +888,39 @@ document.body.appendChild(
   sharedScript
 );
 
-</script>
 
+/* REGISTER OFFLINE SERVICE WORKER */
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    function() {
+
+      navigator
+        .serviceWorker
+        .register(
+          "service-worker.js"
+        )
+        .catch(
+          function(error) {
+
+            console.log(
+              "Service worker registration failed:",
+              error
+            );
+
+          }
+        );
+
+    }
+  );
+
+}
+
+</script>
 
 </body>
 </html>

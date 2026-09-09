@@ -1,37 +1,50 @@
-const CACHE_NAME =
-  "hk-delight-menu-v2";
+/* =========================================================
+   HK DELIGHT OFFLINE CACHE
+   ========================================================= */
 
+const CACHE_NAME =
+  "hk-delight-menu-v3";
+
+
+/*
+  These are the files we want available
+  immediately after installation.
+
+  Promo images beyond curry.jpg are learned
+  automatically when promo.html requests them.
+*/
 
 const CORE_FILES = [
 
   "./bbq.html",
-
   "./lunchbox.html",
-
   "./promo.html",
 
   "./shared.css",
-
   "./shared.js",
 
   "./display-config.json",
-
   "./menu-data.json",
-
   "./promo-list.js",
 
   "./images/bbq-strip.png",
-
   "./images/lunch-strip.png",
-
   "./images/curry.jpg"
 
 ];
 
 
-
 /* =========================================================
-   REMOVE CACHE-BUST QUERY PARAMETERS
+   NORMALISE CACHE KEY
+
+   Example:
+
+   shared.js?t=123
+   shared.js?t=456
+
+   both become:
+
+   shared.js
    ========================================================= */
 
 function getCacheKey(
@@ -57,7 +70,6 @@ function getCacheKey(
   );
 
 }
-
 
 
 /* =========================================================
@@ -101,7 +113,7 @@ self.addEventListener(
 
                   await cache.put(
                     CORE_FILES[i],
-                    response
+                    response.clone()
                   );
 
                 }
@@ -111,9 +123,8 @@ self.addEventListener(
               catch (error) {
 
                 /*
-                  One missing optional asset
-                  should not prevent the
-                  service worker installing.
+                  One missing file should not
+                  break service worker install.
                 */
 
               }
@@ -132,9 +143,9 @@ self.addEventListener(
 );
 
 
-
 /* =========================================================
    ACTIVATE
+   Remove old cache versions.
    ========================================================= */
 
 self.addEventListener(
@@ -185,9 +196,15 @@ self.addEventListener(
 );
 
 
-
 /* =========================================================
-   NETWORK FIRST / CACHE FALLBACK
+   FETCH
+
+   NETWORK FIRST:
+   - online -> newest GitHub file
+   - successful result -> update cache
+   - offline -> cached last-known-good file
+
+   Applies automatically to new promo images too.
    ========================================================= */
 
 self.addEventListener(
@@ -199,8 +216,7 @@ self.addEventListener(
 
 
     if (
-      request.method !==
-      "GET"
+      request.method !== "GET"
     ) {
 
       return;
@@ -213,6 +229,10 @@ self.addEventListener(
         request.url
       );
 
+
+    /*
+      Only handle our own GitHub Pages site.
+    */
 
     if (
       url.origin !==
@@ -293,6 +313,11 @@ self.addEventListener(
           }
 
 
+          /*
+            Navigation fallback:
+            completely black page.
+          */
+
           if (
             request.mode ===
             "navigate"
@@ -303,16 +328,16 @@ self.addEventListener(
               <!DOCTYPE html>
               <html>
               <head>
-              <meta charset="UTF-8">
-              <style>
-              html,
-              body {
-                width:100%;
-                height:100%;
-                margin:0;
-                background:#000;
-              }
-              </style>
+                <meta charset="UTF-8">
+                <style>
+                  html,
+                  body {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                    background: #000;
+                  }
+                </style>
               </head>
               <body></body>
               </html>

@@ -11,11 +11,11 @@ const DISPLAY_CONFIG = {
     21:00 -> 09:00
   */
 
-  blackFromHour: 15,
-  blackFromMinute: 15,
+  blackFromHour: 21,
+  blackFromMinute: 00,
 
-  blackUntilHour: 15,
-  blackUntilMinute: 20,
+  blackUntilHour: 09,
+  blackUntilMinute: 00,
 
   /*
     Check every 10 seconds.

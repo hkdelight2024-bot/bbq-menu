@@ -21,12 +21,13 @@
 <style>
 
 * {
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
-
 
 html,
 body {
+
   width: 100%;
   height: 100%;
 
@@ -36,19 +37,8 @@ body {
   overflow: hidden;
 
   background: #000;
+
 }
-
-
-body {
-  font-family:
-    Arial,
-    sans-serif;
-}
-
-
-/* ========================================
-   FULL SCREEN PROMOTION CANVAS
-   ======================================== */
 
 #viewport {
 
@@ -64,14 +54,6 @@ body {
   background: #000;
 
 }
-
-
-/* ========================================
-   TWO IMAGE LAYERS
-
-   We alternate between them so the next
-   image can load before the transition.
-   ======================================== */
 
 .promo-image {
 
@@ -95,20 +77,11 @@ body {
 
 }
 
-
 .promo-image.active {
 
   opacity: 1;
 
 }
-
-
-/* ========================================
-   FALLBACK MESSAGE
-
-   Normally never seen because curry.jpg
-   currently exists.
-   ======================================== */
 
 #fallback {
 
@@ -121,11 +94,11 @@ body {
   align-items: center;
   justify-content: center;
 
-  padding: 50px;
-
-  text-align: center;
-
   color: #ddd;
+
+  font-family:
+    Arial,
+    sans-serif;
 
   font-size: 30px;
 
@@ -143,43 +116,40 @@ body {
 
 <div id="viewport">
 
+<img
+  id="promoA"
+  class="promo-image active"
+  alt=""
+>
 
-  <img
-    id="promoA"
-    class="promo-image active"
-    alt=""
-  >
+<img
+  id="promoB"
+  class="promo-image"
+  alt=""
+>
 
-
-  <img
-    id="promoB"
-    class="promo-image"
-    alt=""
-  >
-
-
-  <div id="fallback">
-    Promotions unavailable
-  </div>
-
+<div id="fallback">
+Promotions unavailable
+</div>
 
 </div>
 
 
-
 <script>
-
-/* ========================================
-   STATE
-   ======================================== */
 
 let promoImages = [];
 
 let currentIndex = 0;
 
-let frontImage = null;
+let frontImage =
+  document.getElementById(
+    "promoA"
+  );
 
-let backImage = null;
+let backImage =
+  document.getElementById(
+    "promoB"
+  );
 
 let slideTimer = null;
 
@@ -188,13 +158,6 @@ let rosterTimer = null;
 let currentConfig = null;
 
 
-
-/* ========================================
-   CHECK WHETHER AN IMAGE EXISTS
-
-   Missing placeholder images simply
-   return false and are skipped.
-   ======================================== */
 
 function imageExists(url) {
 
@@ -221,11 +184,6 @@ function imageExists(url) {
         };
 
 
-      /*
-        Cache bust so recently uploaded
-        GitHub images are detected.
-      */
-
       image.src =
         url +
         "?t=" +
@@ -238,15 +196,11 @@ function imageExists(url) {
 
 
 
-/* ========================================
-   BUILD VALID PROMOTION LIST
-   ======================================== */
-
 async function buildValidImageList(
   imageList
 ) {
 
-  const validImages = [];
+  const valid = [];
 
 
   for (
@@ -255,20 +209,16 @@ async function buildValidImageList(
     i++
   ) {
 
-    const url =
-      imageList[i];
-
-
     const exists =
       await imageExists(
-        url
+        imageList[i]
       );
 
 
     if (exists) {
 
-      validImages.push(
-        url
+      valid.push(
+        imageList[i]
       );
 
     }
@@ -276,39 +226,29 @@ async function buildValidImageList(
   }
 
 
-  return validImages;
+  return valid;
 
 }
 
 
-
-/* ========================================
-   PRELOAD PROMOTIONS
-   ======================================== */
 
 function preloadImages() {
 
-  for (
-    let i = 0;
-    i < promoImages.length;
-    i++
-  ) {
+  promoImages.forEach(
+    function(url) {
 
-    const preload =
-      new Image();
+      const image =
+        new Image();
 
-    preload.src =
-      promoImages[i];
+      image.src =
+        url;
 
-  }
+    }
+  );
 
 }
 
 
-
-/* ========================================
-   DISPLAY FIRST IMAGE
-   ======================================== */
 
 function showFirstImage() {
 
@@ -325,12 +265,6 @@ function showFirstImage() {
     fallback.style.display =
       "flex";
 
-    frontImage.style.display =
-      "none";
-
-    backImage.style.display =
-      "none";
-
     return;
 
   }
@@ -338,13 +272,6 @@ function showFirstImage() {
 
   fallback.style.display =
     "none";
-
-
-  frontImage.style.display =
-    "block";
-
-  backImage.style.display =
-    "block";
 
 
   currentIndex = 0;
@@ -367,17 +294,7 @@ function showFirstImage() {
 
 
 
-/* ========================================
-   NEXT PROMOTION
-   ======================================== */
-
 function nextPromotion() {
-
-
-  /*
-    No need to rotate if only one
-    valid image currently exists.
-  */
 
   if (
     promoImages.length <= 1
@@ -437,12 +354,7 @@ function nextPromotion() {
 
 
 
-/* ========================================
-   START / RESTART SLIDE TIMER
-   ======================================== */
-
 function restartSlideTimer() {
-
 
   if (slideTimer) {
 
@@ -473,14 +385,9 @@ function restartSlideTimer() {
 
 
 
-/* ========================================
-   APPLY NEW ROSTER
-   ======================================== */
-
 async function applyRoster(
   config
 ) {
-
 
   if (
     !config ||
@@ -494,35 +401,23 @@ async function applyRoster(
   }
 
 
-  const validImages =
+  const valid =
     await buildValidImageList(
       config.images
     );
 
 
-  /*
-    Compare current roster with new roster.
-  */
-
-  const oldRoster =
-    JSON.stringify(
-      promoImages
-    );
-
-
-  const newRoster =
-    JSON.stringify(
-      validImages
-    );
+  const changed =
+    JSON.stringify(valid)
+    !==
+    JSON.stringify(promoImages);
 
 
   currentConfig =
     config;
 
 
-  if (
-    oldRoster === newRoster
-  ) {
+  if (!changed) {
 
     return;
 
@@ -530,14 +425,12 @@ async function applyRoster(
 
 
   promoImages =
-    validImages;
+    valid;
 
 
   preloadImages();
 
-
   showFirstImage();
-
 
   restartSlideTimer();
 
@@ -545,26 +438,17 @@ async function applyRoster(
 
 
 
-/* ========================================
-   LOAD LATEST promo-list.js
-
-   The file is loaded dynamically with a
-   timestamp so GitHub/browser caching
-   doesn't leave the TV on an old roster.
-   ======================================== */
-
 function loadPromoRoster() {
 
-
-  const oldScript =
+  const previous =
     document.getElementById(
       "promoRosterScript"
     );
 
 
-  if (oldScript) {
+  if (previous) {
 
-    oldScript.remove();
+    previous.remove();
 
   }
 
@@ -603,27 +487,17 @@ function loadPromoRoster() {
       );
 
 
-      /*
-        Schedule future roster refreshes
-        after the first successful load.
-      */
-
       if (!rosterTimer) {
-
-
-        const refreshMs =
-          PROMO_CONFIG
-            .rosterRefreshMs
-          ||
-          300000;
-
 
         rosterTimer =
           setInterval(
 
             loadPromoRoster,
 
-            refreshMs
+            PROMO_CONFIG
+              .rosterRefreshMs
+            ||
+            300000
 
           );
 
@@ -639,36 +513,11 @@ function loadPromoRoster() {
 }
 
 
-
-/* ========================================
-   INITIALISE
-   ======================================== */
-
-frontImage =
-  document.getElementById(
-    "promoA"
-  );
-
-
-backImage =
-  document.getElementById(
-    "promoB"
-  );
-
-
 loadPromoRoster();
 
-</script>
 
 
-
-<!-- =====================================
-     SHARED 9PM -> 9AM SCREENSAVER
-
-     Same file used by all menu TVs.
-     ===================================== -->
-
-<script>
+/* SHARED SCREENSAVER */
 
 const sharedScript =
   document.createElement(
@@ -685,8 +534,40 @@ document.body.appendChild(
   sharedScript
 );
 
-</script>
 
+
+/* OFFLINE SERVICE WORKER */
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    function() {
+
+      navigator
+        .serviceWorker
+        .register(
+          "service-worker.js"
+        )
+        .catch(
+          function(error) {
+
+            console.log(
+              "Service worker failed:",
+              error
+            );
+
+          }
+        );
+
+    }
+  );
+
+}
+
+</script>
 
 </body>
 

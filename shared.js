@@ -4,10 +4,9 @@
 
 
 /* ---------------------------------------------------------
-   SAFE DEFAULTS
+   SAFE FALLBACK CONFIG
 
-   These are only used before display-config.json loads
-   or if it has never successfully loaded.
+   Used until display-config.json successfully loads.
    --------------------------------------------------------- */
 
 let DISPLAY_CONFIG = {
@@ -36,11 +35,9 @@ let DISPLAY_CONFIG = {
 };
 
 
-
 let configTimer = null;
 
 let clockTimer = null;
-
 
 
 /* =========================================================
@@ -63,14 +60,13 @@ function validNumber(
 }
 
 
-
 function validateConfig(
-  incoming
+  config
 ) {
 
   if (
-    !incoming ||
-    typeof incoming !== "object"
+    !config ||
+    typeof config !== "object"
   ) {
 
     return false;
@@ -79,8 +75,8 @@ function validateConfig(
 
 
   if (
-    typeof incoming.timeZone
-    !== "string"
+    typeof config.timeZone !==
+    "string"
   ) {
 
     return false;
@@ -90,7 +86,7 @@ function validateConfig(
 
   if (
     !validNumber(
-      incoming.blackFromHour,
+      config.blackFromHour,
       0,
       23
     )
@@ -103,7 +99,7 @@ function validateConfig(
 
   if (
     !validNumber(
-      incoming.blackFromMinute,
+      config.blackFromMinute,
       0,
       59
     )
@@ -116,7 +112,7 @@ function validateConfig(
 
   if (
     !validNumber(
-      incoming.blackUntilHour,
+      config.blackUntilHour,
       0,
       23
     )
@@ -129,7 +125,7 @@ function validateConfig(
 
   if (
     !validNumber(
-      incoming.blackUntilMinute,
+      config.blackUntilMinute,
       0,
       59
     )
@@ -145,9 +141,8 @@ function validateConfig(
 }
 
 
-
 /* =========================================================
-   GET SYDNEY / CONFIGURED LOCAL TIME
+   GET DISPLAY TIME
    ========================================================= */
 
 function getDisplayTime() {
@@ -177,7 +172,6 @@ function getDisplayTime() {
 
 
     let hour = 0;
-
     let minute = 0;
 
 
@@ -223,8 +217,8 @@ function getDisplayTime() {
   catch (error) {
 
     /*
-      Very old browser fallback:
-      use the device's local clock.
+      Fallback for a very old TV browser.
+      Uses the TV's local clock.
     */
 
     const now =
@@ -244,9 +238,8 @@ function getDisplayTime() {
 }
 
 
-
 /* =========================================================
-   DETERMINE WHETHER SCREEN SHOULD BE BLACK
+   SHOULD SCREEN BE BLACK?
    ========================================================= */
 
 function shouldScreenBeBlack() {
@@ -270,13 +263,11 @@ function shouldScreenBeBlack() {
     DISPLAY_CONFIG.blackUntilMinute;
 
 
-
   /*
+    Same-day window.
+
     Example:
-
     14:00 -> 16:00
-
-    same-day window
   */
 
   if (
@@ -292,13 +283,11 @@ function shouldScreenBeBlack() {
   }
 
 
-
   /*
+    Overnight window.
+
     Example:
-
     21:00 -> 09:00
-
-    crosses midnight
   */
 
   if (
@@ -314,10 +303,8 @@ function shouldScreenBeBlack() {
   }
 
 
-
   /*
-    Same start and finish means
-    screensaver is disabled.
+    Same start/end = disabled.
   */
 
   return false;
@@ -325,24 +312,18 @@ function shouldScreenBeBlack() {
 }
 
 
-
 /* =========================================================
-   APPLY SCREENSAVER STATE
+   APPLY SCREENSAVER
    ========================================================= */
 
 function updateScreensaver() {
 
-  const black =
-    shouldScreenBeBlack();
-
-
   document.body.classList.toggle(
     "screensaver-active",
-    black
+    shouldScreenBeBlack()
   );
 
 }
-
 
 
 /* =========================================================
@@ -367,29 +348,28 @@ function restartClockTimer() {
     setInterval(
       updateScreensaver,
       DISPLAY_CONFIG.timeCheckMs ||
-        10000
+      10000
     );
 
 }
 
 
-
 /* =========================================================
-   APPLY NEW CONFIG
+   APPLY CONFIG
    ========================================================= */
 
 function applyConfig(
-  incoming
+  config
 ) {
 
   if (
     !validateConfig(
-      incoming
+      config
     )
   ) {
 
     console.log(
-      "Invalid display-config.json; keeping previous config."
+      "Invalid display config. Keeping last-known config."
     );
 
     return;
@@ -400,32 +380,26 @@ function applyConfig(
   DISPLAY_CONFIG = {
 
     timeZone:
-      incoming.timeZone,
-
+      config.timeZone,
 
     blackFromHour:
-      incoming.blackFromHour,
-
+      config.blackFromHour,
 
     blackFromMinute:
-      incoming.blackFromMinute,
-
+      config.blackFromMinute,
 
     blackUntilHour:
-      incoming.blackUntilHour,
-
+      config.blackUntilHour,
 
     blackUntilMinute:
-      incoming.blackUntilMinute,
-
+      config.blackUntilMinute,
 
     configRefreshMs:
-      incoming.configRefreshMs ||
+      config.configRefreshMs ||
       60000,
 
-
     timeCheckMs:
-      incoming.timeCheckMs ||
+      config.timeCheckMs ||
       10000
 
   };
@@ -436,14 +410,13 @@ function applyConfig(
 }
 
 
-
 /* =========================================================
-   LOAD LATEST CONFIG
+   LOAD CONFIG
 
-   Timestamp defeats normal browser/CDN caching.
+   The timestamp prevents normal browser/CDN caching.
 
-   If offline, the service worker returns the
-   last successfully cached version instead.
+   When offline, the service worker returns the
+   last successfully cached display-config.json.
    ========================================================= */
 
 async function loadDisplayConfig() {
@@ -486,18 +459,17 @@ async function loadDisplayConfig() {
   catch (error) {
 
     /*
-      Keep using whatever config is already
-      loaded if internet disappears.
+      Keep using whatever configuration
+      is already running.
     */
 
     console.log(
-      "Display config unavailable; using last-known config."
+      "Display config unavailable. Using last-known config."
     );
 
   }
 
 }
-
 
 
 /* =========================================================
@@ -518,12 +490,6 @@ function startConfigRefresh() {
   }
 
 
-  /*
-    Use 60 seconds as the stable polling
-    interval. The JSON can change its own
-    timeCheckMs independently.
-  */
-
   configTimer =
     setInterval(
       loadDisplayConfig,
@@ -533,17 +499,16 @@ function startConfigRefresh() {
 }
 
 
-
 /* =========================================================
-   REGISTER SERVICE WORKER
+   SERVICE WORKER
    ========================================================= */
 
 function registerOfflineSupport() {
 
   if (
     !(
-      "serviceWorker"
-      in navigator
+      "serviceWorker" in
+      navigator
     )
   ) {
 
@@ -571,12 +536,11 @@ function registerOfflineSupport() {
 }
 
 
-
 /* =========================================================
    START
    ========================================================= */
 
-updateScreensaver();
+restartClockTimer();
 
 startConfigRefresh();
 

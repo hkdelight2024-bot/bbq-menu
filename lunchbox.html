@@ -37,7 +37,7 @@ body {
 
 
 /* =========================
-   VIEWPORT
+   FIXED TV CANVAS
    ========================= */
 
 #viewport {
@@ -81,7 +81,7 @@ body {
    ========================= */
 
 .menu-body {
-  height: 600px;
+  height: 558px;
 
   display: grid;
 
@@ -91,8 +91,8 @@ body {
     1fr;
 
   padding:
-    16px 30px
-    10px 30px;
+    12px 22px
+    4px 22px;
 }
 
 .middle-divider {
@@ -101,26 +101,28 @@ body {
 }
 
 .left {
-  padding-right: 26px;
+  min-width: 0;
+  padding-right: 20px;
 }
 
 .right {
-  padding-left: 26px;
+  min-width: 0;
+  padding-left: 20px;
 }
 
 
 /* =========================
-   PANEL HEADERS
+   RED HEADERS
    ========================= */
 
 .panel-header {
-  height: 88px;
+  height: 94px;
 
   display: flex;
   align-items: center;
 
   padding:
-    0 22px;
+    0 20px;
 
   background:
     linear-gradient(
@@ -137,25 +139,9 @@ body {
 }
 
 .panel-header-cn {
-  font-size: 52px;
-  font-weight: 900;
+  flex-shrink: 0;
 
-  white-space: nowrap;
-}
-
-.panel-header-divider {
-  width: 2px;
-  height: 48px;
-
-  margin:
-    0 20px;
-
-  background:
-    rgba(255,255,255,0.55);
-}
-
-.panel-header-en {
-  font-size: 36px;
+  font-size: 61px;
   font-weight: 900;
 
   line-height: 1;
@@ -163,56 +149,88 @@ body {
   white-space: nowrap;
 }
 
+.panel-header-divider {
+  flex-shrink: 0;
+
+  width: 2px;
+  height: 58px;
+
+  margin:
+    0 18px;
+
+  background:
+    rgba(255,255,255,0.60);
+}
+
+.panel-header-en {
+  min-width: 0;
+
+  font-size: 43px;
+  font-weight: 900;
+
+  line-height: 0.92;
+
+  white-space: nowrap;
+}
+
 .panel-header-en small {
   display: block;
 
-  margin-top: 5px;
+  margin-top: 8px;
 
-  font-size: 21px;
-  font-weight: 700;
+  font-size: 25px;
+  font-weight: 800;
 }
 
 
 /* =========================
-   LUNCH BOX ROWS
+   LUNCH BOX
    ========================= */
 
 .lunch-row {
-  min-height: 108px;
+  height: 108px;
 
   display: grid;
 
   grid-template-columns:
     minmax(0,1fr)
-    175px;
+    168px;
 
   align-items: center;
 
   padding:
-    7px 14px;
+    4px 10px;
 
   border-bottom:
     1px solid #cbbda3;
 }
 
+.lunch-copy {
+  min-width: 0;
+}
+
 .lunch-cn {
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 900;
 
-  line-height: 1.05;
+  line-height: 1;
 
   white-space: nowrap;
+
+  letter-spacing: -1px;
 }
 
 .lunch-en {
-  margin-top: 6px;
+  margin-top: 8px;
 
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 31px;
+  font-weight: 900;
 
-  line-height: 1.05;
+  line-height: 1;
 
   white-space: nowrap;
+
+  letter-spacing: -0.5px;
 }
 
 .price {
@@ -223,8 +241,10 @@ body {
     "Times New Roman",
     serif;
 
-  font-size: 47px;
+  font-size: 49px;
   font-weight: 800;
+
+  line-height: 1;
 
   color: #a41010;
 
@@ -233,19 +253,19 @@ body {
 
 
 /* =========================
-   DISHES ONLY
+   DISHES ONLY HEADER
    ========================= */
 
 .dishes-header {
-  height: 76px;
+  height: 82px;
 
-  margin-top: 14px;
+  margin-top: 8px;
 
   display: flex;
   align-items: center;
 
   padding:
-    0 22px;
+    0 20px;
 
   background:
     linear-gradient(
@@ -259,16 +279,9 @@ body {
 }
 
 .dishes-cn {
-  font-size: 48px;
-  font-weight: 900;
+  flex-shrink: 0;
 
-  white-space: nowrap;
-}
-
-.dishes-en {
-  margin-left: 24px;
-
-  font-size: 31px;
+  font-size: 56px;
   font-weight: 900;
 
   line-height: 1;
@@ -276,22 +289,33 @@ body {
   white-space: nowrap;
 }
 
+.dishes-en {
+  margin-left: 24px;
+
+  font-size: 38px;
+  font-weight: 900;
+
+  line-height: 0.9;
+
+  white-space: nowrap;
+}
+
 .dishes-en small {
   display: block;
 
-  margin-top: 5px;
+  margin-top: 8px;
 
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 23px;
+  font-weight: 800;
 }
 
 
 /* =========================
-   SMALL / LARGE PRICE AREA
+   SMALL / LARGE
    ========================= */
 
 .size-area {
-  height: 126px;
+  height: 116px;
 
   display: grid;
 
@@ -300,56 +324,55 @@ body {
     2px
     1fr;
 
-  align-items: stretch;
+  align-items: center;
 
-  padding:
-    10px 8px 0 8px;
+  padding-top: 3px;
 }
 
 .size-divider {
   width: 2px;
-  height: 84px;
-
-  align-self: center;
+  height: 78px;
 
   background:
     rgba(145,24,24,0.50);
 }
 
 .size-box {
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns:
-    110px
+    92px
     minmax(0,1fr);
 
   align-items: center;
 
+  column-gap: 5px;
+
   padding:
-    0 14px;
-
-  column-gap: 12px;
-}
-
-.size-copy {
-  min-width: 0;
+    0 10px;
 }
 
 .size-name-cn {
-  font-size: 38px;
+  font-size: 42px;
   font-weight: 900;
 
   line-height: 1;
 }
 
 .size-name-en {
-  margin-top: 6px;
+  margin-top: 7px;
 
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 27px;
+  font-weight: 900;
+
+  line-height: 1;
 }
 
 .size-price {
+  min-width: 0;
+
   text-align: right;
 
   font-family:
@@ -357,8 +380,10 @@ body {
     "Times New Roman",
     serif;
 
-  font-size: 43px;
+  font-size: 42px;
   font-weight: 800;
+
+  line-height: 1;
 
   color: #a41010;
 
@@ -367,42 +392,55 @@ body {
 
 
 /* =========================
-   PREMIUM DISHES
+   PREMIUM DISH ROWS
    ========================= */
 
 .premium-row {
-  height: 140px;
+  height: 144px;
 
   display: grid;
 
   grid-template-columns:
     minmax(0,1fr)
-    132px
-    132px;
+    128px
+    136px;
 
   align-items: center;
 
   padding:
-    8px 12px;
+    5px 5px;
 
   border-bottom:
     1px solid #cbbda3;
 }
 
+.premium-copy {
+  min-width: 0;
+
+  padding-left: 8px;
+  padding-right: 6px;
+}
+
 .premium-name-cn {
-  font-size: 40px;
+  font-size: 44px;
   font-weight: 900;
 
   line-height: 1;
+
+  white-space: nowrap;
 }
 
 .premium-name-en {
-  margin-top: 8px;
+  margin-top: 9px;
 
-  font-size: 27px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 900;
 
-  line-height: 1.05;
+  line-height: 1.02;
+}
+
+.premium-name-en.single {
+  white-space: nowrap;
 }
 
 .premium-price {
@@ -418,8 +456,10 @@ body {
     "Times New Roman",
     serif;
 
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 800;
+
+  line-height: 1;
 
   color: #a41010;
 
@@ -427,10 +467,12 @@ body {
 }
 
 .premium-price-label {
-  margin-top: 6px;
+  margin-top: 10px;
 
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 25px;
+  font-weight: 900;
+
+  line-height: 1;
 }
 
 
@@ -439,8 +481,10 @@ body {
    ========================= */
 
 .food-strip {
+  position: relative;
+
   width: 100%;
-  height: 168px;
+  height: 210px;
 
   border-top:
     4px solid #8e1414;
@@ -452,8 +496,6 @@ body {
       #8b2416,
       #55110e
     );
-
-  position: relative;
 }
 
 .food-strip::after {
@@ -465,15 +507,15 @@ body {
   top: 50%;
 
   transform:
-    translate(-50%,-50%);
+    translate(-50%, -50%);
 
   color:
-    rgba(247,224,178,0.70);
+    rgba(247,224,178,0.72);
 
-  font-size: 19px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 900;
 
-  letter-spacing: 4px;
+  letter-spacing: 5px;
 }
 
 </style>
@@ -490,9 +532,7 @@ body {
 <div class="menu-body">
 
 
-<!-- =========================
-     LEFT PANEL
-     ========================= -->
+<!-- LEFT -->
 
 <div class="left">
 
@@ -518,7 +558,7 @@ body {
 
 <div class="lunch-row">
 
-  <div>
+  <div class="lunch-copy">
 
     <div class="lunch-cn">
       任選兩款小菜 + 白飯
@@ -539,7 +579,7 @@ body {
 
 <div class="lunch-row">
 
-  <div>
+  <div class="lunch-copy">
 
     <div class="lunch-cn">
       任選三款小菜 + 白飯
@@ -580,7 +620,7 @@ body {
 
   <div class="size-box">
 
-    <div class="size-copy">
+    <div>
 
       <div class="size-name-cn">
         小份
@@ -604,7 +644,7 @@ body {
 
   <div class="size-box">
 
-    <div class="size-copy">
+    <div>
 
       <div class="size-name-cn">
         大份
@@ -625,18 +665,15 @@ body {
 
 </div>
 
-
 </div>
 
 
-<!-- CENTER DIVIDER -->
+<!-- CENTER -->
 
 <div class="middle-divider"></div>
 
 
-<!-- =========================
-     RIGHT PANEL
-     ========================= -->
+<!-- RIGHT -->
 
 <div class="right">
 
@@ -662,13 +699,13 @@ body {
 
 <div class="premium-row">
 
-  <div>
+  <div class="premium-copy">
 
     <div class="premium-name-cn">
       牛腩
     </div>
 
-    <div class="premium-name-en">
+    <div class="premium-name-en single">
       Beef Brisket
     </div>
 
@@ -705,13 +742,13 @@ body {
 
 <div class="premium-row">
 
-  <div>
+  <div class="premium-copy">
 
     <div class="premium-name-cn">
       椒鹽排骨
     </div>
 
-    <div class="premium-name-en">
+    <div class="premium-name-en single">
       Salt &amp; Pepper Pork Ribs
     </div>
 
@@ -748,7 +785,7 @@ body {
 
 <div class="premium-row">
 
-  <div>
+  <div class="premium-copy">
 
     <div class="premium-name-cn">
       花生炆腩肉
@@ -795,8 +832,6 @@ body {
 </div>
 
 
-<!-- BOTTOM STRIP -->
-
 <div class="food-strip"></div>
 
 
@@ -806,10 +841,7 @@ body {
 
 <script>
 
-
-/* =========================
-   FIT TO SCREEN
-   ========================= */
+/* FIT 1366 × 768 */
 
 function fitMenu() {
 
@@ -826,10 +858,7 @@ function fitMenu() {
     window.innerHeight / designHeight;
 
   const scale =
-    Math.min(
-      scaleX,
-      scaleY
-    );
+    Math.min(scaleX, scaleY);
 
   menu.style.transform =
     "translate(-50%, -50%) scale(" +
@@ -837,15 +866,12 @@ function fitMenu() {
     ")";
 }
 
-
 fitMenu();
-
 
 window.addEventListener(
   "resize",
   fitMenu
 );
-
 
 window.addEventListener(
   "orientationchange",
@@ -860,38 +886,26 @@ window.addEventListener(
 );
 
 
-/* =========================
-   PRICE HELPERS
-   ========================= */
+/* PRICE HELPERS */
 
-function setSinglePrice(
-  id,
-  value
-) {
+function setSinglePrice(id, value) {
 
   const element =
     document.getElementById(id);
 
   if (element) {
-
     element.textContent =
       Number(value).toFixed(2);
-
   }
 
 }
 
 
-function setRepeatedPrice(
-  key,
-  value
-) {
+function setRepeatedPrice(key, value) {
 
   const elements =
     document.querySelectorAll(
-      '[data-price="' +
-      key +
-      '"]'
+      '[data-price="' + key + '"]'
     );
 
   for (
@@ -908,9 +922,7 @@ function setRepeatedPrice(
 }
 
 
-/* =========================
-   LOAD PRICES
-   ========================= */
+/* LOAD PRICES */
 
 async function loadPrices() {
 
@@ -925,33 +937,23 @@ async function loadPrices() {
         }
       );
 
-
     if (!response.ok) {
-
       throw new Error(
-        "HTTP " +
-        response.status
+        "HTTP " + response.status
       );
-
     }
-
 
     const data =
       await response.json();
 
-
     if (!data.lunchbox) {
-
       throw new Error(
         "Lunchbox data missing"
       );
-
     }
-
 
     const lunch =
       data.lunchbox;
-
 
     setSinglePrice(
       "twoDishes",
@@ -996,15 +998,12 @@ async function loadPrices() {
 
 }
 
-
 loadPrices();
-
 
 setInterval(
   loadPrices,
   300000
 );
-
 
 </script>
 

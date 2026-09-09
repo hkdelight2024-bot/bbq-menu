@@ -2,12 +2,12 @@ const DISPLAY_CONFIG = {
   timeZone: "Australia/Sydney",
 
   // Black screen starts at 9:00 PM
-  blackFromHour: 21,
-  blackFromMinute: 0,
+  blackFromHour: 14,
+  blackFromMinute: 26,
 
   // Menu returns at 9:00 AM
-  blackUntilHour: 9,
-  blackUntilMinute: 0,
+  blackUntilHour: 14,
+  blackUntilMinute: 27,
 
   // Recheck every 30 seconds
   checkIntervalMs: 30000

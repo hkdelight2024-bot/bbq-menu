@@ -1,16 +1,27 @@
 const DISPLAY_CONFIG = {
-  timeZone: "Australia/Sydney",
 
-  // Black screen starts at 9:00 PM
+  timeZone:
+    "Australia/Sydney",
+
+  /*
+    TEST:
+    black from 14:25 until 14:40
+
+    Later restore to:
+    21:00 -> 09:00
+  */
+
   blackFromHour: 14,
-  blackFromMinute: 35,
+  blackFromMinute: 40,
 
-  // Menu returns at 9:00 AM
   blackUntilHour: 14,
-  blackUntilMinute: 40,
+  blackUntilMinute: 45,
 
-  // Recheck every 30 seconds
-  checkIntervalMs: 30000
+  /*
+    Check every 10 seconds.
+  */
+
+  checkIntervalMs: 10000
 };
 
 
@@ -74,8 +85,8 @@ function getSydneyTimeParts() {
 
 
   return {
-    hour,
-    minute
+    hour: hour,
+    minute: minute
   };
 }
 
@@ -91,55 +102,80 @@ function updateScreensaver() {
     now.minute;
 
 
-  const blackFromMinutes =
+  const startMinutes =
     DISPLAY_CONFIG.blackFromHour * 60 +
     DISPLAY_CONFIG.blackFromMinute;
 
 
-  const blackUntilMinutes =
+  const endMinutes =
     DISPLAY_CONFIG.blackUntilHour * 60 +
     DISPLAY_CONFIG.blackUntilMinute;
 
 
+  let shouldBeBlack = false;
+
+
   /*
-    This handles schedules that cross midnight.
+    Same-day window.
 
     Example:
-    black from 21:00
-    until 09:00
+    14:25 -> 14:40
   */
 
-  let shouldBeBlack;
-
-
   if (
-    blackFromMinutes >
-    blackUntilMinutes
+    startMinutes <
+    endMinutes
   ) {
 
     shouldBeBlack =
-      currentMinutes >=
-        blackFromMinutes
-      ||
-      currentMinutes <
-        blackUntilMinutes;
+      currentMinutes >= startMinutes &&
+      currentMinutes < endMinutes;
 
   }
 
-  else {
+
+  /*
+    Overnight window.
+
+    Example:
+    21:00 -> 09:00
+  */
+
+  else if (
+    startMinutes >
+    endMinutes
+  ) {
 
     shouldBeBlack =
-      currentMinutes >=
-        blackFromMinutes
-      &&
-      currentMinutes <
-        blackUntilMinutes;
+      currentMinutes >= startMinutes ||
+      currentMinutes < endMinutes;
+
+  }
+
+
+  /*
+    Same start/end means disabled rather
+    than blacking out for 24 hours.
+  */
+
+  else {
+
+    shouldBeBlack = false;
 
   }
 
 
   document.body.classList.toggle(
     "screensaver-active",
+    shouldBeBlack
+  );
+
+
+  console.log(
+    "Sydney:",
+    now.hour + ":" +
+    String(now.minute).padStart(2, "0"),
+    "Screensaver:",
     shouldBeBlack
   );
 

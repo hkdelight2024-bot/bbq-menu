@@ -186,7 +186,7 @@ body {
 }
 
 
-/* Right header slightly tighter */
+/* RIGHT HEADER */
 
 .right .panel-header {
   padding-left: 18px;
@@ -508,7 +508,9 @@ body {
 
 /* ========================================
    LUNCH FOOTER IMAGE
-   EXACTLY 125px TO MATCH BBQ PAGE
+
+   Footer remains exactly 125px high.
+   Image shifted UP 22px inside frame.
    ======================================== */
 
 .food-strip {
@@ -522,8 +524,7 @@ body {
   border-top:
     4px solid #8e1414;
 
-  background-color:
-    #65110f;
+  background-color: #65110f;
 
   background-image:
     url("images/lunch-strip.png");
@@ -535,7 +536,7 @@ body {
     cover;
 
   background-position:
-    center center;
+    center calc(50% - 22px);
 }
 
 .food-strip::after {
@@ -570,7 +571,9 @@ body {
 <div class="menu-body">
 
 
-<!-- LEFT SIDE -->
+<!-- =====================================
+     LEFT SIDE
+     ===================================== -->
 
 <div class="left">
 
@@ -655,6 +658,7 @@ body {
 
 <div class="size-area">
 
+
   <div class="size-box">
 
     <div class="size-copy">
@@ -699,17 +703,23 @@ body {
 
   </div>
 
-</div>
 
 </div>
 
 
-<!-- CENTER -->
+</div>
+
+
+<!-- =====================================
+     CENTER DIVIDER
+     ===================================== -->
 
 <div class="middle-divider"></div>
 
 
-<!-- RIGHT SIDE -->
+<!-- =====================================
+     RIGHT SIDE
+     ===================================== -->
 
 <div class="right">
 
@@ -733,6 +743,8 @@ body {
 </div>
 
 
+<!-- BEEF BRISKET -->
+
 <div class="premium-row">
 
   <div class="premium-copy">
@@ -747,6 +759,7 @@ body {
 
   </div>
 
+
   <div class="premium-price">
 
     <div class="premium-price-value">
@@ -758,6 +771,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="premium-price">
 
@@ -773,6 +787,8 @@ body {
 
 </div>
 
+
+<!-- SALT & PEPPER PORK RIBS -->
 
 <div class="premium-row">
 
@@ -788,6 +804,7 @@ body {
 
   </div>
 
+
   <div class="premium-price">
 
     <div class="premium-price-value">
@@ -799,6 +816,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="premium-price">
 
@@ -814,6 +832,8 @@ body {
 
 </div>
 
+
+<!-- BRAISED PORK BELLY -->
 
 <div class="premium-row">
 
@@ -830,6 +850,7 @@ body {
 
   </div>
 
+
   <div class="premium-price">
 
     <div class="premium-price-value">
@@ -841,6 +862,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="premium-price">
 
@@ -862,7 +884,9 @@ body {
 </div>
 
 
-<!-- FOOTER IMAGE -->
+<!-- =====================================
+     FOOTER IMAGE
+     ===================================== -->
 
 <div class="food-strip"></div>
 
@@ -872,6 +896,11 @@ body {
 
 
 <script>
+
+
+/* ========================================
+   FIT 1366 × 768 TO AVAILABLE SCREEN
+   ======================================== */
 
 function fitMenu() {
 
@@ -899,12 +928,15 @@ function fitMenu() {
     ")";
 }
 
+
 fitMenu();
+
 
 window.addEventListener(
   "resize",
   fitMenu
 );
+
 
 window.addEventListener(
   "orientationchange",
@@ -918,6 +950,10 @@ window.addEventListener(
   }
 );
 
+
+/* ========================================
+   PRICE HELPERS
+   ======================================== */
 
 function setSinglePrice(
   id,
@@ -963,6 +999,10 @@ function setRepeatedPrice(
 }
 
 
+/* ========================================
+   LOAD PRICES
+   ======================================== */
+
 async function loadPrices() {
 
   try {
@@ -976,6 +1016,7 @@ async function loadPrices() {
         }
       );
 
+
     if (!response.ok) {
 
       throw new Error(
@@ -985,8 +1026,10 @@ async function loadPrices() {
 
     }
 
+
     const data =
       await response.json();
+
 
     if (!data.lunchbox) {
 
@@ -996,8 +1039,10 @@ async function loadPrices() {
 
     }
 
+
     const lunch =
       data.lunchbox;
+
 
     setSinglePrice(
       "twoDishes",
@@ -1042,12 +1087,15 @@ async function loadPrices() {
 
 }
 
+
 loadPrices();
+
 
 setInterval(
   loadPrices,
   300000
 );
+
 
 </script>
 

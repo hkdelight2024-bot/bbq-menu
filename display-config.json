@@ -5,7 +5,7 @@
   "blackFromMinute": 0,
 
   "blackUntilHour": 9,
-  "blackUntilMinute": 00,
+  "blackUntilMinute": 0,
 
   "configRefreshMs": 60000,
   "timeCheckMs": 10000

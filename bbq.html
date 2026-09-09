@@ -73,9 +73,7 @@ body {
 }
 
 
-/* ========================================
-   HEADER
-   ======================================== */
+/* HEADER */
 
 .header {
   height: 108px;
@@ -103,7 +101,8 @@ body {
 
   color: #f3deb0;
 
-  border-bottom: 4px solid #c59b4c;
+  border-bottom:
+    4px solid #c59b4c;
 }
 
 .title-cn {
@@ -121,7 +120,7 @@ body {
   height: 64px;
 
   background:
-    rgba(236, 210, 154, 0.72);
+    rgba(236,210,154,0.72);
 }
 
 .title-en {
@@ -151,23 +150,26 @@ body {
   width: 36px;
   height: 36px;
 
-  border-top: 3px solid #d9b86d;
+  border-top:
+    3px solid #d9b86d;
 }
 
 .header::before {
   left: 26px;
-  border-left: 3px solid #d9b86d;
+
+  border-left:
+    3px solid #d9b86d;
 }
 
 .header::after {
   right: 26px;
-  border-right: 3px solid #d9b86d;
+
+  border-right:
+    3px solid #d9b86d;
 }
 
 
-/* ========================================
-   MENU BODY
-   ======================================== */
+/* MENU BODY */
 
 .menu-body {
   height: 535px;
@@ -175,9 +177,9 @@ body {
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1fr)
+    minmax(0,1fr)
     2px
-    minmax(0, 1fr);
+    minmax(0,1fr);
 
   padding:
     8px 34px
@@ -186,7 +188,7 @@ body {
 
 .middle-divider {
   background:
-    rgba(145, 24, 24, 0.72);
+    rgba(145,24,24,0.72);
 }
 
 .column {
@@ -202,9 +204,7 @@ body {
 }
 
 
-/* ========================================
-   ROWS
-   ======================================== */
+/* ROWS */
 
 .row {
   height: 64px;
@@ -220,21 +220,19 @@ body {
 
 .cn-row {
   grid-template-columns:
-    minmax(225px, 1fr)
+    minmax(225px,1fr)
     140px
     205px;
 }
 
 .en-row {
   grid-template-columns:
-    minmax(0, 1fr)
+    minmax(0,1fr)
     195px;
 }
 
 
-/* ========================================
-   CHINESE
-   ======================================== */
+/* CHINESE */
 
 .cn-name {
   font-size: 45px;
@@ -261,9 +259,7 @@ body {
 }
 
 
-/* ========================================
-   ENGLISH
-   ======================================== */
+/* ENGLISH */
 
 .en-main {
   min-width: 0;
@@ -299,9 +295,7 @@ body {
 }
 
 
-/* ========================================
-   PRICES
-   ======================================== */
+/* PRICES */
 
 .price {
   text-align: right;
@@ -327,32 +321,29 @@ body {
 }
 
 
-/* ========================================
-   WHOLE / HALF
-   ======================================== */
+/* WHOLE / HALF */
 
 .cn-row.combo {
   grid-template-columns:
-    minmax(205px, 1fr)
+    minmax(205px,1fr)
     140px
     220px;
 }
 
 .en-row.combo {
   grid-template-columns:
-    minmax(0, 1fr)
+    minmax(0,1fr)
     220px;
 }
 
 .combo .price {
   font-size: 38px;
+
   letter-spacing: -1px;
 }
 
 
-/* ========================================
-   RICE SECTION
-   ======================================== */
+/* RICE SECTION */
 
 .rice-start {
   margin-top: 5px;
@@ -386,10 +377,7 @@ body {
 }
 
 
-/* ========================================
-   FOOD STRIP
-   125px
-   ======================================== */
+/* FOOD STRIP */
 
 .food-strip {
   position: relative;
@@ -402,7 +390,8 @@ body {
   border-top:
     4px solid #8e1414;
 
-  background-color: #45100d;
+  background-color:
+    #45100d;
 
   background-image:
     url("images/bbq-strip.png");
@@ -445,8 +434,6 @@ body {
 <div id="menu">
 
 
-<!-- HEADER -->
-
 <div class="header">
 
   <div class="title-cn">
@@ -462,12 +449,8 @@ body {
 </div>
 
 
-<!-- MENU -->
-
 <div class="menu-body">
 
-
-<!-- CHINESE -->
 
 <div class="column left">
 
@@ -608,8 +591,6 @@ body {
 
 <div class="middle-divider"></div>
 
-
-<!-- ENGLISH -->
 
 <div class="column right">
 
@@ -770,7 +751,10 @@ function fitMenu() {
     window.innerHeight / designHeight;
 
   const scale =
-    Math.min(scaleX, scaleY);
+    Math.min(
+      scaleX,
+      scaleY
+    );
 
   menu.style.transform =
     "translate(-50%, -50%) scale(" +
@@ -778,15 +762,12 @@ function fitMenu() {
     ")";
 }
 
-
 fitMenu();
-
 
 window.addEventListener(
   "resize",
   fitMenu
 );
-
 
 window.addEventListener(
   "orientationchange",
@@ -806,12 +787,20 @@ function formatPrice(key, value) {
   const number =
     Number(value);
 
-  if (Number.isNaN(number)) {
+  if (
+    Number.isNaN(number)
+  ) {
+
     return value;
+
   }
 
-  if (Number.isInteger(number)) {
+  if (
+    Number.isInteger(number)
+  ) {
+
     return String(number);
+
   }
 
   return number.toFixed(2);
@@ -821,15 +810,23 @@ function formatPrice(key, value) {
 function setPrice(key, value) {
 
   const formatted =
-    formatPrice(key, value);
+    formatPrice(
+      key,
+      value
+    );
 
   const chinese =
-    document.getElementById(key);
+    document.getElementById(
+      key
+    );
 
   if (chinese) {
+
     chinese.textContent =
       formatted;
+
   }
+
 
   const english =
     document.querySelectorAll(
@@ -837,6 +834,7 @@ function setPrice(key, value) {
       key +
       '"]'
     );
+
 
   for (
     let i = 0;
@@ -861,9 +859,11 @@ async function loadPrices() {
         "menu-data.json?t=" +
         Date.now(),
         {
-          cache: "no-store"
+          cache:
+            "no-store"
         }
       );
+
 
     if (!response.ok) {
 
@@ -874,8 +874,10 @@ async function loadPrices() {
 
     }
 
+
     const data =
       await response.json();
+
 
     if (!data.bbq) {
 
@@ -884,6 +886,7 @@ async function loadPrices() {
       );
 
     }
+
 
     Object.keys(
       data.bbq
@@ -920,12 +923,25 @@ setInterval(
   300000
 );
 
+
+/* ========================================
+   LOAD LATEST SHARED SCREENSAVER SCRIPT
+   ======================================== */
+
+const sharedScript =
+  document.createElement(
+    "script"
+  );
+
+sharedScript.src =
+  "shared.js?t=" +
+  Date.now();
+
+document.body.appendChild(
+  sharedScript
+);
+
 </script>
-
-
-<!-- SHARED SCREENSAVER BEHAVIOUR -->
-
-<script src="shared.js"></script>
 
 
 </body>

@@ -35,7 +35,6 @@ body {
     sans-serif;
 }
 
-
 /* ========================================
    1366 × 768 DISPLAY CANVAS
    ======================================== */
@@ -75,7 +74,6 @@ body {
   border: 2px solid #8d1414;
 }
 
-
 /* ========================================
    MAIN MENU AREA
    ======================================== */
@@ -102,16 +100,13 @@ body {
 
 .left {
   min-width: 0;
-
   padding-right: 20px;
 }
 
 .right {
   min-width: 0;
-
   padding-left: 20px;
 }
-
 
 /* ========================================
    MAIN RED HEADERS
@@ -138,6 +133,8 @@ body {
 
   border-bottom:
     4px solid #c59b4c;
+
+  overflow: hidden;
 }
 
 .panel-header-cn {
@@ -184,6 +181,33 @@ body {
   font-weight: 800;
 }
 
+/*
+  Right-side title gets its own sizing
+  so "PREMIUM DISHES" fits cleanly.
+*/
+
+.right .panel-header {
+  padding-left: 18px;
+  padding-right: 12px;
+}
+
+.right .panel-header-cn {
+  font-size: 64px;
+}
+
+.right .panel-header-divider {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.right .panel-header-en {
+  font-size: 40px;
+  letter-spacing: -0.5px;
+}
+
+.right .panel-header-en small {
+  font-size: 25px;
+}
 
 /* ========================================
    LUNCH BOX OPTIONS
@@ -253,7 +277,6 @@ body {
   white-space: nowrap;
 }
 
-
 /* ========================================
    DISHES ONLY HEADER
    ======================================== */
@@ -311,7 +334,6 @@ body {
   font-weight: 800;
 }
 
-
 /* ========================================
    SMALL / LARGE
    ======================================== */
@@ -339,12 +361,6 @@ body {
   background:
     rgba(145,24,24,0.50);
 }
-
-
-/*
-  Each size now uses a compact horizontal group
-  rather than pushing the price to the far edge.
-*/
 
 .size-box {
   min-width: 0;
@@ -398,7 +414,6 @@ body {
 
   white-space: nowrap;
 }
-
 
 /* ========================================
    PREMIUM DISH ROWS
@@ -484,7 +499,6 @@ body {
   line-height: 1;
 }
 
-
 /* ========================================
    BOTTOM STRIP
    ======================================== */
@@ -545,9 +559,7 @@ body {
 <div class="menu-body">
 
 
-<!-- =====================================
-     LEFT SIDE
-     ===================================== -->
+<!-- LEFT SIDE -->
 
 <div class="left">
 
@@ -632,7 +644,6 @@ body {
 
 <div class="size-area">
 
-
   <div class="size-box">
 
     <div class="size-copy">
@@ -677,23 +688,17 @@ body {
 
   </div>
 
+</div>
 
 </div>
 
 
-</div>
-
-
-<!-- =====================================
-     MIDDLE DIVIDER
-     ===================================== -->
+<!-- MIDDLE -->
 
 <div class="middle-divider"></div>
 
 
-<!-- =====================================
-     RIGHT SIDE
-     ===================================== -->
+<!-- RIGHT SIDE -->
 
 <div class="right">
 
@@ -731,7 +736,6 @@ body {
 
   </div>
 
-
   <div class="premium-price">
 
     <div class="premium-price-value">
@@ -743,7 +747,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="premium-price">
 
@@ -774,7 +777,6 @@ body {
 
   </div>
 
-
   <div class="premium-price">
 
     <div class="premium-price-value">
@@ -786,7 +788,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="premium-price">
 
@@ -818,7 +819,6 @@ body {
 
   </div>
 
-
   <div class="premium-price">
 
     <div class="premium-price-value">
@@ -830,7 +830,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="premium-price">
 
@@ -852,10 +851,6 @@ body {
 </div>
 
 
-<!-- =====================================
-     BOTTOM STRIP
-     ===================================== -->
-
 <div class="food-strip"></div>
 
 
@@ -864,11 +859,6 @@ body {
 
 
 <script>
-
-
-/* ========================================
-   FIT 1366 × 768 TO BROWSER
-   ======================================== */
 
 function fitMenu() {
 
@@ -896,15 +886,12 @@ function fitMenu() {
     ")";
 }
 
-
 fitMenu();
-
 
 window.addEventListener(
   "resize",
   fitMenu
 );
-
 
 window.addEventListener(
   "orientationchange",
@@ -918,10 +905,6 @@ window.addEventListener(
   }
 );
 
-
-/* ========================================
-   PRICE HELPERS
-   ======================================== */
 
 function setSinglePrice(
   id,
@@ -967,10 +950,6 @@ function setRepeatedPrice(
 }
 
 
-/* ========================================
-   LOAD PRICE DATA
-   ======================================== */
-
 async function loadPrices() {
 
   try {
@@ -984,7 +963,6 @@ async function loadPrices() {
         }
       );
 
-
     if (!response.ok) {
 
       throw new Error(
@@ -994,10 +972,8 @@ async function loadPrices() {
 
     }
 
-
     const data =
       await response.json();
-
 
     if (!data.lunchbox) {
 
@@ -1007,10 +983,8 @@ async function loadPrices() {
 
     }
 
-
     const lunch =
       data.lunchbox;
-
 
     setSinglePrice(
       "twoDishes",
@@ -1055,15 +1029,12 @@ async function loadPrices() {
 
 }
 
-
 loadPrices();
-
 
 setInterval(
   loadPrices,
   300000
 );
-
 
 </script>
 

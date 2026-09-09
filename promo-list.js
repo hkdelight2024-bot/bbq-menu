@@ -18,13 +18,13 @@ const PROMO_CONFIG = {
 
     "images/curry.jpg",
 
-    "images/promo-02.jpg",
+    "images/promo-02.png",
 
-    "images/promo-03.jpg",
+    "images/promo-03.png",
 
-    "images/promo-04.jpg",
+    "images/promo-04.png",
 
-    "images/promo-05.jpg"
+    "images/promo-05.png"
 
   ]
 

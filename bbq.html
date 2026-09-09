@@ -10,6 +10,8 @@
 
 <title>港式燒味 | BBQ Roast Meats</title>
 
+<link rel="stylesheet" href="shared.css">
+
 <style>
 
 * {
@@ -70,7 +72,10 @@ body {
   border: 2px solid #8d1414;
 }
 
-/* HEADER */
+
+/* ========================================
+   HEADER
+   ======================================== */
 
 .header {
   height: 108px;
@@ -159,7 +164,10 @@ body {
   border-right: 3px solid #d9b86d;
 }
 
-/* MENU BODY */
+
+/* ========================================
+   MENU BODY
+   ======================================== */
 
 .menu-body {
   height: 535px;
@@ -193,7 +201,10 @@ body {
   padding-left: 28px;
 }
 
-/* ROWS */
+
+/* ========================================
+   ROWS
+   ======================================== */
 
 .row {
   height: 64px;
@@ -220,7 +231,10 @@ body {
     195px;
 }
 
-/* CHINESE */
+
+/* ========================================
+   CHINESE
+   ======================================== */
 
 .cn-name {
   font-size: 45px;
@@ -246,7 +260,10 @@ body {
   line-height: 1;
 }
 
-/* ENGLISH */
+
+/* ========================================
+   ENGLISH
+   ======================================== */
 
 .en-main {
   min-width: 0;
@@ -281,7 +298,10 @@ body {
   white-space: nowrap;
 }
 
-/* PRICES */
+
+/* ========================================
+   PRICES
+   ======================================== */
 
 .price {
   text-align: right;
@@ -306,7 +326,10 @@ body {
   font-weight: 700;
 }
 
-/* WHOLE / HALF ROWS */
+
+/* ========================================
+   WHOLE / HALF
+   ======================================== */
 
 .cn-row.combo {
   grid-template-columns:
@@ -326,7 +349,10 @@ body {
   letter-spacing: -1px;
 }
 
-/* RICE SECTION */
+
+/* ========================================
+   RICE SECTION
+   ======================================== */
 
 .rice-start {
   margin-top: 5px;
@@ -359,7 +385,11 @@ body {
   font-size: 42px;
 }
 
-/* FOOD IMAGE */
+
+/* ========================================
+   FOOD STRIP
+   125px
+   ======================================== */
 
 .food-strip {
   position: relative;
@@ -383,10 +413,6 @@ body {
   background-size:
     cover;
 
-  /*
-    Higher percentage moves the visible crop
-    in the direction you wanted.
-  */
   background-position:
     center 58%;
 }
@@ -418,6 +444,9 @@ body {
 
 <div id="menu">
 
+
+<!-- HEADER -->
+
 <div class="header">
 
   <div class="title-cn">
@@ -432,9 +461,16 @@ body {
 
 </div>
 
+
+<!-- MENU -->
+
 <div class="menu-body">
 
+
+<!-- CHINESE -->
+
 <div class="column left">
+
 
   <div class="row cn-row combo">
 
@@ -454,6 +490,7 @@ body {
 
   </div>
 
+
   <div class="row cn-row combo">
 
     <div class="cn-name">
@@ -472,6 +509,7 @@ body {
 
   </div>
 
+
   <div class="row cn-row">
 
     <div class="cn-name">
@@ -486,6 +524,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="row cn-row">
 
@@ -502,6 +541,7 @@ body {
 
   </div>
 
+
   <div class="row cn-row">
 
     <div class="cn-name">
@@ -517,6 +557,7 @@ body {
 
   </div>
 
+
   <div class="row cn-row rice-start rice-row">
 
     <div class="cn-name">
@@ -530,6 +571,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="row cn-row rice-row">
 
@@ -545,6 +587,7 @@ body {
 
   </div>
 
+
   <div class="row cn-row rice-row">
 
     <div class="cn-name">
@@ -559,11 +602,17 @@ body {
 
   </div>
 
+
 </div>
+
 
 <div class="middle-divider"></div>
 
+
+<!-- ENGLISH -->
+
 <div class="column right">
+
 
   <div class="row en-row combo">
 
@@ -587,6 +636,7 @@ body {
 
   </div>
 
+
   <div class="row en-row combo">
 
     <div class="en-main">
@@ -609,6 +659,7 @@ body {
 
   </div>
 
+
   <div class="row en-row">
 
     <div class="en-name">
@@ -621,6 +672,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="row en-row">
 
@@ -635,6 +687,7 @@ body {
 
   </div>
 
+
   <div class="row en-row">
 
     <div class="en-name">
@@ -648,6 +701,7 @@ body {
 
   </div>
 
+
   <div class="row en-row rice-start rice-row">
 
     <div class="en-name">
@@ -659,6 +713,7 @@ body {
     </div>
 
   </div>
+
 
   <div class="row en-row rice-row">
 
@@ -672,6 +727,7 @@ body {
 
   </div>
 
+
   <div class="row en-row rice-row">
 
     <div class="en-name">
@@ -684,14 +740,18 @@ body {
 
   </div>
 
+
 </div>
 
 </div>
+
 
 <div class="food-strip"></div>
 
+
 </div>
 </div>
+
 
 <script>
 
@@ -718,12 +778,15 @@ function fitMenu() {
     ")";
 }
 
+
 fitMenu();
+
 
 window.addEventListener(
   "resize",
   fitMenu
 );
+
 
 window.addEventListener(
   "orientationchange",
@@ -736,6 +799,7 @@ window.addEventListener(
 
   }
 );
+
 
 function formatPrice(key, value) {
 
@@ -753,6 +817,7 @@ function formatPrice(key, value) {
   return number.toFixed(2);
 }
 
+
 function setPrice(key, value) {
 
   const formatted =
@@ -762,7 +827,8 @@ function setPrice(key, value) {
     document.getElementById(key);
 
   if (chinese) {
-    chinese.textContent = formatted;
+    chinese.textContent =
+      formatted;
   }
 
   const english =
@@ -785,6 +851,7 @@ function setPrice(key, value) {
 
 }
 
+
 async function loadPrices() {
 
   try {
@@ -799,19 +866,23 @@ async function loadPrices() {
       );
 
     if (!response.ok) {
+
       throw new Error(
         "HTTP " +
         response.status
       );
+
     }
 
     const data =
       await response.json();
 
     if (!data.bbq) {
+
       throw new Error(
         "BBQ data missing"
       );
+
     }
 
     Object.keys(
@@ -840,7 +911,9 @@ async function loadPrices() {
 
 }
 
+
 loadPrices();
+
 
 setInterval(
   loadPrices,
@@ -848,6 +921,12 @@ setInterval(
 );
 
 </script>
+
+
+<!-- SHARED SCREENSAVER BEHAVIOUR -->
+
+<script src="shared.js"></script>
+
 
 </body>
 </html>

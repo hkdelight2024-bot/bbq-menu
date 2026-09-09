@@ -11,7 +11,7 @@ body {
 
 
 /* ========================================
-   SCREENSAVER / CLOSED MODE
+   SHARED BLACK-SCREEN MODE
    ======================================== */
 
 body.screensaver-active {
@@ -21,14 +21,4 @@ body.screensaver-active {
 
 body.screensaver-active #viewport {
   visibility: hidden !important;
-}
-
-
-/*
-  Force anything accidentally outside
-  the main viewport to disappear too.
-*/
-
-body.screensaver-active {
-  color: transparent !important;
 }

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
+
+<title>HK Delight Promotions</title>
+
+<link
+  rel="stylesheet"
+  href="shared.css"
+>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #000;
+}
+
+
+body {
+  font-family:
+    Arial,
+    sans-serif;
+}
+
+
+/* ========================================
+   FULL SCREEN PROMOTION CANVAS
+   ======================================== */
+
+#viewport {
+
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #000;
+
+}
+
+
+/* ========================================
+   TWO IMAGE LAYERS
+
+   We alternate between them so the next
+   image can load before the transition.
+   ======================================== */
+
+.promo-image {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  background: #000;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.8s ease;
+
+}
+
+
+.promo-image.active {
+
+  opacity: 1;
+
+}
+
+
+/* ========================================
+   FALLBACK MESSAGE
+
+   Normally never seen because curry.jpg
+   currently exists.
+   ======================================== */
+
+#fallback {
+
+  position: absolute;
+
+  inset: 0;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 50px;
+
+  text-align: center;
+
+  color: #ddd;
+
+  font-size: 30px;
+
+  background: #000;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="viewport">
+
+
+  <img
+    id="promoA"
+    class="promo-image active"
+    alt=""
+  >
+
+
+  <img
+    id="promoB"
+    class="promo-image"
+    alt=""
+  >
+
+
+  <div id="fallback">
+    Promotions unavailable
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+/* ========================================
+   STATE
+   ======================================== */
+
+let promoImages = [];
+
+let currentIndex = 0;
+
+let frontImage = null;
+
+let backImage = null;
+
+let slideTimer = null;
+
+let rosterTimer = null;
+
+let currentConfig = null;
+
+
+
+/* ========================================
+   CHECK WHETHER AN IMAGE EXISTS
+
+   Missing placeholder images simply
+   return false and are skipped.
+   ======================================== */
+
+function imageExists(url) {
+
+  return new Promise(
+    function(resolve) {
+
+      const image =
+        new Image();
+
+
+      image.onload =
+        function() {
+
+          resolve(true);
+
+        };
+
+
+      image.onerror =
+        function() {
+
+          resolve(false);
+
+        };
+
+
+      /*
+        Cache bust so recently uploaded
+        GitHub images are detected.
+      */
+
+      image.src =
+        url +
+        "?t=" +
+        Date.now();
+
+    }
+  );
+
+}
+
+
+
+/* ========================================
+   BUILD VALID PROMOTION LIST
+   ======================================== */
+
+async function buildValidImageList(
+  imageList
+) {
+
+  const validImages = [];
+
+
+  for (
+    let i = 0;
+    i < imageList.length;
+    i++
+  ) {
+
+    const url =
+      imageList[i];
+
+
+    const exists =
+      await imageExists(
+        url
+      );
+
+
+    if (exists) {
+
+      validImages.push(
+        url
+      );
+
+    }
+
+  }
+
+
+  return validImages;
+
+}
+
+
+
+/* ========================================
+   PRELOAD PROMOTIONS
+   ======================================== */
+
+function preloadImages() {
+
+  for (
+    let i = 0;
+    i < promoImages.length;
+    i++
+  ) {
+
+    const preload =
+      new Image();
+
+    preload.src =
+      promoImages[i];
+
+  }
+
+}
+
+
+
+/* ========================================
+   DISPLAY FIRST IMAGE
+   ======================================== */
+
+function showFirstImage() {
+
+  const fallback =
+    document.getElementById(
+      "fallback"
+    );
+
+
+  if (
+    promoImages.length === 0
+  ) {
+
+    fallback.style.display =
+      "flex";
+
+    frontImage.style.display =
+      "none";
+
+    backImage.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  fallback.style.display =
+    "none";
+
+
+  frontImage.style.display =
+    "block";
+
+  backImage.style.display =
+    "block";
+
+
+  currentIndex = 0;
+
+
+  frontImage.src =
+    promoImages[0];
+
+
+  frontImage.classList.add(
+    "active"
+  );
+
+
+  backImage.classList.remove(
+    "active"
+  );
+
+}
+
+
+
+/* ========================================
+   NEXT PROMOTION
+   ======================================== */
+
+function nextPromotion() {
+
+
+  /*
+    No need to rotate if only one
+    valid image currently exists.
+  */
+
+  if (
+    promoImages.length <= 1
+  ) {
+
+    return;
+
+  }
+
+
+  currentIndex =
+    (
+      currentIndex + 1
+    )
+    %
+    promoImages.length;
+
+
+  const nextUrl =
+    promoImages[
+      currentIndex
+    ];
+
+
+  backImage.onload =
+    function() {
+
+
+      backImage.classList.add(
+        "active"
+      );
+
+
+      frontImage.classList.remove(
+        "active"
+      );
+
+
+      const oldFront =
+        frontImage;
+
+
+      frontImage =
+        backImage;
+
+
+      backImage =
+        oldFront;
+
+    };
+
+
+  backImage.src =
+    nextUrl;
+
+}
+
+
+
+/* ========================================
+   START / RESTART SLIDE TIMER
+   ======================================== */
+
+function restartSlideTimer() {
+
+
+  if (slideTimer) {
+
+    clearInterval(
+      slideTimer
+    );
+
+  }
+
+
+  if (
+    promoImages.length > 1
+  ) {
+
+    slideTimer =
+      setInterval(
+
+        nextPromotion,
+
+        currentConfig
+          .slideDurationMs
+
+      );
+
+  }
+
+}
+
+
+
+/* ========================================
+   APPLY NEW ROSTER
+   ======================================== */
+
+async function applyRoster(
+  config
+) {
+
+
+  if (
+    !config ||
+    !Array.isArray(
+      config.images
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  const validImages =
+    await buildValidImageList(
+      config.images
+    );
+
+
+  /*
+    Compare current roster with new roster.
+  */
+
+  const oldRoster =
+    JSON.stringify(
+      promoImages
+    );
+
+
+  const newRoster =
+    JSON.stringify(
+      validImages
+    );
+
+
+  currentConfig =
+    config;
+
+
+  if (
+    oldRoster === newRoster
+  ) {
+
+    return;
+
+  }
+
+
+  promoImages =
+    validImages;
+
+
+  preloadImages();
+
+
+  showFirstImage();
+
+
+  restartSlideTimer();
+
+}
+
+
+
+/* ========================================
+   LOAD LATEST promo-list.js
+
+   The file is loaded dynamically with a
+   timestamp so GitHub/browser caching
+   doesn't leave the TV on an old roster.
+   ======================================== */
+
+function loadPromoRoster() {
+
+
+  const oldScript =
+    document.getElementById(
+      "promoRosterScript"
+    );
+
+
+  if (oldScript) {
+
+    oldScript.remove();
+
+  }
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.id =
+    "promoRosterScript";
+
+
+  script.src =
+    "promo-list.js?t=" +
+    Date.now();
+
+
+  script.onload =
+    function() {
+
+
+      if (
+        typeof PROMO_CONFIG ===
+        "undefined"
+      ) {
+
+        return;
+
+      }
+
+
+      applyRoster(
+        PROMO_CONFIG
+      );
+
+
+      /*
+        Schedule future roster refreshes
+        after the first successful load.
+      */
+
+      if (!rosterTimer) {
+
+
+        const refreshMs =
+          PROMO_CONFIG
+            .rosterRefreshMs
+          ||
+          300000;
+
+
+        rosterTimer =
+          setInterval(
+
+            loadPromoRoster,
+
+            refreshMs
+
+          );
+
+      }
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+
+/* ========================================
+   INITIALISE
+   ======================================== */
+
+frontImage =
+  document.getElementById(
+    "promoA"
+  );
+
+
+backImage =
+  document.getElementById(
+    "promoB"
+  );
+
+
+loadPromoRoster();
+
+</script>
+
+
+
+<!-- =====================================
+     SHARED 9PM -> 9AM SCREENSAVER
+
+     Same file used by all menu TVs.
+     ===================================== -->
+
+<script>
+
+const sharedScript =
+  document.createElement(
+    "script"
+  );
+
+
+sharedScript.src =
+  "shared.js?t=" +
+  Date.now();
+
+
+document.body.appendChild(
+  sharedScript
+);
+
+</script>
+
+
+</body>
+
+</html>

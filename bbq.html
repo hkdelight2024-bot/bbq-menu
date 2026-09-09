@@ -415,8 +415,12 @@ body {
   background-size:
     cover;
 
+  /*
+    Image moved upward inside
+    the same 125px frame.
+  */
   background-position:
-    center 48%;
+    center 38%;
 }
 
 .food-strip::after {
@@ -448,7 +452,9 @@ body {
 <div id="menu">
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+     ========================= -->
 
 <div class="header">
 
@@ -465,7 +471,9 @@ body {
 </div>
 
 
-<!-- MENU BODY -->
+<!-- =========================
+     MENU BODY
+     ========================= -->
 
 <div class="menu-body">
 
@@ -610,7 +618,7 @@ body {
 </div>
 
 
-<!-- DIVIDER -->
+<!-- CENTER DIVIDER -->
 
 <div class="middle-divider"></div>
 
@@ -754,7 +762,9 @@ body {
 </div>
 
 
-<!-- FOOD STRIP -->
+<!-- =========================
+     FOOD IMAGE
+     ========================= -->
 
 <div class="food-strip"></div>
 
@@ -829,7 +839,6 @@ function formatPrice(key, value) {
     return value;
   }
 
-
   /*
     $39.00 -> $39
     $17.00 -> $17
@@ -844,11 +853,14 @@ function formatPrice(key, value) {
 }
 
 
+/* =========================
+   UPDATE BOTH LANGUAGES
+   ========================= */
+
 function setPrice(key, value) {
 
   const formatted =
     formatPrice(key, value);
-
 
   const chinese =
     document.getElementById(key);

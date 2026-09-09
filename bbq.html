@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -10,7 +12,10 @@
 
 <title>港式燒味 | BBQ Roast Meats</title>
 
-<link rel="stylesheet" href="shared.css">
+<link
+  rel="stylesheet"
+  href="shared.css"
+>
 
 <style>
 
@@ -18,15 +23,20 @@
   box-sizing: border-box;
 }
 
+
 html,
 body {
   width: 100%;
   height: 100%;
+
   margin: 0;
   padding: 0;
+
   overflow: hidden;
+
   background: #111;
 }
+
 
 body {
   font-family:
@@ -36,6 +46,11 @@ body {
     "Noto Sans CJK TC",
     sans-serif;
 }
+
+
+/* ========================================
+   VIEWPORT
+   ======================================== */
 
 #viewport {
   position: fixed;
@@ -50,6 +65,7 @@ body {
   background: #111;
 }
 
+
 #menu {
   position: absolute;
 
@@ -59,7 +75,8 @@ body {
   left: 50%;
   top: 50%;
 
-  transform-origin: center center;
+  transform-origin:
+    center center;
 
   overflow: hidden;
 
@@ -70,11 +87,14 @@ body {
       #f4ead5 100%
     );
 
-  border: 2px solid #8d1414;
+  border:
+    2px solid #8d1414;
 }
 
 
-/* HEADER */
+/* ========================================
+   HEADER
+   ======================================== */
 
 .header {
   height: 108px;
@@ -90,7 +110,8 @@ body {
 
   align-items: center;
 
-  padding: 0 65px;
+  padding:
+    0 65px;
 
   background:
     linear-gradient(
@@ -100,11 +121,13 @@ body {
       #751010 100%
     );
 
-  color: #f3deb0;
+  color:
+    #f3deb0;
 
   border-bottom:
     4px solid #c59b4c;
 }
+
 
 .title-cn {
   text-align: center;
@@ -117,12 +140,19 @@ body {
   white-space: nowrap;
 }
 
+
 .header-divider {
   height: 64px;
 
   background:
-    rgba(236,210,154,0.72);
+    rgba(
+      236,
+      210,
+      154,
+      0.72
+    );
 }
+
 
 .title-en {
   text-align: center;
@@ -140,6 +170,7 @@ body {
   white-space: nowrap;
 }
 
+
 .header::before,
 .header::after {
   content: "";
@@ -155,12 +186,14 @@ body {
     3px solid #d9b86d;
 }
 
+
 .header::before {
   left: 26px;
 
   border-left:
     3px solid #d9b86d;
 }
+
 
 .header::after {
   right: 26px;
@@ -170,7 +203,9 @@ body {
 }
 
 
-/* MENU BODY */
+/* ========================================
+   MENU BODY
+   ======================================== */
 
 .menu-body {
   height: 535px;
@@ -187,25 +222,36 @@ body {
     5px 34px;
 }
 
+
 .middle-divider {
   background:
-    rgba(145,24,24,0.72);
+    rgba(
+      145,
+      24,
+      24,
+      0.72
+    );
 }
+
 
 .column {
   min-width: 0;
 }
 
+
 .left {
   padding-right: 28px;
 }
+
 
 .right {
   padding-left: 28px;
 }
 
 
-/* ROWS */
+/* ========================================
+   ROWS
+   ======================================== */
 
 .row {
   height: 64px;
@@ -219,12 +265,14 @@ body {
   overflow: hidden;
 }
 
+
 .cn-row {
   grid-template-columns:
     minmax(225px,1fr)
     140px
     205px;
 }
+
 
 .en-row {
   grid-template-columns:
@@ -233,7 +281,9 @@ body {
 }
 
 
-/* CHINESE */
+/* ========================================
+   CHINESE
+   ======================================== */
 
 .cn-name {
   font-size: 45px;
@@ -245,6 +295,7 @@ body {
 
   line-height: 1;
 }
+
 
 .cn-sub {
   font-size: 32px;
@@ -260,11 +311,14 @@ body {
 }
 
 
-/* ENGLISH */
+/* ========================================
+   ENGLISH
+   ======================================== */
 
 .en-main {
   min-width: 0;
 }
+
 
 .en-name {
   font-family:
@@ -282,6 +336,7 @@ body {
   white-space: nowrap;
 }
 
+
 .en-sub {
   margin-top: 3px;
 
@@ -296,7 +351,9 @@ body {
 }
 
 
-/* PRICES */
+/* ========================================
+   PRICES
+   ======================================== */
 
 .price {
   text-align: right;
@@ -316,13 +373,16 @@ body {
   line-height: 1;
 }
 
+
 .unit {
   font-size: 25px;
   font-weight: 700;
 }
 
 
-/* WHOLE / HALF */
+/* ========================================
+   WHOLE / HALF
+   ======================================== */
 
 .cn-row.combo {
   grid-template-columns:
@@ -331,11 +391,13 @@ body {
     220px;
 }
 
+
 .en-row.combo {
   grid-template-columns:
     minmax(0,1fr)
     220px;
 }
+
 
 .combo .price {
   font-size: 38px;
@@ -344,7 +406,9 @@ body {
 }
 
 
-/* RICE */
+/* ========================================
+   RICE SECTION
+   ======================================== */
 
 .rice-start {
   margin-top: 5px;
@@ -352,6 +416,7 @@ body {
   border-top:
     4px solid #9f1919;
 }
+
 
 .rice-row {
   height: 64px;
@@ -365,20 +430,25 @@ body {
     );
 }
 
+
 .rice-row .cn-name {
   font-size: 43px;
 }
 
+
 .rice-row .en-name {
   font-size: 32px;
 }
+
 
 .rice-row .price {
   font-size: 42px;
 }
 
 
-/* FOOD STRIP */
+/* ========================================
+   BBQ IMAGE STRIP
+   ======================================== */
 
 .food-strip {
   position: relative;
@@ -407,16 +477,41 @@ body {
     center 58%;
 }
 
+
+.food-strip::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(70,10,8,0.12) 0%,
+      transparent 14%,
+      transparent 86%,
+      rgba(70,10,8,0.12) 100%
+    );
+}
+
 </style>
+
 </head>
 
 
 <body>
 
+
 <div id="viewport">
 
 <div id="menu">
 
+
+<!-- =====================================
+     HEADER
+     ===================================== -->
 
 <div class="header">
 
@@ -433,8 +528,14 @@ body {
 </div>
 
 
+<!-- =====================================
+     MENU
+     ===================================== -->
+
 <div class="menu-body">
 
+
+<!-- CHINESE -->
 
 <div class="column left">
 
@@ -573,8 +674,12 @@ body {
 </div>
 
 
+<!-- CENTER -->
+
 <div class="middle-divider"></div>
 
+
+<!-- ENGLISH -->
 
 <div class="column right">
 
@@ -711,25 +816,36 @@ body {
 </div>
 
 
+<!-- FOOTER -->
+
 <div class="food-strip"></div>
 
 
 </div>
+
 </div>
 
 
 <script>
 
+/* ========================================
+   FIT 1366 × 768 TO SCREEN
+   ======================================== */
+
 function fitMenu() {
 
   const menu =
-    document.getElementById("menu");
+    document.getElementById(
+      "menu"
+    );
+
 
   const scale =
     Math.min(
       window.innerWidth / 1366,
       window.innerHeight / 768
     );
+
 
   menu.style.transform =
     "translate(-50%, -50%) scale(" +
@@ -738,7 +854,9 @@ function fitMenu() {
 
 }
 
+
 fitMenu();
+
 
 window.addEventListener(
   "resize",
@@ -746,13 +864,30 @@ window.addEventListener(
 );
 
 
+window.addEventListener(
+  "orientationchange",
+  function() {
+
+    setTimeout(
+      fitMenu,
+      300
+    );
+
+  }
+);
+
+
+/* ========================================
+   PRICE FORMATTING
+   ======================================== */
+
 function formatPrice(
-  key,
   value
 ) {
 
   const number =
     Number(value);
+
 
   if (
     Number.isNaN(number)
@@ -762,6 +897,7 @@ function formatPrice(
 
   }
 
+
   if (
     Number.isInteger(number)
   ) {
@@ -770,10 +906,15 @@ function formatPrice(
 
   }
 
+
   return number.toFixed(2);
 
 }
 
+
+/* ========================================
+   UPDATE BOTH LANGUAGES
+   ======================================== */
 
 function setPrice(
   key,
@@ -782,7 +923,6 @@ function setPrice(
 
   const formatted =
     formatPrice(
-      key,
       value
     );
 
@@ -801,25 +941,27 @@ function setPrice(
   }
 
 
-  const english =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       '[data-price="' +
       key +
       '"]'
+    )
+    .forEach(
+      function(element) {
+
+        element.textContent =
+          formatted;
+
+      }
     );
-
-
-  english.forEach(
-    function(element) {
-
-      element.textContent =
-        formatted;
-
-    }
-  );
 
 }
 
+
+/* ========================================
+   LOAD PRICES
+   ======================================== */
 
 async function loadPrices() {
 
@@ -830,34 +972,60 @@ async function loadPrices() {
         "menu-data.json?t=" +
         Date.now(),
         {
-          cache: "no-store"
+          cache:
+            "no-store"
         }
       );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
 
 
     const data =
       await response.json();
 
 
-    Object.keys(
-      data.bbq
-    ).forEach(
-      function(key) {
+    if (
+      !data.bbq
+    ) {
 
-        setPrice(
-          key,
-          data.bbq[key]
-        );
+      throw new Error(
+        "BBQ data missing"
+      );
 
-      }
-    );
+    }
+
+
+    Object
+      .keys(
+        data.bbq
+      )
+      .forEach(
+        function(key) {
+
+          setPrice(
+            key,
+            data.bbq[key]
+          );
+
+        }
+      );
 
   }
 
   catch (error) {
 
     console.log(
-      "Using cached/default prices."
+      "Using last-known/default BBQ prices."
     );
 
   }
@@ -867,60 +1035,20 @@ async function loadPrices() {
 
 loadPrices();
 
+
 setInterval(
   loadPrices,
   300000
 );
 
-
-/* LOAD SHARED SCREENSAVER */
-
-const sharedScript =
-  document.createElement(
-    "script"
-  );
-
-sharedScript.src =
-  "shared.js?t=" +
-  Date.now();
-
-document.body.appendChild(
-  sharedScript
-);
-
-
-/* REGISTER OFFLINE SERVICE WORKER */
-
-if (
-  "serviceWorker" in navigator
-) {
-
-  window.addEventListener(
-    "load",
-    function() {
-
-      navigator
-        .serviceWorker
-        .register(
-          "service-worker.js"
-        )
-        .catch(
-          function(error) {
-
-            console.log(
-              "Service worker registration failed:",
-              error
-            );
-
-          }
-        );
-
-    }
-  );
-
-}
-
 </script>
 
+
+<!-- SHARED SCREENSAVER + OFFLINE ENGINE -->
+
+<script src="shared.js"></script>
+
+
 </body>
+
 </html>

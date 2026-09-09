@@ -35,11 +35,6 @@ body {
     sans-serif;
 }
 
-
-/* =========================
-   VIEWPORT
-   ========================= */
-
 #viewport {
   position: fixed;
   inset: 0;
@@ -75,10 +70,7 @@ body {
   border: 2px solid #8d1414;
 }
 
-
-/* =========================
-   HEADER
-   ========================= */
+/* HEADER */
 
 .header {
   height: 108px;
@@ -167,10 +159,7 @@ body {
   border-right: 3px solid #d9b86d;
 }
 
-
-/* =========================
-   MENU BODY
-   ========================= */
+/* MENU BODY */
 
 .menu-body {
   height: 535px;
@@ -204,10 +193,7 @@ body {
   padding-left: 28px;
 }
 
-
-/* =========================
-   ROWS
-   ========================= */
+/* ROWS */
 
 .row {
   height: 64px;
@@ -234,10 +220,7 @@ body {
     195px;
 }
 
-
-/* =========================
-   CHINESE
-   ========================= */
+/* CHINESE */
 
 .cn-name {
   font-size: 45px;
@@ -263,10 +246,7 @@ body {
   line-height: 1;
 }
 
-
-/* =========================
-   ENGLISH
-   ========================= */
+/* ENGLISH */
 
 .en-main {
   min-width: 0;
@@ -301,10 +281,7 @@ body {
   white-space: nowrap;
 }
 
-
-/* =========================
-   PRICES
-   ========================= */
+/* PRICES */
 
 .price {
   text-align: right;
@@ -329,10 +306,7 @@ body {
   font-weight: 700;
 }
 
-
-/* =========================
-   WHOLE / HALF ROWS
-   ========================= */
+/* WHOLE / HALF ROWS */
 
 .cn-row.combo {
   grid-template-columns:
@@ -352,10 +326,7 @@ body {
   letter-spacing: -1px;
 }
 
-
-/* =========================
-   RICE SECTION
-   ========================= */
+/* RICE SECTION */
 
 .rice-start {
   margin-top: 5px;
@@ -388,10 +359,7 @@ body {
   font-size: 42px;
 }
 
-
-/* =========================
-   FOOD IMAGE
-   ========================= */
+/* FOOD IMAGE */
 
 .food-strip {
   position: relative;
@@ -416,11 +384,11 @@ body {
     cover;
 
   /*
-    Image moved upward inside
-    the same 125px frame.
+    Higher percentage moves the visible crop
+    in the direction you wanted.
   */
   background-position:
-    center 38%;
+    center 58%;
 }
 
 .food-strip::after {
@@ -444,17 +412,11 @@ body {
 </style>
 </head>
 
-
 <body>
 
 <div id="viewport">
 
 <div id="menu">
-
-
-<!-- =========================
-     HEADER
-     ========================= -->
 
 <div class="header">
 
@@ -470,20 +432,9 @@ body {
 
 </div>
 
-
-<!-- =========================
-     MENU BODY
-     ========================= -->
-
 <div class="menu-body">
 
-
-<!-- =========================
-     CHINESE
-     ========================= -->
-
 <div class="column left">
-
 
   <div class="row cn-row combo">
 
@@ -503,7 +454,6 @@ body {
 
   </div>
 
-
   <div class="row cn-row combo">
 
     <div class="cn-name">
@@ -522,7 +472,6 @@ body {
 
   </div>
 
-
   <div class="row cn-row">
 
     <div class="cn-name">
@@ -537,7 +486,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="row cn-row">
 
@@ -554,7 +502,6 @@ body {
 
   </div>
 
-
   <div class="row cn-row">
 
     <div class="cn-name">
@@ -570,7 +517,6 @@ body {
 
   </div>
 
-
   <div class="row cn-row rice-start rice-row">
 
     <div class="cn-name">
@@ -585,7 +531,6 @@ body {
 
   </div>
 
-
   <div class="row cn-row rice-row">
 
     <div class="cn-name">
@@ -599,7 +544,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="row cn-row rice-row">
 
@@ -617,18 +561,9 @@ body {
 
 </div>
 
-
-<!-- CENTER DIVIDER -->
-
 <div class="middle-divider"></div>
 
-
-<!-- =========================
-     ENGLISH
-     ========================= -->
-
 <div class="column right">
-
 
   <div class="row en-row combo">
 
@@ -652,7 +587,6 @@ body {
 
   </div>
 
-
   <div class="row en-row combo">
 
     <div class="en-main">
@@ -675,7 +609,6 @@ body {
 
   </div>
 
-
   <div class="row en-row">
 
     <div class="en-name">
@@ -688,7 +621,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="row en-row">
 
@@ -703,7 +635,6 @@ body {
 
   </div>
 
-
   <div class="row en-row">
 
     <div class="en-name">
@@ -717,7 +648,6 @@ body {
 
   </div>
 
-
   <div class="row en-row rice-start rice-row">
 
     <div class="en-name">
@@ -729,7 +659,6 @@ body {
     </div>
 
   </div>
-
 
   <div class="row en-row rice-row">
 
@@ -743,7 +672,6 @@ body {
 
   </div>
 
-
   <div class="row en-row rice-row">
 
     <div class="en-name">
@@ -756,29 +684,16 @@ body {
 
   </div>
 
-
 </div>
 
 </div>
-
-
-<!-- =========================
-     FOOD IMAGE
-     ========================= -->
 
 <div class="food-strip"></div>
 
-
 </div>
 </div>
-
 
 <script>
-
-
-/* =========================
-   FIT 1366 × 768 TO SCREEN
-   ========================= */
 
 function fitMenu() {
 
@@ -803,15 +718,12 @@ function fitMenu() {
     ")";
 }
 
-
 fitMenu();
-
 
 window.addEventListener(
   "resize",
   fitMenu
 );
-
 
 window.addEventListener(
   "orientationchange",
@@ -825,11 +737,6 @@ window.addEventListener(
   }
 );
 
-
-/* =========================
-   PRICE FORMATTING
-   ========================= */
-
 function formatPrice(key, value) {
 
   const number =
@@ -839,23 +746,12 @@ function formatPrice(key, value) {
     return value;
   }
 
-  /*
-    $39.00 -> $39
-    $17.00 -> $17
-    $15.50 -> $15.50
-  */
-
   if (Number.isInteger(number)) {
     return String(number);
   }
 
   return number.toFixed(2);
 }
-
-
-/* =========================
-   UPDATE BOTH LANGUAGES
-   ========================= */
 
 function setPrice(key, value) {
 
@@ -866,12 +762,8 @@ function setPrice(key, value) {
     document.getElementById(key);
 
   if (chinese) {
-
-    chinese.textContent =
-      formatted;
-
+    chinese.textContent = formatted;
   }
-
 
   const english =
     document.querySelectorAll(
@@ -879,7 +771,6 @@ function setPrice(key, value) {
       key +
       '"]'
     );
-
 
   for (
     let i = 0;
@@ -894,11 +785,6 @@ function setPrice(key, value) {
 
 }
 
-
-/* =========================
-   LOAD MENU DATA
-   ========================= */
-
 async function loadPrices() {
 
   try {
@@ -912,29 +798,21 @@ async function loadPrices() {
         }
       );
 
-
     if (!response.ok) {
-
       throw new Error(
         "HTTP " +
         response.status
       );
-
     }
-
 
     const data =
       await response.json();
 
-
     if (!data.bbq) {
-
       throw new Error(
         "BBQ data missing"
       );
-
     }
-
 
     Object.keys(
       data.bbq
@@ -962,17 +840,12 @@ async function loadPrices() {
 
 }
 
-
 loadPrices();
-
-
-/* Refresh price data every 5 minutes */
 
 setInterval(
   loadPrices,
   300000
 );
-
 
 </script>
 

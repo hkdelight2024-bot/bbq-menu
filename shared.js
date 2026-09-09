@@ -3,11 +3,11 @@ const DISPLAY_CONFIG = {
 
   // Black screen starts at 9:00 PM
   blackFromHour: 14,
-  blackFromMinute: 26,
+  blackFromMinute: 29,
 
   // Menu returns at 9:00 AM
   blackUntilHour: 14,
-  blackUntilMinute: 27,
+  blackUntilMinute: 30,
 
   // Recheck every 30 seconds
   checkIntervalMs: 30000

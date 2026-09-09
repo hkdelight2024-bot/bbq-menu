@@ -10,6 +10,8 @@
 
 <title>飯盒 | Lunch Box</title>
 
+<link rel="stylesheet" href="shared.css">
+
 <style>
 
 * {
@@ -34,11 +36,6 @@ body {
     "Noto Sans CJK TC",
     sans-serif;
 }
-
-
-/* ========================================
-   1366 × 768 DISPLAY CANVAS
-   ======================================== */
 
 #viewport {
   position: fixed;
@@ -113,7 +110,7 @@ body {
 
 
 /* ========================================
-   MAIN RED HEADERS
+   RED HEADERS
    ======================================== */
 
 .panel-header {
@@ -282,7 +279,7 @@ body {
 
 
 /* ========================================
-   DISHES ONLY HEADER
+   DISHES ONLY
    ======================================== */
 
 .dishes-header {
@@ -507,10 +504,8 @@ body {
 
 
 /* ========================================
-   LUNCH FOOTER IMAGE
-
-   Footer remains exactly 125px high.
-   Image shifted UP 22px inside frame.
+   LUNCH FOOTER
+   125px
    ======================================== */
 
 .food-strip {
@@ -571,9 +566,7 @@ body {
 <div class="menu-body">
 
 
-<!-- =====================================
-     LEFT SIDE
-     ===================================== -->
+<!-- LEFT -->
 
 <div class="left">
 
@@ -710,16 +703,10 @@ body {
 </div>
 
 
-<!-- =====================================
-     CENTER DIVIDER
-     ===================================== -->
-
 <div class="middle-divider"></div>
 
 
-<!-- =====================================
-     RIGHT SIDE
-     ===================================== -->
+<!-- RIGHT -->
 
 <div class="right">
 
@@ -742,8 +729,6 @@ body {
 
 </div>
 
-
-<!-- BEEF BRISKET -->
 
 <div class="premium-row">
 
@@ -788,8 +773,6 @@ body {
 </div>
 
 
-<!-- SALT & PEPPER PORK RIBS -->
-
 <div class="premium-row">
 
   <div class="premium-copy">
@@ -832,8 +815,6 @@ body {
 
 </div>
 
-
-<!-- BRAISED PORK BELLY -->
 
 <div class="premium-row">
 
@@ -884,10 +865,6 @@ body {
 </div>
 
 
-<!-- =====================================
-     FOOTER IMAGE
-     ===================================== -->
-
 <div class="food-strip"></div>
 
 
@@ -896,11 +873,6 @@ body {
 
 
 <script>
-
-
-/* ========================================
-   FIT 1366 × 768 TO AVAILABLE SCREEN
-   ======================================== */
 
 function fitMenu() {
 
@@ -917,10 +889,7 @@ function fitMenu() {
     window.innerHeight / designHeight;
 
   const scale =
-    Math.min(
-      scaleX,
-      scaleY
-    );
+    Math.min(scaleX, scaleY);
 
   menu.style.transform =
     "translate(-50%, -50%) scale(" +
@@ -950,10 +919,6 @@ window.addEventListener(
   }
 );
 
-
-/* ========================================
-   PRICE HELPERS
-   ======================================== */
 
 function setSinglePrice(
   id,
@@ -999,10 +964,6 @@ function setRepeatedPrice(
 }
 
 
-/* ========================================
-   LOAD PRICES
-   ======================================== */
-
 async function loadPrices() {
 
   try {
@@ -1016,7 +977,6 @@ async function loadPrices() {
         }
       );
 
-
     if (!response.ok) {
 
       throw new Error(
@@ -1026,10 +986,8 @@ async function loadPrices() {
 
     }
 
-
     const data =
       await response.json();
-
 
     if (!data.lunchbox) {
 
@@ -1039,10 +997,8 @@ async function loadPrices() {
 
     }
 
-
     const lunch =
       data.lunchbox;
-
 
     setSinglePrice(
       "twoDishes",
@@ -1096,8 +1052,13 @@ setInterval(
   300000
 );
 
-
 </script>
+
+
+<!-- SHARED SCREENSAVER BEHAVIOUR -->
+
+<script src="shared.js"></script>
+
 
 </body>
 </html>

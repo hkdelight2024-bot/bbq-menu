@@ -78,8 +78,6 @@ body {
 
 /* ========================================
    MAIN MENU AREA
-
-   643px + 125px image = 768px
    ======================================== */
 
 .menu-body {
@@ -331,7 +329,7 @@ body {
   align-items: center;
 
   padding:
-    5px 2px 0 2px;
+    5px 4px 0 4px;
 }
 
 .size-divider {
@@ -342,25 +340,27 @@ body {
     rgba(145,24,24,0.50);
 }
 
+
+/*
+  Each size now uses a compact horizontal group
+  rather than pushing the price to the far edge.
+*/
+
 .size-box {
   min-width: 0;
 
-  display: grid;
-
-  grid-template-columns:
-    100px
-    minmax(0,1fr);
-
+  display: flex;
   align-items: center;
+  justify-content: center;
 
-  column-gap: 6px;
+  gap: 18px;
 
   padding:
-    0 10px;
+    0 8px;
 }
 
 .size-copy {
-  min-width: 0;
+  flex: 0 0 auto;
 }
 
 .size-name-cn {
@@ -380,7 +380,9 @@ body {
 }
 
 .size-price {
-  text-align: right;
+  flex: 0 0 auto;
+
+  text-align: left;
 
   font-family:
     Georgia,
@@ -484,9 +486,7 @@ body {
 
 
 /* ========================================
-   BOTTOM IMAGE STRIP
-
-   EXACTLY MATCHES BBQ PAGE: 125px
+   BOTTOM STRIP
    ======================================== */
 
 .food-strip {

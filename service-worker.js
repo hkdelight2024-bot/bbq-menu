@@ -1,49 +1,67 @@
-const CACHE_NAME = "hk-delight-menu-v1";
+const CACHE_NAME =
+  "hk-delight-menu-v2";
+
 
 const CORE_FILES = [
+
   "./bbq.html",
+
   "./lunchbox.html",
+
   "./promo.html",
+
   "./shared.css",
+
   "./shared.js",
+
+  "./display-config.json",
+
   "./menu-data.json",
-  "./promo-list.js"
+
+  "./promo-list.js",
+
+  "./images/bbq-strip.png",
+
+  "./images/lunch-strip.png",
+
+  "./images/curry.jpg"
+
 ];
 
 
+
 /* =========================================================
-   NORMALISE CACHE KEYS
-
-   shared.js?t=12345
-   shared.js?t=67890
-
-   both cache as:
-
-   shared.js
+   REMOVE CACHE-BUST QUERY PARAMETERS
    ========================================================= */
 
-function getCacheKey(request) {
+function getCacheKey(
+  request
+) {
 
   const url =
-    new URL(request.url);
+    new URL(
+      request.url
+    );
 
-  url.search = "";
+
+  url.search =
+    "";
+
 
   return new Request(
     url.toString(),
     {
-      method: "GET"
+      method:
+        "GET"
     }
   );
 
 }
 
 
+
 /* =========================================================
    INSTALL
-   Cache the basic application files.
-
-   Individual failures do not stop installation.
    ========================================================= */
 
 self.addEventListener(
@@ -53,7 +71,9 @@ self.addEventListener(
     event.waitUntil(
 
       caches
-        .open(CACHE_NAME)
+        .open(
+          CACHE_NAME
+        )
         .then(
           async function(cache) {
 
@@ -69,11 +89,15 @@ self.addEventListener(
                   await fetch(
                     CORE_FILES[i],
                     {
-                      cache: "no-store"
+                      cache:
+                        "no-store"
                     }
                   );
 
-                if (response.ok) {
+
+                if (
+                  response.ok
+                ) {
 
                   await cache.put(
                     CORE_FILES[i],
@@ -86,10 +110,11 @@ self.addEventListener(
 
               catch (error) {
 
-                console.log(
-                  "Precache failed:",
-                  CORE_FILES[i]
-                );
+                /*
+                  One missing optional asset
+                  should not prevent the
+                  service worker installing.
+                */
 
               }
 
@@ -107,9 +132,9 @@ self.addEventListener(
 );
 
 
+
 /* =========================================================
    ACTIVATE
-   Delete older cache versions.
    ========================================================= */
 
 self.addEventListener(
@@ -129,7 +154,8 @@ self.addEventListener(
                 function(key) {
 
                   if (
-                    key !== CACHE_NAME
+                    key !==
+                    CACHE_NAME
                   ) {
 
                     return caches.delete(
@@ -159,20 +185,9 @@ self.addEventListener(
 );
 
 
+
 /* =========================================================
-   FETCH
-
-   Strategy:
-
-   ONLINE:
-   1. Get newest GitHub version.
-   2. Save it locally.
-   3. Return it.
-
-   OFFLINE:
-   1. Return last cached successful version.
-
-   This applies to HTML, CSS, JS, JSON and images.
+   NETWORK FIRST / CACHE FALLBACK
    ========================================================= */
 
 self.addEventListener(
@@ -184,7 +199,8 @@ self.addEventListener(
 
 
     if (
-      request.method !== "GET"
+      request.method !==
+      "GET"
     ) {
 
       return;
@@ -193,13 +209,10 @@ self.addEventListener(
 
 
     const url =
-      new URL(request.url);
+      new URL(
+        request.url
+      );
 
-
-    /*
-      Only handle files belonging to this
-      GitHub Pages site.
-    */
 
     if (
       url.origin !==
@@ -212,7 +225,9 @@ self.addEventListener(
 
 
     const cacheKey =
-      getCacheKey(request);
+      getCacheKey(
+        request
+      );
 
 
     event.respondWith(
@@ -221,110 +236,111 @@ self.addEventListener(
         new Request(
           request,
           {
-            cache: "no-store"
+            cache:
+              "no-store"
           }
         )
       )
 
-        .then(
-          function(networkResponse) {
+      .then(
+        function(response) {
 
-            if (
-              networkResponse &&
-              networkResponse.ok
-            ) {
+          if (
+            response &&
+            response.ok
+          ) {
 
-              const responseCopy =
-                networkResponse.clone();
-
-
-              caches
-                .open(CACHE_NAME)
-                .then(
-                  function(cache) {
-
-                    cache.put(
-                      cacheKey,
-                      responseCopy
-                    );
-
-                  }
-                );
-
-            }
+            const copy =
+              response.clone();
 
 
-            return networkResponse;
+            caches
+              .open(
+                CACHE_NAME
+              )
+              .then(
+                function(cache) {
 
-          }
-        )
+                  cache.put(
+                    cacheKey,
+                    copy
+                  );
 
-        .catch(
-          async function() {
-
-            const cached =
-              await caches.match(
-                cacheKey
-              );
-
-
-            if (cached) {
-
-              return cached;
-
-            }
-
-
-            /*
-              If an HTML navigation somehow
-              has not been cached yet, return
-              a simple black offline page.
-            */
-
-            if (
-              request.mode ===
-              "navigate"
-            ) {
-
-              return new Response(
-                `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                  <meta charset="UTF-8">
-                  <style>
-                    html, body {
-                      margin: 0;
-                      width: 100%;
-                      height: 100%;
-                      background: black;
-                    }
-                  </style>
-                </head>
-                <body></body>
-                </html>
-                `,
-                {
-                  headers: {
-                    "Content-Type":
-                      "text/html"
-                  }
                 }
               );
 
-            }
+          }
 
+
+          return response;
+
+        }
+      )
+
+      .catch(
+        async function() {
+
+          const cached =
+            await caches.match(
+              cacheKey
+            );
+
+
+          if (cached) {
+
+            return cached;
+
+          }
+
+
+          if (
+            request.mode ===
+            "navigate"
+          ) {
 
             return new Response(
-              "",
+              `
+              <!DOCTYPE html>
+              <html>
+              <head>
+              <meta charset="UTF-8">
+              <style>
+              html,
+              body {
+                width:100%;
+                height:100%;
+                margin:0;
+                background:#000;
+              }
+              </style>
+              </head>
+              <body></body>
+              </html>
+              `,
               {
-                status: 503,
-                statusText: "Offline"
+                headers: {
+                  "Content-Type":
+                    "text/html"
+                }
               }
             );
 
           }
-        )
+
+
+          return new Response(
+            "",
+            {
+              status:
+                503,
+
+              statusText:
+                "Offline"
+            }
+          );
+
+        }
+      )
 
     );
 

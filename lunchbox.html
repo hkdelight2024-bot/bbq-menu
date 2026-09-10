@@ -128,14 +128,13 @@ body {
 
 
 /* ========================================
-   MAIN HEADERS
+   HEADERS
    ======================================== */
 
 .panel-header {
   height: 108px;
 
   display: flex;
-
   align-items: center;
 
   padding: 0 20px;
@@ -205,7 +204,7 @@ body {
 
 
 /* ========================================
-   PREMIUM HEADER
+   PREMIUM HEADER FIT
    ======================================== */
 
 .right .panel-header {
@@ -233,7 +232,7 @@ body {
 
 
 /* ========================================
-   LUNCH BOX OPTIONS
+   LUNCH OPTIONS
    ======================================== */
 
 .lunch-row {
@@ -309,7 +308,6 @@ body {
   margin-top: 9px;
 
   display: flex;
-
   align-items: center;
 
   padding: 0 20px;
@@ -395,7 +393,6 @@ body {
   min-width: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -557,11 +554,6 @@ body {
 
   background-size: cover;
 
-  /*
-    This is the corrected direction:
-    lunch artwork is shifted UP within its frame.
-  */
-
   background-position:
     center calc(50% - 22px);
 }
@@ -600,8 +592,6 @@ body {
 
 <div class="menu-body">
 
-
-<!-- LEFT -->
 
 <div class="left">
 
@@ -742,12 +732,8 @@ body {
 </div>
 
 
-<!-- CENTER -->
-
 <div class="middle-divider"></div>
 
-
-<!-- RIGHT -->
 
 <div class="right">
 
@@ -908,8 +894,6 @@ body {
 </div>
 
 
-<!-- FOOTER -->
-
 <div class="food-strip"></div>
 
 
@@ -919,10 +903,6 @@ body {
 
 
 <script>
-
-/* ========================================
-   FIT 1366 × 768
-   ======================================== */
 
 function fitMenu() {
 
@@ -1049,6 +1029,7 @@ function loadPrices() {
 
       }
 
+
       return response.json();
 
     }
@@ -1127,6 +1108,41 @@ loadPrices();
 setInterval(
   loadPrices,
   300000
+);
+
+
+/* ========================================
+   RESUME / FOCUS RECOVERY
+   ======================================== */
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+
+    if (
+      document.visibilityState ===
+      "visible"
+    ) {
+
+      fitMenu();
+
+      loadPrices();
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "focus",
+  function() {
+
+    fitMenu();
+
+    loadPrices();
+
+  }
 );
 
 </script>

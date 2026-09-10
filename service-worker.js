@@ -1,57 +1,72 @@
 /* =========================================================
-   HK DELIGHT OFFLINE CACHE
+   HK DELIGHT OFFLINE SERVICE WORKER
    ========================================================= */
-
-const CACHE_NAME =
-  "hk-delight-menu-v3";
 
 
 /*
-  These are the files we want available
-  immediately after installation.
-
-  Promo images beyond curry.jpg are learned
-  automatically when promo.html requests them.
+  Change this name when we deliberately make
+  a major service-worker/cache revision.
 */
 
-const CORE_FILES = [
+var CACHE_NAME =
+  "hk-delight-menu-v4";
+
+
+/*
+  Essential files that should be cached as soon
+  as this service worker installs.
+
+  Extra promo images are cached automatically
+  when promo.html requests them.
+*/
+
+var CORE_FILES = [
 
   "./bbq.html",
+
   "./lunchbox.html",
+
   "./promo.html",
 
   "./shared.css",
+
   "./shared.js",
 
   "./display-config.json",
+
+  "./site-version.json",
+
   "./menu-data.json",
+
   "./promo-list.js",
 
   "./images/bbq-strip.png",
+
   "./images/lunch-strip.png",
+
   "./images/curry.jpg"
 
 ];
 
 
 /* =========================================================
-   NORMALISE CACHE KEY
+   CACHE KEY
+
+   Removes cache-busting query strings.
 
    Example:
 
-   shared.js?t=123
-   shared.js?t=456
+   display-config.json?t=123
+   display-config.json?t=456
 
-   both become:
-
-   shared.js
+   both use the same cached object.
    ========================================================= */
 
 function getCacheKey(
   request
 ) {
 
-  const url =
+  var url =
     new URL(
       request.url
     );
@@ -86,50 +101,77 @@ self.addEventListener(
         .open(
           CACHE_NAME
         )
+
         .then(
-          async function(cache) {
+          function(cache) {
+
+            var jobs = [];
+
 
             for (
-              let i = 0;
+              var i = 0;
               i < CORE_FILES.length;
               i++
             ) {
 
-              try {
+              (
+                function(file) {
 
-                const response =
-                  await fetch(
-                    CORE_FILES[i],
-                    {
-                      cache:
-                        "no-store"
-                    }
-                  );
+                  var job =
+                    fetch(
+                      file,
+                      {
+                        cache:
+                          "no-store"
+                      }
+                    )
+
+                    .then(
+                      function(response) {
+
+                        if (
+                          response &&
+                          response.ok
+                        ) {
+
+                          return cache.put(
+                            file,
+                            response.clone()
+                          );
+
+                        }
+
+                      }
+                    )
+
+                    .catch(
+                      function() {
+
+                        /*
+                          One unavailable file should not
+                          prevent the service worker from
+                          installing.
+                        */
+
+                      }
+                    );
 
 
-                if (
-                  response.ok
-                ) {
-
-                  await cache.put(
-                    CORE_FILES[i],
-                    response.clone()
+                  jobs.push(
+                    job
                   );
 
                 }
-
-              }
-
-              catch (error) {
-
-                /*
-                  One missing file should not
-                  break service worker install.
-                */
-
-              }
+              )(
+                CORE_FILES[i]
+              );
 
             }
+
+
+            return Promise.all(
+              jobs
+            );
 
           }
         )
@@ -145,7 +187,6 @@ self.addEventListener(
 
 /* =========================================================
    ACTIVATE
-   Remove old cache versions.
    ========================================================= */
 
 self.addEventListener(
@@ -156,32 +197,43 @@ self.addEventListener(
 
       caches
         .keys()
+
         .then(
           function(keys) {
 
+            var deletions =
+              [];
+
+
+            for (
+              var i = 0;
+              i < keys.length;
+              i++
+            ) {
+
+              if (
+                keys[i] !==
+                CACHE_NAME
+              ) {
+
+                deletions.push(
+                  caches.delete(
+                    keys[i]
+                  )
+                );
+
+              }
+
+            }
+
+
             return Promise.all(
-
-              keys.map(
-                function(key) {
-
-                  if (
-                    key !==
-                    CACHE_NAME
-                  ) {
-
-                    return caches.delete(
-                      key
-                    );
-
-                  }
-
-                }
-              )
-
+              deletions
             );
 
           }
         )
+
         .then(
           function() {
 
@@ -197,26 +249,42 @@ self.addEventListener(
 
 
 /* =========================================================
-   FETCH
+   FETCH STRATEGY
 
-   NETWORK FIRST:
-   - online -> newest GitHub file
-   - successful result -> update cache
-   - offline -> cached last-known-good file
+   NETWORK FIRST
 
-   Applies automatically to new promo images too.
+   ONLINE:
+   - request newest GitHub Pages resource
+   - return it
+   - save successful result to cache
+
+   OFFLINE:
+   - return last successfully cached resource
+
+   This works for:
+   - HTML
+   - CSS
+   - JS
+   - JSON
+   - footer images
+   - newly-added promo PNGs
    ========================================================= */
 
 self.addEventListener(
   "fetch",
   function(event) {
 
-    const request =
+    var request =
       event.request;
 
 
+    /*
+      Only GET requests can be cached this way.
+    */
+
     if (
-      request.method !== "GET"
+      request.method !==
+      "GET"
     ) {
 
       return;
@@ -224,14 +292,14 @@ self.addEventListener(
     }
 
 
-    const url =
+    var url =
       new URL(
         request.url
       );
 
 
     /*
-      Only handle our own GitHub Pages site.
+      Do not interfere with other websites.
     */
 
     if (
@@ -244,7 +312,7 @@ self.addEventListener(
     }
 
 
-    const cacheKey =
+    var cacheKey =
       getCacheKey(
         request
       );
@@ -253,38 +321,43 @@ self.addEventListener(
     event.respondWith(
 
       fetch(
-        new Request(
-          request,
-          {
-            cache:
-              "no-store"
-          }
-        )
+        request,
+        {
+          cache:
+            "no-store"
+        }
       )
 
       .then(
-        function(response) {
+        function(networkResponse) {
 
           if (
-            response &&
-            response.ok
+            networkResponse &&
+            networkResponse.ok
           ) {
 
-            const copy =
-              response.clone();
+            var copy =
+              networkResponse.clone();
 
 
             caches
               .open(
                 CACHE_NAME
               )
+
               .then(
                 function(cache) {
 
-                  cache.put(
+                  return cache.put(
                     cacheKey,
                     copy
                   );
+
+                }
+              )
+
+              .catch(
+                function() {
 
                 }
               );
@@ -292,77 +365,91 @@ self.addEventListener(
           }
 
 
-          return response;
+          return networkResponse;
 
         }
       )
 
       .catch(
-        async function() {
+        function() {
 
-          const cached =
-            await caches.match(
+          return caches
+            .match(
               cacheKey
-            );
+            )
 
+            .then(
+              function(cachedResponse) {
 
-          if (cached) {
+                if (
+                  cachedResponse
+                ) {
 
-            return cached;
+                  return cachedResponse;
 
-          }
-
-
-          /*
-            Navigation fallback:
-            completely black page.
-          */
-
-          if (
-            request.mode ===
-            "navigate"
-          ) {
-
-            return new Response(
-              `
-              <!DOCTYPE html>
-              <html>
-              <head>
-                <meta charset="UTF-8">
-                <style>
-                  html,
-                  body {
-                    width: 100%;
-                    height: 100%;
-                    margin: 0;
-                    background: #000;
-                  }
-                </style>
-              </head>
-              <body></body>
-              </html>
-              `,
-              {
-                headers: {
-                  "Content-Type":
-                    "text/html"
                 }
+
+
+                /*
+                  If an HTML page has never been cached
+                  and we're offline, show black rather
+                  than a browser error page.
+                */
+
+                if (
+                  request.mode ===
+                  "navigate"
+                ) {
+
+                  return new Response(
+                    [
+                      "<!DOCTYPE html>",
+                      "<html>",
+                      "<head>",
+                      '<meta charset="UTF-8">',
+                      "<style>",
+                      "html,body{",
+                      "width:100%;",
+                      "height:100%;",
+                      "margin:0;",
+                      "padding:0;",
+                      "background:#000;",
+                      "overflow:hidden;",
+                      "}",
+                      "</style>",
+                      "</head>",
+                      "<body></body>",
+                      "</html>"
+                    ].join(
+                      ""
+                    ),
+                    {
+                      status:
+                        200,
+
+                      headers: {
+                        "Content-Type":
+                          "text/html; charset=UTF-8"
+                      }
+                    }
+                  );
+
+                }
+
+
+                return new Response(
+                  "",
+                  {
+                    status:
+                      503,
+
+                    statusText:
+                      "Offline"
+                  }
+                );
+
               }
             );
-
-          }
-
-
-          return new Response(
-            "",
-            {
-              status:
-                503,
-
-              statusText:
-                "Offline"
-            }
-          );
 
         }
       )

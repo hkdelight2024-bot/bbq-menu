@@ -1,20 +1,23 @@
-const PROMO_CONFIG = {
+/* =========================================================
+   HK DELIGHT PROMOTION ROSTER
+   =========================================================
 
-  /*
-    30 seconds per image.
-  */
+   Using "var" deliberately.
 
-  slideDurationMs:
-    30000,
+   The currently-running promo page periodically reloads
+   this file. "var" can be safely declared again, unlike
+   a top-level "const".
 
+   Missing image files are skipped by promo.html.
+   ========================================================= */
 
-  /*
-    Check the roster every 5 minutes.
-  */
+var PROMO_CONFIG = {
 
-  rosterRefreshMs:
-    300000,
+  /* 30 seconds per promotion */
+  slideDurationMs: 30000,
 
+  /* Check this roster every 5 minutes */
+  rosterRefreshMs: 300000,
 
   images: [
 

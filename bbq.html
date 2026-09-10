@@ -14,7 +14,7 @@
 
 <link
   rel="stylesheet"
-  href="shared.css"
+  href="shared.css?v=4"
 >
 
 <style>
@@ -23,20 +23,15 @@
   box-sizing: border-box;
 }
 
-
 html,
 body {
   width: 100%;
   height: 100%;
-
   margin: 0;
   padding: 0;
-
   overflow: hidden;
-
   background: #111;
 }
-
 
 body {
   font-family:
@@ -61,10 +56,8 @@ body {
   justify-content: center;
 
   overflow: hidden;
-
   background: #111;
 }
-
 
 #menu {
   position: absolute;
@@ -75,8 +68,7 @@ body {
   left: 50%;
   top: 50%;
 
-  transform-origin:
-    center center;
+  transform-origin: center center;
 
   overflow: hidden;
 
@@ -87,8 +79,7 @@ body {
       #f4ead5 100%
     );
 
-  border:
-    2px solid #8d1414;
+  border: 2px solid #8d1414;
 }
 
 
@@ -110,8 +101,7 @@ body {
 
   align-items: center;
 
-  padding:
-    0 65px;
+  padding: 0 65px;
 
   background:
     linear-gradient(
@@ -121,13 +111,10 @@ body {
       #751010 100%
     );
 
-  color:
-    #f3deb0;
+  color: #f3deb0;
 
-  border-bottom:
-    4px solid #c59b4c;
+  border-bottom: 4px solid #c59b4c;
 }
-
 
 .title-cn {
   text-align: center;
@@ -140,7 +127,6 @@ body {
   white-space: nowrap;
 }
 
-
 .header-divider {
   height: 64px;
 
@@ -152,7 +138,6 @@ body {
       0.72
     );
 }
-
 
 .title-en {
   text-align: center;
@@ -170,7 +155,6 @@ body {
   white-space: nowrap;
 }
 
-
 .header::before,
 .header::after {
   content: "";
@@ -182,24 +166,17 @@ body {
   width: 36px;
   height: 36px;
 
-  border-top:
-    3px solid #d9b86d;
+  border-top: 3px solid #d9b86d;
 }
-
 
 .header::before {
   left: 26px;
-
-  border-left:
-    3px solid #d9b86d;
+  border-left: 3px solid #d9b86d;
 }
-
 
 .header::after {
   right: 26px;
-
-  border-right:
-    3px solid #d9b86d;
+  border-right: 3px solid #d9b86d;
 }
 
 
@@ -222,7 +199,6 @@ body {
     5px 34px;
 }
 
-
 .middle-divider {
   background:
     rgba(
@@ -233,16 +209,13 @@ body {
     );
 }
 
-
 .column {
   min-width: 0;
 }
 
-
 .left {
   padding-right: 28px;
 }
-
 
 .right {
   padding-left: 28px;
@@ -257,14 +230,13 @@ body {
   height: 64px;
 
   display: grid;
+
   align-items: center;
 
-  border-bottom:
-    1px solid #cbbda3;
+  border-bottom: 1px solid #cbbda3;
 
   overflow: hidden;
 }
-
 
 .cn-row {
   grid-template-columns:
@@ -272,7 +244,6 @@ body {
     140px
     205px;
 }
-
 
 .en-row {
   grid-template-columns:
@@ -296,7 +267,6 @@ body {
   line-height: 1;
 }
 
-
 .cn-sub {
   font-size: 32px;
   font-weight: 800;
@@ -319,7 +289,6 @@ body {
   min-width: 0;
 }
 
-
 .en-name {
   font-family:
     Georgia,
@@ -335,7 +304,6 @@ body {
 
   white-space: nowrap;
 }
-
 
 .en-sub {
   margin-top: 3px;
@@ -373,7 +341,6 @@ body {
   line-height: 1;
 }
 
-
 .unit {
   font-size: 25px;
   font-weight: 700;
@@ -391,32 +358,27 @@ body {
     220px;
 }
 
-
 .en-row.combo {
   grid-template-columns:
     minmax(0,1fr)
     220px;
 }
 
-
 .combo .price {
   font-size: 38px;
-
   letter-spacing: -1px;
 }
 
 
 /* ========================================
-   RICE SECTION
+   RICE
    ======================================== */
 
 .rice-start {
   margin-top: 5px;
 
-  border-top:
-    4px solid #9f1919;
+  border-top: 4px solid #9f1919;
 }
-
 
 .rice-row {
   height: 64px;
@@ -430,16 +392,13 @@ body {
     );
 }
 
-
 .rice-row .cn-name {
   font-size: 43px;
 }
 
-
 .rice-row .en-name {
   font-size: 32px;
 }
-
 
 .rice-row .price {
   font-size: 42px;
@@ -447,7 +406,7 @@ body {
 
 
 /* ========================================
-   BBQ IMAGE STRIP
+   BBQ FOOTER
    ======================================== */
 
 .food-strip {
@@ -458,30 +417,25 @@ body {
 
   overflow: hidden;
 
-  border-top:
-    4px solid #8e1414;
+  border-top: 4px solid #8e1414;
 
-  background-color:
-    #45100d;
+  background-color: #45100d;
 
   background-image:
     url("images/bbq-strip.png");
 
-  background-repeat:
-    no-repeat;
+  background-repeat: no-repeat;
 
-  background-size:
-    cover;
+  background-size: cover;
 
-  background-position:
-    center 58%;
+  background-position: center 58%;
 }
-
 
 .food-strip::after {
   content: "";
 
   position: absolute;
+
   inset: 0;
 
   pointer-events: none;
@@ -509,9 +463,7 @@ body {
 <div id="menu">
 
 
-<!-- =====================================
-     HEADER
-     ===================================== -->
+<!-- HEADER -->
 
 <div class="header">
 
@@ -528,9 +480,7 @@ body {
 </div>
 
 
-<!-- =====================================
-     MENU
-     ===================================== -->
+<!-- MENU BODY -->
 
 <div class="menu-body">
 
@@ -673,8 +623,6 @@ body {
 
 </div>
 
-
-<!-- CENTER -->
 
 <div class="middle-divider"></div>
 
@@ -829,18 +777,18 @@ body {
 <script>
 
 /* ========================================
-   FIT 1366 × 768 TO SCREEN
+   FIT 1366 × 768
    ======================================== */
 
 function fitMenu() {
 
-  const menu =
+  var menu =
     document.getElementById(
       "menu"
     );
 
 
-  const scale =
+  var scale =
     Math.min(
       window.innerWidth / 1366,
       window.innerHeight / 768
@@ -878,19 +826,19 @@ window.addEventListener(
 
 
 /* ========================================
-   PRICE FORMATTING
+   PRICES
    ======================================== */
 
 function formatPrice(
   value
 ) {
 
-  const number =
+  var number =
     Number(value);
 
 
   if (
-    Number.isNaN(number)
+    isNaN(number)
   ) {
 
     return value;
@@ -899,7 +847,7 @@ function formatPrice(
 
 
   if (
-    Number.isInteger(number)
+    Math.floor(number) === number
   ) {
 
     return String(number);
@@ -912,22 +860,18 @@ function formatPrice(
 }
 
 
-/* ========================================
-   UPDATE BOTH LANGUAGES
-   ======================================== */
-
 function setPrice(
   key,
   value
 ) {
 
-  const formatted =
+  var formatted =
     formatPrice(
       value
     );
 
 
-  const chinese =
+  var chinese =
     document.getElementById(
       key
     );
@@ -941,94 +885,102 @@ function setPrice(
   }
 
 
-  document
-    .querySelectorAll(
+  var english =
+    document.querySelectorAll(
       '[data-price="' +
       key +
       '"]'
-    )
-    .forEach(
-      function(element) {
-
-        element.textContent =
-          formatted;
-
-      }
     );
+
+
+  for (
+    var i = 0;
+    i < english.length;
+    i++
+  ) {
+
+    english[i].textContent =
+      formatted;
+
+  }
 
 }
 
 
-/* ========================================
-   LOAD PRICES
-   ======================================== */
+function loadPrices() {
 
-async function loadPrices() {
+  fetch(
+    "menu-data.json?t=" +
+    Date.now(),
+    {
+      cache: "no-store"
+    }
+  )
 
-  try {
+  .then(
+    function(response) {
 
-    const response =
-      await fetch(
-        "menu-data.json?t=" +
-        Date.now(),
-        {
-          cache:
-            "no-store"
-        }
-      );
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP " +
+          response.status
+        );
+
+      }
+
+      return response.json();
+
+    }
+  )
+
+  .then(
+    function(data) {
+
+      if (!data.bbq) {
+
+        throw new Error(
+          "BBQ data missing"
+        );
+
+      }
 
 
-    if (
-      !response.ok
-    ) {
+      var keys =
+        Object.keys(
+          data.bbq
+        );
 
-      throw new Error(
-        "HTTP " +
-        response.status
+
+      for (
+        var i = 0;
+        i < keys.length;
+        i++
+      ) {
+
+        var key =
+          keys[i];
+
+
+        setPrice(
+          key,
+          data.bbq[key]
+        );
+
+      }
+
+    }
+  )
+
+  .catch(
+    function() {
+
+      console.log(
+        "Using current/default BBQ prices."
       );
 
     }
-
-
-    const data =
-      await response.json();
-
-
-    if (
-      !data.bbq
-    ) {
-
-      throw new Error(
-        "BBQ data missing"
-      );
-
-    }
-
-
-    Object
-      .keys(
-        data.bbq
-      )
-      .forEach(
-        function(key) {
-
-          setPrice(
-            key,
-            data.bbq[key]
-          );
-
-        }
-      );
-
-  }
-
-  catch (error) {
-
-    console.log(
-      "Using last-known/default BBQ prices."
-    );
-
-  }
+  );
 
 }
 
@@ -1044,11 +996,8 @@ setInterval(
 </script>
 
 
-<!-- SHARED SCREENSAVER + OFFLINE ENGINE -->
-
-<script src="shared.js"></script>
+<script src="shared.js?v=4"></script>
 
 
 </body>
-
 </html>

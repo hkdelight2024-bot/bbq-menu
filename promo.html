@@ -38,7 +38,6 @@ body {
 
 #viewport {
   position: fixed;
-
   inset: 0;
 
   width: 100%;
@@ -50,41 +49,39 @@ body {
 }
 
 
-/* ========================================
-   PROMO IMAGE LAYERS
-   ======================================== */
+/* =========================================================
+   MEDIA LAYERS
+   ========================================================= */
 
-.promo-image {
+.promo-media {
   position: absolute;
-
   inset: 0;
 
   width: 100%;
   height: 100%;
 
   object-fit: contain;
-
   object-position: center;
 
   background: #000;
 
   opacity: 0;
 
-  transition: opacity 0.8s ease;
+  transition:
+    opacity 0.8s ease;
 }
 
-.promo-image.active {
+.promo-media.active {
   opacity: 1;
 }
 
 
-/* ========================================
+/* =========================================================
    FALLBACK
-   ======================================== */
+   ========================================================= */
 
 #fallback {
   position: absolute;
-
   inset: 0;
 
   display: none;
@@ -95,7 +92,6 @@ body {
   padding: 50px;
 
   color: #ddd;
-
   background: #000;
 
   text-align: center;
@@ -118,23 +114,49 @@ body {
 <div id="viewport">
 
 
-<img
-  id="promoA"
-  class="promo-image active"
-  alt=""
->
+  <!--
+    Two image layers and two video layers.
+
+    We alternate between A and B so transitions
+    can occur without exposing a blank frame.
+  -->
 
 
-<img
-  id="promoB"
-  class="promo-image"
-  alt=""
->
+  <img
+    id="imageA"
+    class="promo-media"
+    alt=""
+  >
 
 
-<div id="fallback">
-  Promotions unavailable
-</div>
+  <img
+    id="imageB"
+    class="promo-media"
+    alt=""
+  >
+
+
+  <video
+    id="videoA"
+    class="promo-media"
+    muted
+    playsinline
+    preload="auto"
+  ></video>
+
+
+  <video
+    id="videoB"
+    class="promo-media"
+    muted
+    playsinline
+    preload="auto"
+  ></video>
+
+
+  <div id="fallback">
+    Promotions unavailable
+  </div>
 
 
 </div>
@@ -142,11 +164,11 @@ body {
 
 <script>
 
-/* ========================================
+/* =========================================================
    STATE
-   ======================================== */
+   ========================================================= */
 
-var promoImages = [];
+var promoItems = [];
 
 var currentIndex = 0;
 
@@ -156,24 +178,220 @@ var rosterTimer = null;
 
 var currentConfig = null;
 
+var activeElement = null;
 
-var frontImage =
+var nextSlot = "A";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+var imageA =
   document.getElementById(
-    "promoA"
+    "imageA"
+  );
+
+var imageB =
+  document.getElementById(
+    "imageB"
+  );
+
+var videoA =
+  document.getElementById(
+    "videoA"
+  );
+
+var videoB =
+  document.getElementById(
+    "videoB"
+  );
+
+var fallback =
+  document.getElementById(
+    "fallback"
   );
 
 
-var backImage =
-  document.getElementById(
-    "promoB"
+/* =========================================================
+   FILE TYPE
+   ========================================================= */
+
+function getExtension(
+  url
+) {
+
+  var clean =
+    url
+      .split("?")[0]
+      .split("#")[0];
+
+
+  var dot =
+    clean.lastIndexOf(".");
+
+
+  if (
+    dot === -1
+  ) {
+
+    return "";
+
+  }
+
+
+  return clean
+    .substring(
+      dot + 1
+    )
+    .toLowerCase();
+
+}
+
+
+function isVideo(
+  url
+) {
+
+  var extension =
+    getExtension(
+      url
+    );
+
+
+  return (
+    extension === "mp4" ||
+    extension === "webm"
   );
 
+}
 
-/* ========================================
-   CHECK WHETHER IMAGE EXISTS
-   ======================================== */
 
-function imageExists(
+/* =========================================================
+   HIDE / STOP MEDIA
+   ========================================================= */
+
+function deactivateElement(
+  element
+) {
+
+  if (
+    !element
+  ) {
+
+    return;
+
+  }
+
+
+  element
+    .classList
+    .remove(
+      "active"
+    );
+
+
+  if (
+    element.tagName ===
+    "VIDEO"
+  ) {
+
+    try {
+
+      element.pause();
+
+    }
+
+    catch (error) {
+
+    }
+
+  }
+
+}
+
+
+function hideAllMedia() {
+
+  var elements = [
+    imageA,
+    imageB,
+    videoA,
+    videoB
+  ];
+
+
+  for (
+    var i = 0;
+    i < elements.length;
+    i++
+  ) {
+
+    deactivateElement(
+      elements[i]
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PICK NEXT DISPLAY ELEMENT
+   ========================================================= */
+
+function getNextElement(
+  url
+) {
+
+  var video =
+    isVideo(
+      url
+    );
+
+
+  var element;
+
+
+  if (
+    nextSlot === "A"
+  ) {
+
+    element =
+      video
+        ? videoA
+        : imageA;
+
+
+    nextSlot =
+      "B";
+
+  }
+
+  else {
+
+    element =
+      video
+        ? videoB
+        : imageB;
+
+
+    nextSlot =
+      "A";
+
+  }
+
+
+  return element;
+
+}
+
+
+/* =========================================================
+   CHECK IMAGE
+   ========================================================= */
+
+function checkImage(
   url
 ) {
 
@@ -184,25 +402,95 @@ function imageExists(
         new Image();
 
 
+      var finished =
+        false;
+
+
+      var timeout =
+        setTimeout(
+          function() {
+
+            if (
+              finished
+            ) {
+
+              return;
+
+            }
+
+
+            finished =
+              true;
+
+
+            resolve(
+              false
+            );
+
+          },
+          12000
+        );
+
+
       image.onload =
         function() {
 
-          resolve(true);
+          if (
+            finished
+          ) {
 
-        };
+            return;
+
+          }
+
+
+          finished =
+            true;
+
+
+          clearTimeout(
+            timeout
+          );
+
+
+          resolve(
+            true
+          );
+
+      };
 
 
       image.onerror =
         function() {
 
-          resolve(false);
+          if (
+            finished
+          ) {
 
-        };
+            return;
+
+          }
+
+
+          finished =
+            true;
+
+
+          clearTimeout(
+            timeout
+          );
+
+
+          resolve(
+            false
+          );
+
+      };
 
 
       image.src =
         url +
-        "?t=" +
+        "?check=" +
         Date.now();
 
     }
@@ -211,11 +499,220 @@ function imageExists(
 }
 
 
-/* ========================================
-   BUILD VALID IMAGE LIST
-   ======================================== */
+/* =========================================================
+   CHECK VIDEO
+   ========================================================= */
 
-function buildValidImageList(
+function checkVideo(
+  url
+) {
+
+  return new Promise(
+    function(resolve) {
+
+      var video =
+        document.createElement(
+          "video"
+        );
+
+
+      var finished =
+        false;
+
+
+      video.muted =
+        true;
+
+
+      video.preload =
+        "metadata";
+
+
+      var timeout =
+        setTimeout(
+          function() {
+
+            if (
+              finished
+            ) {
+
+              return;
+
+            }
+
+
+            finished =
+              true;
+
+
+            try {
+
+              video.src =
+                "";
+
+            }
+
+            catch (error) {
+
+            }
+
+
+            resolve(
+              false
+            );
+
+          },
+          15000
+        );
+
+
+      function success() {
+
+        if (
+          finished
+        ) {
+
+          return;
+
+        }
+
+
+        finished =
+          true;
+
+
+        clearTimeout(
+          timeout
+        );
+
+
+        try {
+
+          video.src =
+            "";
+
+        }
+
+        catch (error) {
+
+        }
+
+
+        resolve(
+          true
+        );
+
+      }
+
+
+      function failure() {
+
+        if (
+          finished
+        ) {
+
+          return;
+
+        }
+
+
+        finished =
+          true;
+
+
+        clearTimeout(
+          timeout
+        );
+
+
+        try {
+
+          video.src =
+            "";
+
+        }
+
+        catch (error) {
+
+        }
+
+
+        resolve(
+          false
+        );
+
+      }
+
+
+      video.onloadedmetadata =
+        success;
+
+
+      video.oncanplay =
+        success;
+
+
+      video.onerror =
+        failure;
+
+
+      video.src =
+        url +
+        "?check=" +
+        Date.now();
+
+
+      try {
+
+        video.load();
+
+      }
+
+      catch (error) {
+
+        failure();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CHECK MEDIA
+   ========================================================= */
+
+function mediaExists(
+  url
+) {
+
+  if (
+    isVideo(
+      url
+    )
+  ) {
+
+    return checkVideo(
+      url
+    );
+
+  }
+
+
+  return checkImage(
+    url
+  );
+
+}
+
+
+/* =========================================================
+   BUILD VALID ROSTER
+   ========================================================= */
+
+function buildValidMediaList(
   list
 ) {
 
@@ -233,7 +730,7 @@ function buildValidImageList(
 
         jobs.push(
 
-          imageExists(
+          mediaExists(
             url
           )
 
@@ -295,56 +792,256 @@ function buildValidImageList(
 }
 
 
-/* ========================================
-   PRELOAD
-   ======================================== */
+/* =========================================================
+   PRELOAD IMAGES
+   ========================================================= */
 
 function preloadImages() {
 
   for (
     var i = 0;
-    i < promoImages.length;
+    i < promoItems.length;
     i++
   ) {
 
-    var preload =
-      new Image();
+    if (
+      !isVideo(
+        promoItems[i]
+      )
+    ) {
+
+      var image =
+        new Image();
 
 
-    preload.src =
-      promoImages[i];
+      image.src =
+        promoItems[i];
+
+    }
 
   }
 
 }
 
 
-/* ========================================
-   SHOW FIRST IMAGE
-   ======================================== */
+/* =========================================================
+   SHOW MEDIA
+   ========================================================= */
 
-function showFirstImage() {
+function showMedia(
+  url
+) {
 
-  var fallback =
-    document.getElementById(
-      "fallback"
-    );
+  return new Promise(
+    function(resolve) {
 
+      var element =
+        getNextElement(
+          url
+        );
+
+
+      var previous =
+        activeElement;
+
+
+      if (
+        isVideo(
+          url
+        )
+      ) {
+
+        element.muted =
+          true;
+
+
+        element.loop =
+          true;
+
+
+        element.autoplay =
+          true;
+
+
+        element.setAttribute(
+          "playsinline",
+          ""
+        );
+
+
+        element.oncanplay =
+          function() {
+
+
+            element
+              .classList
+              .add(
+                "active"
+              );
+
+
+            if (
+              previous &&
+              previous !== element
+            ) {
+
+              deactivateElement(
+                previous
+              );
+
+            }
+
+
+            activeElement =
+              element;
+
+
+            var playResult;
+
+
+            try {
+
+              playResult =
+                element.play();
+
+            }
+
+            catch (error) {
+
+            }
+
+
+            if (
+              playResult &&
+              typeof playResult.catch ===
+              "function"
+            ) {
+
+              playResult.catch(
+                function() {
+
+                  /*
+                    Muted autoplay normally succeeds.
+                    If this particular browser refuses,
+                    the media remains visible at its
+                    available frame and rotation continues.
+                  */
+
+                }
+              );
+
+            }
+
+
+            resolve(
+              true
+            );
+
+        };
+
+
+        element.onerror =
+          function() {
+
+            resolve(
+              false
+            );
+
+        };
+
+
+        element.src =
+          url;
+
+
+        try {
+
+          element.load();
+
+        }
+
+        catch (error) {
+
+          resolve(
+            false
+          );
+
+        }
+
+      }
+
+      else {
+
+        element.onload =
+          function() {
+
+
+            element
+              .classList
+              .add(
+                "active"
+              );
+
+
+            if (
+              previous &&
+              previous !== element
+            ) {
+
+              deactivateElement(
+                previous
+              );
+
+            }
+
+
+            activeElement =
+              element;
+
+
+            resolve(
+              true
+            );
+
+        };
+
+
+        element.onerror =
+          function() {
+
+            resolve(
+              false
+            );
+
+        };
+
+
+        element.src =
+          url;
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SHOW CURRENT ITEM
+   ========================================================= */
+
+function showCurrentItem() {
 
   if (
-    promoImages.length === 0
+    promoItems.length === 0
   ) {
+
+    hideAllMedia();
+
 
     fallback.style.display =
       "flex";
-
-
-    frontImage.style.display =
-      "none";
-
-
-    backImage.style.display =
-      "none";
 
 
     return;
@@ -356,51 +1053,99 @@ function showFirstImage() {
     "none";
 
 
-  frontImage.style.display =
-    "block";
+  if (
+    currentIndex >=
+    promoItems.length
+  ) {
+
+    currentIndex =
+      0;
+
+  }
 
 
-  backImage.style.display =
-    "block";
-
-
-  currentIndex =
+  var attempts =
     0;
 
 
-  frontImage.onload =
-    function() {
+  function attempt() {
 
-      frontImage
-        .classList
-        .add(
-          "active"
-        );
+    if (
+      attempts >=
+      promoItems.length
+    ) {
 
-    };
+      hideAllMedia();
 
 
-  frontImage.src =
-    promoImages[0];
+      fallback.style.display =
+        "flex";
 
 
-  backImage
-    .classList
-    .remove(
-      "active"
+      return;
+
+    }
+
+
+    var url =
+      promoItems[
+        currentIndex
+      ];
+
+
+    showMedia(
+      url
+    )
+
+    .then(
+      function(success) {
+
+        if (
+          success
+        ) {
+
+          return;
+
+        }
+
+
+        /*
+          Runtime failure:
+          skip this item and try the next one.
+        */
+
+        attempts++;
+
+
+        currentIndex =
+          (
+            currentIndex + 1
+          )
+          %
+          promoItems.length;
+
+
+        attempt();
+
+      }
     );
+
+  }
+
+
+  attempt();
 
 }
 
 
-/* ========================================
+/* =========================================================
    NEXT PROMOTION
-   ======================================== */
+   ========================================================= */
 
 function nextPromotion() {
 
   if (
-    promoImages.length <= 1
+    promoItems.length <= 1
   ) {
 
     return;
@@ -413,56 +1158,17 @@ function nextPromotion() {
       currentIndex + 1
     )
     %
-    promoImages.length;
+    promoItems.length;
 
 
-  var nextUrl =
-    promoImages[
-      currentIndex
-    ];
-
-
-  backImage.onload =
-    function() {
-
-
-      backImage
-        .classList
-        .add(
-          "active"
-        );
-
-
-      frontImage
-        .classList
-        .remove(
-          "active"
-        );
-
-
-      var oldFront =
-        frontImage;
-
-
-      frontImage =
-        backImage;
-
-
-      backImage =
-        oldFront;
-
-    };
-
-
-  backImage.src =
-    nextUrl;
+  showCurrentItem();
 
 }
 
 
-/* ========================================
+/* =========================================================
    SLIDE TIMER
-   ======================================== */
+   ========================================================= */
 
 function restartSlideTimer() {
 
@@ -478,21 +1184,28 @@ function restartSlideTimer() {
 
 
   if (
-    promoImages.length > 1
+    promoItems.length > 1
   ) {
+
+    var duration =
+      30000;
+
+
+    if (
+      currentConfig &&
+      currentConfig.slideDurationMs
+    ) {
+
+      duration =
+        currentConfig.slideDurationMs;
+
+    }
+
 
     slideTimer =
       setInterval(
-
         nextPromotion,
-
-        currentConfig &&
-        currentConfig.slideDurationMs
-          ?
-          currentConfig.slideDurationMs
-          :
-          30000
-
+        duration
       );
 
   }
@@ -500,9 +1213,9 @@ function restartSlideTimer() {
 }
 
 
-/* ========================================
-   APPLY PROMO ROSTER
-   ======================================== */
+/* =========================================================
+   APPLY REMOTE ROSTER
+   ========================================================= */
 
 function applyRoster(
   config
@@ -521,7 +1234,7 @@ function applyRoster(
   }
 
 
-  buildValidImageList(
+  buildValidMediaList(
     config.images
   )
 
@@ -530,7 +1243,7 @@ function applyRoster(
 
       var oldList =
         JSON.stringify(
-          promoImages
+          promoItems
         );
 
 
@@ -544,15 +1257,16 @@ function applyRoster(
         config;
 
 
+      /*
+        Same roster:
+        keep current media but allow remotely
+        changed slide duration to take effect.
+      */
+
       if (
         oldList ===
         newList
       ) {
-
-        /*
-          The image list hasn't changed, but the
-          slide interval may have changed remotely.
-        */
 
         restartSlideTimer();
 
@@ -561,13 +1275,19 @@ function applyRoster(
       }
 
 
-      promoImages =
+      promoItems =
         valid;
+
+
+      currentIndex =
+        0;
 
 
       preloadImages();
 
-      showFirstImage();
+
+      showCurrentItem();
+
 
       restartSlideTimer();
 
@@ -577,9 +1297,9 @@ function applyRoster(
 }
 
 
-/* ========================================
+/* =========================================================
    LOAD / RELOAD promo-list.js
-   ======================================== */
+   ========================================================= */
 
 function loadPromoRoster() {
 
@@ -636,7 +1356,9 @@ function loadPromoRoster() {
 
 
       /*
-        Establish the roster polling timer once.
+        Start roster polling once.
+
+        The current configuration uses five minutes.
       */
 
       if (
@@ -662,8 +1384,8 @@ function loadPromoRoster() {
     function() {
 
       /*
-        If internet disappears, leave the existing
-        slideshow running with its current images.
+        Network failure does NOT stop the
+        currently-running promotion rotation.
       */
 
       console.log(
@@ -680,9 +1402,9 @@ function loadPromoRoster() {
 }
 
 
-/* ========================================
+/* =========================================================
    START
-   ======================================== */
+   ========================================================= */
 
 loadPromoRoster();
 

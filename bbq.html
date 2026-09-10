@@ -463,8 +463,6 @@ body {
 <div id="menu">
 
 
-<!-- HEADER -->
-
 <div class="header">
 
   <div class="title-cn">
@@ -480,12 +478,8 @@ body {
 </div>
 
 
-<!-- MENU BODY -->
-
 <div class="menu-body">
 
-
-<!-- CHINESE -->
 
 <div class="column left">
 
@@ -627,8 +621,6 @@ body {
 <div class="middle-divider"></div>
 
 
-<!-- ENGLISH -->
-
 <div class="column right">
 
 
@@ -764,8 +756,6 @@ body {
 </div>
 
 
-<!-- FOOTER -->
-
 <div class="food-strip"></div>
 
 
@@ -775,10 +765,6 @@ body {
 
 
 <script>
-
-/* ========================================
-   FIT 1366 × 768
-   ======================================== */
 
 function fitMenu() {
 
@@ -826,7 +812,7 @@ window.addEventListener(
 
 
 /* ========================================
-   PRICES
+   PRICE FORMATTING
    ======================================== */
 
 function formatPrice(
@@ -907,6 +893,10 @@ function setPrice(
 }
 
 
+/* ========================================
+   LOAD PRICES
+   ======================================== */
+
 function loadPrices() {
 
   fetch(
@@ -928,6 +918,7 @@ function loadPrices() {
         );
 
       }
+
 
       return response.json();
 
@@ -991,6 +982,41 @@ loadPrices();
 setInterval(
   loadPrices,
   300000
+);
+
+
+/* ========================================
+   RESUME / FOCUS RECOVERY
+   ======================================== */
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+
+    if (
+      document.visibilityState ===
+      "visible"
+    ) {
+
+      fitMenu();
+
+      loadPrices();
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "focus",
+  function() {
+
+    fitMenu();
+
+    loadPrices();
+
+  }
 );
 
 </script>

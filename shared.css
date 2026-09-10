@@ -1,3 +1,7 @@
+/* =========================================================
+   HK DELIGHT SHARED DISPLAY STYLES
+   ========================================================= */
+
 html,
 body {
   width: 100%;
@@ -10,14 +14,19 @@ body {
 }
 
 
-/* ========================================
-   SHARED BLACK-SCREEN MODE
-   ======================================== */
+/* =========================================================
+   SCREENSAVER / CLOSED MODE
+   ========================================================= */
 
 body.screensaver-active {
   background: #000 !important;
 }
 
+
+/*
+  Hide the actual menu/promo viewport while keeping
+  the browser page and JavaScript running.
+*/
 
 body.screensaver-active #viewport {
   visibility: hidden !important;

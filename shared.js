@@ -3,13 +3,13 @@
    ========================================================= */
 
 
-/* ---------------------------------------------------------
-   SAFE FALLBACK CONFIG
+/* =========================================================
+   DEFAULT SETTINGS
 
-   Used until display-config.json successfully loads.
-   --------------------------------------------------------- */
+   Used until display-config.json is successfully loaded.
+   ========================================================= */
 
-let DISPLAY_CONFIG = {
+var DISPLAY_CONFIG = {
 
   timeZone:
     "Australia/Sydney",
@@ -30,18 +30,29 @@ let DISPLAY_CONFIG = {
     60000,
 
   timeCheckMs:
-    10000
+    10000,
+
+  siteVersionRefreshMs:
+    60000
 
 };
 
 
-let configTimer = null;
+/* =========================================================
+   STATE
+   ========================================================= */
 
-let clockTimer = null;
+var configTimer = null;
+
+var clockTimer = null;
+
+var versionTimer = null;
+
+var reloadInProgress = false;
 
 
 /* =========================================================
-   VALIDATION
+   VALIDATION HELPERS
    ========================================================= */
 
 function validNumber(
@@ -52,7 +63,7 @@ function validNumber(
 
   return (
     typeof value === "number" &&
-    Number.isFinite(value) &&
+    isFinite(value) &&
     value >= minimum &&
     value <= maximum
   );
@@ -143,13 +154,18 @@ function validateConfig(
 
 /* =========================================================
    GET DISPLAY TIME
+
+   Australia/Sydney handles daylight saving automatically.
+
+   If the TV browser doesn't support timezone formatting,
+   fall back to the TV's own local clock.
    ========================================================= */
 
 function getDisplayTime() {
 
   try {
 
-    const parts =
+    var parts =
       new Intl.DateTimeFormat(
         "en-AU",
         {
@@ -171,18 +187,20 @@ function getDisplayTime() {
       );
 
 
-    let hour = 0;
-    let minute = 0;
+    var hour = 0;
+
+    var minute = 0;
 
 
     for (
-      let i = 0;
+      var i = 0;
       i < parts.length;
       i++
     ) {
 
       if (
-        parts[i].type === "hour"
+        parts[i].type ===
+        "hour"
       ) {
 
         hour =
@@ -194,7 +212,8 @@ function getDisplayTime() {
 
 
       if (
-        parts[i].type === "minute"
+        parts[i].type ===
+        "minute"
       ) {
 
         minute =
@@ -208,29 +227,31 @@ function getDisplayTime() {
 
 
     return {
-      hour: hour,
-      minute: minute
+
+      hour:
+        hour,
+
+      minute:
+        minute
+
     };
 
   }
 
   catch (error) {
 
-    /*
-      Fallback for a very old TV browser.
-      Uses the TV's local clock.
-    */
-
-    const now =
+    var now =
       new Date();
 
 
     return {
+
       hour:
         now.getHours(),
 
       minute:
         now.getMinutes()
+
     };
 
   }
@@ -239,26 +260,26 @@ function getDisplayTime() {
 
 
 /* =========================================================
-   SHOULD SCREEN BE BLACK?
+   SHOULD THE SCREEN BE BLACK?
    ========================================================= */
 
 function shouldScreenBeBlack() {
 
-  const now =
+  var now =
     getDisplayTime();
 
 
-  const currentMinutes =
+  var currentMinutes =
     now.hour * 60 +
     now.minute;
 
 
-  const startMinutes =
+  var startMinutes =
     DISPLAY_CONFIG.blackFromHour * 60 +
     DISPLAY_CONFIG.blackFromMinute;
 
 
-  const endMinutes =
+  var endMinutes =
     DISPLAY_CONFIG.blackUntilHour * 60 +
     DISPLAY_CONFIG.blackUntilMinute;
 
@@ -304,7 +325,7 @@ function shouldScreenBeBlack() {
 
 
   /*
-    Same start/end = disabled.
+    Same start/end means blackout disabled.
   */
 
   return false;
@@ -313,15 +334,30 @@ function shouldScreenBeBlack() {
 
 
 /* =========================================================
-   APPLY SCREENSAVER
+   APPLY BLACKOUT STATE
    ========================================================= */
 
 function updateScreensaver() {
 
-  document.body.classList.toggle(
-    "screensaver-active",
-    shouldScreenBeBlack()
-  );
+  var black =
+    shouldScreenBeBlack();
+
+
+  if (black) {
+
+    document.body.classList.add(
+      "screensaver-active"
+    );
+
+  }
+
+  else {
+
+    document.body.classList.remove(
+      "screensaver-active"
+    );
+
+  }
 
 }
 
@@ -332,7 +368,9 @@ function updateScreensaver() {
 
 function restartClockTimer() {
 
-  if (clockTimer) {
+  if (
+    clockTimer
+  ) {
 
     clearInterval(
       clockTimer
@@ -355,10 +393,64 @@ function restartClockTimer() {
 
 
 /* =========================================================
-   APPLY CONFIG
+   CONFIG TIMER
    ========================================================= */
 
-function applyConfig(
+function restartConfigTimer() {
+
+  if (
+    configTimer
+  ) {
+
+    clearInterval(
+      configTimer
+    );
+
+  }
+
+
+  configTimer =
+    setInterval(
+      loadDisplayConfig,
+      DISPLAY_CONFIG.configRefreshMs ||
+      60000
+    );
+
+}
+
+
+/* =========================================================
+   VERSION TIMER
+   ========================================================= */
+
+function restartVersionTimer() {
+
+  if (
+    versionTimer
+  ) {
+
+    clearInterval(
+      versionTimer
+    );
+
+  }
+
+
+  versionTimer =
+    setInterval(
+      checkSiteVersion,
+      DISPLAY_CONFIG.siteVersionRefreshMs ||
+      60000
+    );
+
+}
+
+
+/* =========================================================
+   APPLY REMOTE DISPLAY CONFIG
+   ========================================================= */
+
+function applyDisplayConfig(
   config
 ) {
 
@@ -369,12 +461,24 @@ function applyConfig(
   ) {
 
     console.log(
-      "Invalid display config. Keeping last-known config."
+      "Invalid display-config.json; keeping previous settings."
     );
 
     return;
 
   }
+
+
+  var oldConfigRefresh =
+    DISPLAY_CONFIG.configRefreshMs;
+
+
+  var oldTimeCheck =
+    DISPLAY_CONFIG.timeCheckMs;
+
+
+  var oldVersionRefresh =
+    DISPLAY_CONFIG.siteVersionRefreshMs;
 
 
   DISPLAY_CONFIG = {
@@ -400,58 +504,187 @@ function applyConfig(
 
     timeCheckMs:
       config.timeCheckMs ||
-      10000
+      10000,
+
+    siteVersionRefreshMs:
+      config.siteVersionRefreshMs ||
+      60000
 
   };
 
 
-  restartClockTimer();
+  /*
+    Apply changed hours immediately.
+  */
+
+  updateScreensaver();
+
+
+  /*
+    Restart clock timer only if its interval changed.
+  */
+
+  if (
+    oldTimeCheck !==
+    DISPLAY_CONFIG.timeCheckMs
+  ) {
+
+    restartClockTimer();
+
+  }
+
+
+  /*
+    Restart config polling if its interval changed.
+  */
+
+  if (
+    oldConfigRefresh !==
+    DISPLAY_CONFIG.configRefreshMs
+  ) {
+
+    restartConfigTimer();
+
+  }
+
+
+  /*
+    Restart version polling if its interval changed.
+  */
+
+  if (
+    oldVersionRefresh !==
+    DISPLAY_CONFIG.siteVersionRefreshMs
+  ) {
+
+    restartVersionTimer();
+
+  }
 
 }
 
 
 /* =========================================================
-   LOAD CONFIG
-
-   The timestamp prevents normal browser/CDN caching.
-
-   When offline, the service worker returns the
-   last successfully cached display-config.json.
+   LOAD display-config.json
    ========================================================= */
 
-async function loadDisplayConfig() {
+function loadDisplayConfig() {
+
+  fetch(
+    "display-config.json?t=" +
+    Date.now(),
+    {
+      cache:
+        "no-store"
+    }
+  )
+
+  .then(
+    function(response) {
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          "HTTP " +
+          response.status
+        );
+
+      }
+
+
+      return response.json();
+
+    }
+  )
+
+  .then(
+    function(config) {
+
+      applyDisplayConfig(
+        config
+      );
+
+    }
+  )
+
+  .catch(
+    function() {
+
+      /*
+        Internet unavailable:
+        leave the current configuration running.
+      */
+
+      console.log(
+        "Display config unavailable; using last-known settings."
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SITE VERSION STORAGE
+   ========================================================= */
+
+function getStoredSiteVersion() {
 
   try {
 
-    const response =
-      await fetch(
-        "display-config.json?t=" +
-        Date.now(),
-        {
-          cache:
-            "no-store"
-        }
+    var value =
+      localStorage.getItem(
+        "hkDelightSiteVersion"
       );
 
 
     if (
-      !response.ok
+      value === null
     ) {
 
-      throw new Error(
-        "HTTP " +
-        response.status
-      );
+      return null;
 
     }
 
 
-    const config =
-      await response.json();
+    var number =
+      Number(value);
 
 
-    applyConfig(
-      config
+    if (
+      !isFinite(number)
+    ) {
+
+      return null;
+
+    }
+
+
+    return number;
+
+  }
+
+  catch (error) {
+
+    return null;
+
+  }
+
+}
+
+
+function storeSiteVersion(
+  version
+) {
+
+  try {
+
+    localStorage.setItem(
+      "hkDelightSiteVersion",
+      String(version)
     );
 
   }
@@ -459,13 +692,8 @@ async function loadDisplayConfig() {
   catch (error) {
 
     /*
-      Keep using whatever configuration
-      is already running.
+      Page still works if storage is unavailable.
     */
-
-    console.log(
-      "Display config unavailable. Using last-known config."
-    );
 
   }
 
@@ -473,28 +701,188 @@ async function loadDisplayConfig() {
 
 
 /* =========================================================
-   CONFIG REFRESH LOOP
+   REMOTE PAGE RELOAD
    ========================================================= */
 
-function startConfigRefresh() {
+function reloadWithVersion(
+  version
+) {
 
-  loadDisplayConfig();
+  if (
+    reloadInProgress
+  ) {
 
-
-  if (configTimer) {
-
-    clearInterval(
-      configTimer
-    );
+    return;
 
   }
 
 
-  configTimer =
-    setInterval(
-      loadDisplayConfig,
-      60000
-    );
+  reloadInProgress =
+    true;
+
+
+  /*
+    Store the new version before reload so
+    the page cannot get stuck in a reload loop.
+  */
+
+  storeSiteVersion(
+    version
+  );
+
+
+  /*
+    Give GitHub Pages/CDN 15 seconds to settle
+    after site-version.json becomes visible.
+  */
+
+  setTimeout(
+    function() {
+
+      var url =
+        new URL(
+          window.location.href
+        );
+
+
+      url.searchParams.set(
+        "siteVersion",
+        String(version)
+      );
+
+
+      url.searchParams.set(
+        "reloadTime",
+        String(
+          Date.now()
+        )
+      );
+
+
+      window.location.replace(
+        url.toString()
+      );
+
+    },
+    15000
+  );
+
+}
+
+
+/* =========================================================
+   CHECK site-version.json
+   ========================================================= */
+
+function checkSiteVersion() {
+
+  fetch(
+    "site-version.json?t=" +
+    Date.now(),
+    {
+      cache:
+        "no-store"
+    }
+  )
+
+  .then(
+    function(response) {
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          "HTTP " +
+          response.status
+        );
+
+      }
+
+
+      return response.json();
+
+    }
+  )
+
+  .then(
+    function(data) {
+
+      var remoteVersion =
+        Number(
+          data.version
+        );
+
+
+      if (
+        !isFinite(
+          remoteVersion
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      var storedVersion =
+        getStoredSiteVersion();
+
+
+      /*
+        First run on this TV:
+        establish baseline without reloading.
+      */
+
+      if (
+        storedVersion === null
+      ) {
+
+        storeSiteVersion(
+          remoteVersion
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Only reload for a NEWER version.
+
+        This prevents an old cached version file
+        from causing the TV to "downgrade" itself
+        while offline.
+      */
+
+      if (
+        remoteVersion >
+        storedVersion
+      ) {
+
+        reloadWithVersion(
+          remoteVersion
+        );
+
+      }
+
+    }
+  )
+
+  .catch(
+    function() {
+
+      /*
+        No network / no version file:
+        do absolutely nothing.
+      */
+
+      console.log(
+        "Site version unavailable; keeping current page."
+      );
+
+    }
+  );
 
 }
 
@@ -512,16 +900,30 @@ function registerOfflineSupport() {
     )
   ) {
 
+    console.log(
+      "Service workers not supported by this browser."
+    );
+
     return;
 
   }
 
 
-  navigator
-    .serviceWorker
+  navigator.serviceWorker
     .register(
       "service-worker.js"
     )
+
+    .then(
+      function() {
+
+        console.log(
+          "Offline service worker registered."
+        );
+
+      }
+    )
+
     .catch(
       function(error) {
 
@@ -537,11 +939,20 @@ function registerOfflineSupport() {
 
 
 /* =========================================================
-   START
+   START EVERYTHING
    ========================================================= */
 
 restartClockTimer();
 
-startConfigRefresh();
+
+loadDisplayConfig();
+
+restartConfigTimer();
+
+
+checkSiteVersion();
+
+restartVersionTimer();
+
 
 registerOfflineSupport();

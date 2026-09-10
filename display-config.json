@@ -1,8 +1,8 @@
 {
   "timeZone": "Australia/Sydney",
 
-  "blackFromHour": 21,
-  "blackFromMinute": 0,
+  "blackFromHour": 20,
+  "blackFromMinute": 37,
 
   "blackUntilHour": 9,
   "blackUntilMinute": 0,

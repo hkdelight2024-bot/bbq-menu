@@ -8,5 +8,6 @@
   "blackUntilMinute": 0,
 
   "configRefreshMs": 60000,
-  "timeCheckMs": 10000
+  "timeCheckMs": 10000,
+  "siteVersionRefreshMs": 60000
 }

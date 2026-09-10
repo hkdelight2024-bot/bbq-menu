@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -15,16 +14,14 @@
 
 <link
   rel="stylesheet"
-  href="shared.css"
+  href="shared.css?v=4"
 >
 
 <style>
 
 * {
-  box-sizing:
-    border-box;
+  box-sizing: border-box;
 }
-
 
 html,
 body {
@@ -38,11 +35,6 @@ body {
 
   background: #000;
 }
-
-
-/* ========================================
-   FULL SCREEN
-   ======================================== */
 
 #viewport {
   position: fixed;
@@ -59,9 +51,7 @@ body {
 
 
 /* ========================================
-   IMAGE LAYERS
-
-   Two layers allow smooth crossfading.
+   PROMO IMAGE LAYERS
    ======================================== */
 
 .promo-image {
@@ -72,20 +62,16 @@ body {
   width: 100%;
   height: 100%;
 
-  object-fit:
-    contain;
+  object-fit: contain;
 
-  object-position:
-    center;
+  object-position: center;
 
   background: #000;
 
   opacity: 0;
 
-  transition:
-    opacity 0.8s ease;
+  transition: opacity 0.8s ease;
 }
-
 
 .promo-image.active {
   opacity: 1;
@@ -106,19 +92,19 @@ body {
   align-items: center;
   justify-content: center;
 
+  padding: 50px;
+
   color: #ddd;
 
   background: #000;
+
+  text-align: center;
 
   font-family:
     Arial,
     sans-serif;
 
   font-size: 30px;
-
-  text-align: center;
-
-  padding: 50px;
 }
 
 </style>
@@ -160,34 +146,31 @@ body {
    STATE
    ======================================== */
 
-let promoImages = [];
+var promoImages = [];
 
-let currentIndex = 0;
+var currentIndex = 0;
 
-let slideTimer = null;
+var slideTimer = null;
 
-let rosterTimer = null;
+var rosterTimer = null;
 
-let currentConfig = null;
+var currentConfig = null;
 
 
-let frontImage =
+var frontImage =
   document.getElementById(
     "promoA"
   );
 
 
-let backImage =
+var backImage =
   document.getElementById(
     "promoB"
   );
 
 
 /* ========================================
-   TEST IMAGE
-
-   Missing placeholder files simply fail
-   this test and are excluded.
+   CHECK WHETHER IMAGE EXISTS
    ======================================== */
 
 function imageExists(
@@ -197,7 +180,7 @@ function imageExists(
   return new Promise(
     function(resolve) {
 
-      const image =
+      var image =
         new Image();
 
 
@@ -229,40 +212,85 @@ function imageExists(
 
 
 /* ========================================
-   BUILD VALID ROSTER
+   BUILD VALID IMAGE LIST
    ======================================== */
 
-async function buildValidImageList(
+function buildValidImageList(
   list
 ) {
 
-  const valid = [];
+  var jobs = [];
 
 
   for (
-    let i = 0;
+    var i = 0;
     i < list.length;
     i++
   ) {
 
-    const exists =
-      await imageExists(
-        list[i]
-      );
+    (
+      function(url) {
 
+        jobs.push(
 
-    if (exists) {
+          imageExists(
+            url
+          )
 
-      valid.push(
-        list[i]
-      );
+          .then(
+            function(exists) {
 
-    }
+              return {
+                url: url,
+                exists: exists
+              };
+
+            }
+          )
+
+        );
+
+      }
+    )(
+      list[i]
+    );
 
   }
 
 
-  return valid;
+  return Promise.all(
+    jobs
+  )
+
+  .then(
+    function(results) {
+
+      var valid = [];
+
+
+      for (
+        var i = 0;
+        i < results.length;
+        i++
+      ) {
+
+        if (
+          results[i].exists
+        ) {
+
+          valid.push(
+            results[i].url
+          );
+
+        }
+
+      }
+
+
+      return valid;
+
+    }
+  );
 
 }
 
@@ -273,29 +301,31 @@ async function buildValidImageList(
 
 function preloadImages() {
 
-  promoImages.forEach(
-    function(url) {
+  for (
+    var i = 0;
+    i < promoImages.length;
+    i++
+  ) {
 
-      const preload =
-        new Image();
+    var preload =
+      new Image();
 
 
-      preload.src =
-        url;
+    preload.src =
+      promoImages[i];
 
-    }
-  );
+  }
 
 }
 
 
 /* ========================================
-   FIRST IMAGE
+   SHOW FIRST IMAGE
    ======================================== */
 
 function showFirstImage() {
 
-  const fallback =
+  var fallback =
     document.getElementById(
       "fallback"
     );
@@ -338,15 +368,20 @@ function showFirstImage() {
     0;
 
 
+  frontImage.onload =
+    function() {
+
+      frontImage
+        .classList
+        .add(
+          "active"
+        );
+
+    };
+
+
   frontImage.src =
     promoImages[0];
-
-
-  frontImage
-    .classList
-    .add(
-      "active"
-    );
 
 
   backImage
@@ -359,7 +394,7 @@ function showFirstImage() {
 
 
 /* ========================================
-   NEXT IMAGE
+   NEXT PROMOTION
    ======================================== */
 
 function nextPromotion() {
@@ -381,7 +416,7 @@ function nextPromotion() {
     promoImages.length;
 
 
-  const nextUrl =
+  var nextUrl =
     promoImages[
       currentIndex
     ];
@@ -405,7 +440,7 @@ function nextPromotion() {
         );
 
 
-      const oldFront =
+      var oldFront =
         frontImage;
 
 
@@ -431,7 +466,9 @@ function nextPromotion() {
 
 function restartSlideTimer() {
 
-  if (slideTimer) {
+  if (
+    slideTimer
+  ) {
 
     clearInterval(
       slideTimer
@@ -449,10 +486,12 @@ function restartSlideTimer() {
 
         nextPromotion,
 
-        currentConfig
-          .slideDurationMs
-        ||
-        30000
+        currentConfig &&
+        currentConfig.slideDurationMs
+          ?
+          currentConfig.slideDurationMs
+          :
+          30000
 
       );
 
@@ -462,15 +501,16 @@ function restartSlideTimer() {
 
 
 /* ========================================
-   APPLY ROSTER
+   APPLY PROMO ROSTER
    ======================================== */
 
-async function applyRoster(
+function applyRoster(
   config
 ) {
 
   if (
     !config ||
+    !config.images ||
     !Array.isArray(
       config.images
     )
@@ -481,80 +521,87 @@ async function applyRoster(
   }
 
 
-  const valid =
-    await buildValidImageList(
-      config.images
-    );
+  buildValidImageList(
+    config.images
+  )
+
+  .then(
+    function(valid) {
+
+      var oldList =
+        JSON.stringify(
+          promoImages
+        );
 
 
-  const oldList =
-    JSON.stringify(
-      promoImages
-    );
+      var newList =
+        JSON.stringify(
+          valid
+        );
 
 
-  const newList =
-    JSON.stringify(
-      valid
-    );
+      currentConfig =
+        config;
 
 
-  currentConfig =
-    config;
+      if (
+        oldList ===
+        newList
+      ) {
+
+        /*
+          The image list hasn't changed, but the
+          slide interval may have changed remotely.
+        */
+
+        restartSlideTimer();
+
+        return;
+
+      }
 
 
-  /*
-    Nothing changed.
-  */
-
-  if (
-    oldList ===
-    newList
-  ) {
-
-    return;
-
-  }
+      promoImages =
+        valid;
 
 
-  promoImages =
-    valid;
+      preloadImages();
 
+      showFirstImage();
 
-  preloadImages();
+      restartSlideTimer();
 
-
-  showFirstImage();
-
-
-  restartSlideTimer();
+    }
+  );
 
 }
 
 
 /* ========================================
-   LOAD promo-list.js
-
-   Cache-busted so GitHub changes are
-   discovered automatically.
+   LOAD / RELOAD promo-list.js
    ======================================== */
 
 function loadPromoRoster() {
 
-  const oldScript =
+  var previous =
     document.getElementById(
       "promoRosterScript"
     );
 
 
-  if (oldScript) {
+  if (
+    previous &&
+    previous.parentNode
+  ) {
 
-    oldScript.remove();
+    previous.parentNode.removeChild(
+      previous
+    );
 
   }
 
 
-  const script =
+  var script =
     document.createElement(
       "script"
     );
@@ -589,7 +636,7 @@ function loadPromoRoster() {
 
 
       /*
-        Start periodic roster check once.
+        Establish the roster polling timer once.
       */
 
       if (
@@ -601,9 +648,7 @@ function loadPromoRoster() {
 
             loadPromoRoster,
 
-            PROMO_CONFIG
-              .rosterRefreshMs
-            ||
+            PROMO_CONFIG.rosterRefreshMs ||
             300000
 
           );
@@ -617,12 +662,12 @@ function loadPromoRoster() {
     function() {
 
       /*
-        If offline, keep the currently
-        running roster untouched.
+        If internet disappears, leave the existing
+        slideshow running with its current images.
       */
 
       console.log(
-        "Promo roster unavailable. Keeping current rotation."
+        "Promo roster unavailable; keeping current rotation."
       );
 
     };
@@ -636,7 +681,7 @@ function loadPromoRoster() {
 
 
 /* ========================================
-   START PROMOS
+   START
    ======================================== */
 
 loadPromoRoster();
@@ -644,11 +689,8 @@ loadPromoRoster();
 </script>
 
 
-<!-- SHARED SCREENSAVER + OFFLINE ENGINE -->
-
-<script src="shared.js"></script>
+<script src="shared.js?v=4"></script>
 
 
 </body>
-
 </html>

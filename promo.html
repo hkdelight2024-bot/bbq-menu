@@ -1,117 +1,369 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>HK Delight Promotions</title>
-<link rel="stylesheet" href="shared.css?v=4">
+<link rel="stylesheet" href="shared.css">
 <style>
-*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000}
-#viewport{position:fixed;inset:0;background:#000;overflow:hidden}
-.promo-media{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#000;opacity:0;transition:opacity .8s ease}
-.promo-media.active{opacity:1}
-#fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:50px;color:#ddd;text-align:center;font:30px Arial,sans-serif}
+html,body {
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+}
+#promoScreen {
+  position:fixed;
+  inset:0;
+  background:#000;
+  overflow:hidden;
+}
+.promoMedia {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+  display:none;
+}
+.promoMedia.visible {
+  display:block;
+}
+#promoMessage {
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font:28px Arial,sans-serif;
+  text-align:center;
+  padding:30px;
+}
 </style>
 </head>
 <body>
-<div id="viewport">
-<img id="imageA" class="promo-media" alt="">
-<img id="imageB" class="promo-media" alt="">
-<video id="videoA" class="promo-media" muted playsinline preload="none"></video>
-<video id="videoB" class="promo-media" muted playsinline preload="none"></video>
-<div id="fallback">Promotions unavailable</div>
+
+<div id="promoScreen">
+  <img id="promoImage" class="promoMedia" alt="">
+  <video id="promoVideo" class="promoMedia"
+         muted playsinline loop preload="none"></video>
+  <div id="promoMessage">Promotions unavailable</div>
 </div>
+
 <script>
-/* Roster checks are cheap; image URLs are stable and cached by the service worker. */
-var promoItems=[],currentIndex=0,slideTimer=null,rosterTimer=null,currentConfig=null;
-var activeElement=null,nextSlot='A',rosterLoading=false,rosterSequence=0,showSequence=0;
-var imageA=document.getElementById('imageA'),imageB=document.getElementById('imageB');
-var videoA=document.getElementById('videoA'),videoB=document.getElementById('videoB');
-var fallback=document.getElementById('fallback');
-var knownGood={};
-function extension(url){return url.split(/[?#]/)[0].split('.').pop().toLowerCase();}
-function isVideo(url){var e=extension(url);return e==='mp4'||e==='webm';}
-function normalize(url){return new URL(url,location.href).href;}
-function deactivate(el){if(!el)return;el.classList.remove('active');if(el.tagName==='VIDEO'){try{el.pause();}catch(e){}}}
-function hideAll(){[imageA,imageB,videoA,videoB].forEach(deactivate);activeElement=null;}
-function checkImage(url){return new Promise(function(resolve){
- var img=new Image(),done=false;var timeout=setTimeout(function(){finish(false);},12000);
- function finish(ok){if(done)return;done=true;clearTimeout(timeout);img.onload=null;img.onerror=null;resolve(ok);}
- img.onload=function(){finish(true);};img.onerror=function(){finish(false);};img.src=url;
-});}
-/* Video metadata checks may transfer data, so check only new video URLs. */
-function checkVideo(url){return new Promise(function(resolve){
- var v=document.createElement('video'),done=false;v.preload='metadata';v.muted=true;
- var timeout=setTimeout(function(){finish(false);},12000);
- function finish(ok){if(done)return;done=true;clearTimeout(timeout);v.onloadedmetadata=null;v.onerror=null;v.removeAttribute('src');try{v.load();}catch(e){}resolve(ok);}
- v.onloadedmetadata=function(){finish(true);};v.onerror=function(){finish(false);};v.src=url;
-});}
-function validateRoster(items){
- var unique=[],seen={};items.forEach(function(raw){if(typeof raw!=='string'||!raw.trim())return;
- try{var u=normalize(raw.trim());if(new URL(u).origin!==location.origin)return;if(!seen[u]){seen[u]=true;unique.push(u);}}catch(e){}
- });
- /* Check new or previously unavailable files only. No repeat full-roster downloads. */
- return Promise.all(unique.map(function(url){
-  if(knownGood[url])return Promise.resolve(url);
-  return (isVideo(url)?checkVideo(url):checkImage(url)).then(function(ok){if(ok){knownGood[url]=true;return url;}return null;});
- })).then(function(results){return results.filter(function(x){return !!x;});});
-}
-function showMedia(url){return new Promise(function(resolve){
- var video=isVideo(url),el;
- if(nextSlot==='A'){el=video?videoA:imageA;nextSlot='B';}else{el=video?videoB:imageB;nextSlot='A';}
- var prior=activeElement,done=false,timeout=setTimeout(function(){finish(false);},15000);
- function finish(ok){if(done)return;done=true;clearTimeout(timeout);el.onload=null;el.onerror=null;el.oncanplay=null;
-  if(ok){el.classList.add('active');if(prior&&prior!==el)deactivate(prior);activeElement=el;fallback.style.display='none';if(video){try{var p=el.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}}
-  resolve(ok);
- }
- el.onerror=function(){finish(false);};
- if(video){el.muted=true;el.loop=true;el.setAttribute('playsinline','');el.oncanplay=function(){finish(true);};el.src=url;try{el.load();}catch(e){finish(false);}}
- else{el.onload=function(){finish(true);};el.src=url;if(el.complete&&el.naturalWidth>0)finish(true);}
-});}
-function showCurrentItem(){
- var seq=++showSequence;
- if(!promoItems.length){hideAll();fallback.style.display='flex';return;}
- if(currentIndex>=promoItems.length)currentIndex=0;
- var attempts=0;
- function attempt(){if(seq!==showSequence)return;
-  if(attempts>=promoItems.length){hideAll();fallback.style.display='flex';return;}
-  var url=promoItems[currentIndex];showMedia(url).then(function(ok){if(seq!==showSequence)return;if(ok)return;
-   /* A runtime failure should be retried on a future roster check. */
-   delete knownGood[url];attempts++;currentIndex=(currentIndex+1)%promoItems.length;attempt();
-  });
- }
- attempt();
-}
-function nextPromotion(){if(promoItems.length<2)return;currentIndex=(currentIndex+1)%promoItems.length;showCurrentItem();}
-function restartSlideTimer(){if(slideTimer)clearInterval(slideTimer);slideTimer=null;
- if(promoItems.length>1){var duration=Number(currentConfig&&currentConfig.slideDurationMs)||30000;
- slideTimer=setInterval(nextPromotion,Math.max(3000,duration));}}
-function applyRoster(config){if(!config||!Array.isArray(config.images))return;
- var seq=++rosterSequence;
- validateRoster(config.images).then(function(valid){if(seq!==rosterSequence)return;
-  var changed=JSON.stringify(valid)!==JSON.stringify(promoItems);
-  var previousUrl=promoItems[currentIndex];currentConfig=config;
-  if(changed){promoItems=valid;var idx=valid.indexOf(previousUrl);currentIndex=idx>=0?idx:0;
-   if(!activeElement||idx<0)showCurrentItem();}
+(function () {
+  "use strict";
+
+  var image = document.getElementById("promoImage");
+  var video = document.getElementById("promoVideo");
+  var message = document.getElementById("promoMessage");
+
+  var items = [];
+  var index = 0;
+  var slideTimer = null;
+  var rosterTimer = null;
+  var retryTimer = null;
+  var loadTimer = null;
+  var loadingRoster = false;
+  var loadSerial = 0;
+
+  var slideDuration = 30000;
+  var rosterRefresh = 300000;
+
+  function isVideo(url) {
+    return /\.(mp4|webm)(?:[?#]|$)/i.test(url);
+  }
+
+  function normalizeList(raw) {
+    var result = [];
+    var seen = {};
+
+    if (!Array.isArray(raw)) return result;
+
+    for (var i = 0; i < raw.length; i++) {
+      if (typeof raw[i] !== "string") continue;
+
+      try {
+        var url = new URL(raw[i], location.href);
+
+        if (url.origin !== location.origin) continue;
+
+        var path = url.pathname.toLowerCase();
+
+        if (!/\.(png|jpg|jpeg|webp|gif|avif|mp4|webm)$/.test(path)) {
+          continue;
+        }
+
+        var clean = url.href;
+
+        if (!seen[clean]) {
+          seen[clean] = true;
+          result.push(clean);
+        }
+      } catch (e) {}
+    }
+
+    return result;
+  }
+
+  function clearLoadTimer() {
+    if (loadTimer) {
+      clearTimeout(loadTimer);
+      loadTimer = null;
+    }
+  }
+
+  function showMessage() {
+    image.classList.remove("visible");
+    video.classList.remove("visible");
+    video.pause();
+    message.style.display = "flex";
+  }
+
+  function showImage(url, serial, done) {
+    var probe = new Image();
+    var finished = false;
+
+    function finish(ok) {
+      if (finished || serial !== loadSerial) return;
+      finished = true;
+      clearLoadTimer();
+      probe.onload = null;
+      probe.onerror = null;
+
+      if (ok) {
+        video.pause();
+        video.classList.remove("visible");
+        image.src = url;
+        image.classList.add("visible");
+        message.style.display = "none";
+      }
+
+      done(ok);
+    }
+
+    loadTimer = setTimeout(function () {
+      finish(false);
+    }, 15000);
+
+    probe.onload = function () {
+      finish(true);
+    };
+
+    probe.onerror = function () {
+      finish(false);
+    };
+
+    probe.src = url;
+
+    if (probe.complete && probe.naturalWidth > 0) {
+      finish(true);
+    }
+  }
+
+  function showVideo(url, serial, done) {
+    var finished = false;
+
+    function finish(ok) {
+      if (finished || serial !== loadSerial) return;
+      finished = true;
+      clearLoadTimer();
+
+      video.oncanplay = null;
+      video.onerror = null;
+
+      if (ok) {
+        image.classList.remove("visible");
+        video.classList.add("visible");
+        message.style.display = "none";
+
+        var promise = video.play();
+        if (promise && promise.catch) {
+          promise.catch(function () {});
+        }
+      }
+
+      done(ok);
+    }
+
+    loadTimer = setTimeout(function () {
+      finish(false);
+    }, 15000);
+
+    video.pause();
+    video.classList.remove("visible");
+    video.oncanplay = function () {
+      finish(true);
+    };
+    video.onerror = function () {
+      finish(false);
+    };
+    video.src = url;
+    video.load();
+  }
+
+  function displayCurrent() {
+    loadSerial++;
+    clearLoadTimer();
+
+    var serial = loadSerial;
+
+    if (!items.length) {
+      showMessage();
+      return;
+    }
+
+    var attempts = 0;
+
+    function attempt() {
+      if (serial !== loadSerial) return;
+
+      if (attempts >= items.length) {
+        showMessage();
+        return;
+      }
+
+      var url = items[index];
+
+      function completed(ok) {
+        if (serial !== loadSerial) return;
+
+        if (!ok) {
+          attempts++;
+          index = (index + 1) % items.length;
+          attempt();
+        }
+      }
+
+      if (isVideo(url)) {
+        showVideo(url, serial, completed);
+      } else {
+        showImage(url, serial, completed);
+      }
+    }
+
+    attempt();
+  }
+
+  function nextSlide() {
+    if (!items.length) {
+      displayCurrent();
+      return;
+    }
+
+    index = (index + 1) % items.length;
+    displayCurrent();
+  }
+
+  function restartSlideTimer() {
+    if (slideTimer) clearInterval(slideTimer);
+
+    slideTimer = setInterval(
+      nextSlide,
+      slideDuration
+    );
+  }
+
+  function applyRoster(config) {
+    if (!config || !Array.isArray(config.images)) return;
+
+    var newItems = normalizeList(config.images);
+
+    var oldUrl = items[index] || "";
+    var changed =
+      JSON.stringify(newItems) !== JSON.stringify(items);
+
+    var duration = Number(config.slideDurationMs);
+    var refresh = Number(config.rosterRefreshMs);
+
+    if (isFinite(duration) && duration >= 3000) {
+      slideDuration = duration;
+    }
+
+    if (isFinite(refresh) && refresh >= 60000) {
+      rosterRefresh = refresh;
+    }
+
+    if (changed) {
+      items = newItems;
+
+      var oldPosition = items.indexOf(oldUrl);
+      index = oldPosition >= 0 ? oldPosition : 0;
+
+      displayCurrent();
+    }
+
+    restartSlideTimer();
+    restartRosterTimer();
+  }
+
+  function loadRoster() {
+    if (loadingRoster) return;
+
+    loadingRoster = true;
+
+    var old = document.getElementById("promoRosterScript");
+    if (old && old.parentNode) {
+      old.parentNode.removeChild(old);
+    }
+
+    var script = document.createElement("script");
+    script.id = "promoRosterScript";
+    script.src = "promo-list.js?t=" + Date.now();
+
+    var finished = false;
+
+    var timeout = setTimeout(function () {
+      finish(false);
+    }, 15000);
+
+    function finish(ok) {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timeout);
+      loadingRoster = false;
+
+      if (ok && typeof PROMO_CONFIG !== "undefined") {
+        applyRoster(PROMO_CONFIG);
+      } else if (!items.length) {
+        showMessage();
+      }
+
+      if (!rosterTimer) restartRosterTimer();
+    }
+
+    script.onload = function () {
+      finish(true);
+    };
+
+    script.onerror = function () {
+      finish(false);
+    };
+
+    document.body.appendChild(script);
+  }
+
+  function restartRosterTimer() {
+    if (rosterTimer) clearInterval(rosterTimer);
+
+    rosterTimer = setInterval(
+      loadRoster,
+      rosterRefresh
+    );
+  }
+
+  showMessage();
+  loadRoster();
   restartSlideTimer();
- }).catch(function(e){console.log('Roster validation failed',e);});
-}
-function loadPromoRoster(){if(rosterLoading)return;rosterLoading=true;
- var old=document.getElementById('promoRosterScript');if(old&&old.parentNode)old.parentNode.removeChild(old);
- var script=document.createElement('script');script.id='promoRosterScript';
- script.src='promo-list.js?t='+Date.now();
- script.onload=function(){rosterLoading=false;if(typeof PROMO_CONFIG!=='undefined'){
-  applyRoster(PROMO_CONFIG);
-  var interval=Math.max(60000,Number(PROMO_CONFIG.rosterRefreshMs)||300000);
-  if(rosterTimer)clearInterval(rosterTimer);rosterTimer=setInterval(loadPromoRoster,interval);
- }};
- script.onerror=function(){rosterLoading=false;console.log('Roster unavailable; keeping current rotation.');
-  if(!rosterTimer)rosterTimer=setInterval(loadPromoRoster,300000);
- };
- document.body.appendChild(script);
-}
-loadPromoRoster();
+  restartRosterTimer();
+
+})();
 </script>
-<script src="shared.js?v=4"></script>
+
+<script src="shared.js"></script>
 </body>
 </html>

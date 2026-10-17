@@ -1,53 +1,35 @@
-/* =========================================================
-   HK DELIGHT PROMOTION ROSTER
-   =========================================================
 
-   Using "var" deliberately.
-
-   The currently-running promo page periodically reloads
-   this file. "var" can be safely declared again, unlike
-   a top-level "const".
-
-   Missing image files are skipped by promo.html.
-   ========================================================= */
+/* HK DELIGHT PROMOTION ROSTER */
 
 var PROMO_CONFIG = {
-
-  /* 30 seconds per promotion */
-  slideDurationMs: 30000,
-
-  /* Check this roster every 5 minutes */
+  slideDurationMs: 60000,
   rosterRefreshMs: 300000,
 
   images: [
-
     "images/curry.jpg",
+    "images/promo-02.jpg",
+    "images/promo-03.jpg",
+    "images/promo-04.jpg",
 
-    "images/promo-02.png",
-    "images/promo-03.png",
-    "images/promo-04.png",
-
-    "images/promo2_01.png",
-    "images/promo2_02.png",
-    "images/promo2_03.png",
-    "images/promo2_04.png",
-    "images/promo2_05.png",
-    "images/promo2_06.png",
-    "images/promo2_07.png",
-    "images/promo2_08.png",
-    "images/promo2_09.png",
-    "images/promo2_10.png",
-    "images/promo2_11.png",
-    "images/promo2_12.png",
-    "images/promo2_13.png",
-    "images/promo2_14.png",
-    "images/promo2_15.png",
-    "images/promo2_16.png",
-    "images/promo2_17.png",
-    "images/promo2_18.png",
-    "images/promo2_19.png",
-    "images/promo2_20.png"
-
+    "images/promo2_01.jpg",
+    "images/promo2_02.jpg",
+    "images/promo2_03.jpg",
+    "images/promo2_04.jpg",
+    "images/promo2_05.jpg",
+    "images/promo2_06.jpg",
+    "images/promo2_07.jpg",
+    "images/promo2_08.jpg",
+    "images/promo2_09.jpg",
+    "images/promo2_10.jpg",
+    "images/promo2_11.jpg",
+    "images/promo2_12.jpg",
+    "images/promo2_13.jpg",
+    "images/promo2_14.jpg",
+    "images/promo2_15.jpg",
+    "images/promo2_16.jpg",
+    "images/promo2_17.jpg",
+    "images/promo2_18.jpg",
+    "images/promo2_19.jpg",
+    "images/promo2_20.jpg"
   ]
-
 };

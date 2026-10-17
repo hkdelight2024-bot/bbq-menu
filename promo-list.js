@@ -10,7 +10,6 @@ var PROMO_CONFIG = {
     "images/promo-02.jpg",
     "images/promo-03.jpg",
     "images/promo-04.jpg",
-
     "images/promo2_01.jpg",
     "images/promo2_02.jpg",
     "images/promo2_03.jpg",

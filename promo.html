@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,373 +6,111 @@
 <title>HK Delight Promotions</title>
 <link rel="stylesheet" href="shared.css">
 <style>
-html,body {
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-}
-#promoScreen {
-  position:fixed;
-  inset:0;
-  background:#000;
-  overflow:hidden;
-}
-.promoMedia {
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
-  display:none;
-}
-.promoMedia.visible {
-  display:block;
-}
-#promoMessage {
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font:28px Arial,sans-serif;
-  text-align:center;
-  padding:30px;
-}
-  
-/* Sydney blackout: hide promotions completely */
-body.screensaver-active #promoScreen {
-  display: none !important;
-}
-
-body.screensaver-active {
-  background: #000 !important;
-}
-
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+#promoScreen{position:fixed;inset:0;background:#000;overflow:hidden}
+.promoImage{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:none}
+.promoImage.visible{display:block}
+#promoMessage{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font:28px Arial,sans-serif;text-align:center}
+body.screensaver-active #promoScreen{display:none!important}
+body.screensaver-active{background:#000!important}
 </style>
 </head>
 <body>
-
 <div id="promoScreen">
-  <img id="promoImage" class="promoMedia" alt="">
-  <video id="promoVideo" class="promoMedia"
-         muted playsinline loop preload="none"></video>
-  <div id="promoMessage">Promotions unavailable</div>
+<img id="promoA" class="promoImage" alt="">
+<img id="promoB" class="promoImage" alt="">
+<div id="promoMessage">Promotions unavailable</div>
 </div>
-
 <script>
-(function () {
-  "use strict";
-
-  var image = document.getElementById("promoImage");
-  var video = document.getElementById("promoVideo");
-  var message = document.getElementById("promoMessage");
-
-  var items = [];
-  var index = 0;
-  var slideTimer = null;
-  var rosterTimer = null;
-  var retryTimer = null;
-  var loadTimer = null;
-  var loadingRoster = false;
-  var loadSerial = 0;
-
-  var slideDuration = 30000;
-  var rosterRefresh = 300000;
-
-  function isVideo(url) {
-    return /\.(mp4|webm)(?:[?#]|$)/i.test(url);
-  }
-
-  function normalizeList(raw) {
-    var result = [];
-    var seen = {};
-
-    if (!Array.isArray(raw)) return result;
-
-    for (var i = 0; i < raw.length; i++) {
-      if (typeof raw[i] !== "string") continue;
-
-      try {
-        var url = new URL(raw[i], location.href);
-
-        if (url.origin !== location.origin) continue;
-
-        var path = url.pathname.toLowerCase();
-
-        if (!/\.(png|jpg|jpeg|webp|gif|avif|mp4|webm)$/.test(path)) {
-          continue;
-        }
-
-        var clean = url.href;
-
-        if (!seen[clean]) {
-          seen[clean] = true;
-          result.push(clean);
-        }
-      } catch (e) {}
-    }
-
-    return result;
-  }
-
-  function clearLoadTimer() {
-    if (loadTimer) {
-      clearTimeout(loadTimer);
-      loadTimer = null;
-    }
-  }
-
-  function showMessage() {
-    image.classList.remove("visible");
-    video.classList.remove("visible");
-    video.pause();
-    message.style.display = "flex";
-  }
-
-  function showImage(url, serial, done) {
-    var probe = new Image();
-    var finished = false;
-
-    function finish(ok) {
-      if (finished || serial !== loadSerial) return;
-      finished = true;
-      clearLoadTimer();
-      probe.onload = null;
-      probe.onerror = null;
-
-      if (ok) {
-        video.pause();
-        video.classList.remove("visible");
-        image.src = url;
-        image.classList.add("visible");
-        message.style.display = "none";
-      }
-
-      done(ok);
-    }
-
-    loadTimer = setTimeout(function () {
-      finish(false);
-    }, 15000);
-
-    probe.onload = function () {
-      finish(true);
-    };
-
-    probe.onerror = function () {
-      finish(false);
-    };
-
-    probe.src = url;
-
-    if (probe.complete && probe.naturalWidth > 0) {
-      finish(true);
-    }
-  }
-
-  function showVideo(url, serial, done) {
-    var finished = false;
-
-    function finish(ok) {
-      if (finished || serial !== loadSerial) return;
-      finished = true;
-      clearLoadTimer();
-
-      video.oncanplay = null;
-      video.onerror = null;
-
-      if (ok) {
-        image.classList.remove("visible");
-        video.classList.add("visible");
-        message.style.display = "none";
-
-        var promise = video.play();
-        if (promise && promise.catch) {
-          promise.catch(function () {});
-        }
-      }
-
-      done(ok);
-    }
-
-    loadTimer = setTimeout(function () {
-      finish(false);
-    }, 15000);
-
-    video.pause();
-    video.classList.remove("visible");
-    video.oncanplay = function () {
-      finish(true);
-    };
-    video.onerror = function () {
-      finish(false);
-    };
-    video.src = url;
-    video.load();
-  }
-
-  function displayCurrent() {
-    loadSerial++;
-    clearLoadTimer();
-
-    var serial = loadSerial;
-
-    if (!items.length) {
-      showMessage();
-      return;
-    }
-
-    var attempts = 0;
-
-    function attempt() {
-      if (serial !== loadSerial) return;
-
-      if (attempts >= items.length) {
-        showMessage();
-        return;
-      }
-
-      var url = items[index];
-
-      function completed(ok) {
-        if (serial !== loadSerial) return;
-
-        if (!ok) {
-          attempts++;
-          index = (index + 1) % items.length;
-          attempt();
-        }
-      }
-
-      if (isVideo(url)) {
-        showVideo(url, serial, completed);
-      } else {
-        showImage(url, serial, completed);
-      }
-    }
-
-    attempt();
-  }
-
-  function nextSlide() {
-    if (!items.length) {
-      displayCurrent();
-      return;
-    }
-
-    index = (index + 1) % items.length;
-    displayCurrent();
-  }
-
-  function restartSlideTimer() {
-    if (slideTimer) clearInterval(slideTimer);
-
-    slideTimer = setInterval(
-      nextSlide,
-      slideDuration
-    );
-  }
-
-  function applyRoster(config) {
-    if (!config || !Array.isArray(config.images)) return;
-
-    var newItems = normalizeList(config.images);
-
-    var oldUrl = items[index] || "";
-    var changed =
-      JSON.stringify(newItems) !== JSON.stringify(items);
-
-    var duration = Number(config.slideDurationMs);
-    var refresh = Number(config.rosterRefreshMs);
-
-    if (isFinite(duration) && duration >= 3000) {
-      slideDuration = duration;
-    }
-
-    if (isFinite(refresh) && refresh >= 60000) {
-      rosterRefresh = refresh;
-    }
-
-    if (changed) {
-      items = newItems;
-
-      var oldPosition = items.indexOf(oldUrl);
-      index = oldPosition >= 0 ? oldPosition : 0;
-
-      displayCurrent();
-    }
-
-    restartSlideTimer();
-    restartRosterTimer();
-  }
-
-  function loadRoster() {
-    if (loadingRoster) return;
-
-    loadingRoster = true;
-
-    var old = document.getElementById("promoRosterScript");
-    if (old && old.parentNode) {
-      old.parentNode.removeChild(old);
-    }
-
-    var script = document.createElement("script");
-    script.id = "promoRosterScript";
-    script.src = "promo-list.js?t=" + Date.now();
-
-    var finished = false;
-
-    var timeout = setTimeout(function () {
-      finish(false);
-    }, 15000);
-
-    function finish(ok) {
-      if (finished) return;
-      finished = true;
-      clearTimeout(timeout);
-      loadingRoster = false;
-
-      if (ok && typeof PROMO_CONFIG !== "undefined") {
-        applyRoster(PROMO_CONFIG);
-      } else if (!items.length) {
-        showMessage();
-      }
-
-      if (!rosterTimer) restartRosterTimer();
-    }
-
-    script.onload = function () {
-      finish(true);
-    };
-
-    script.onerror = function () {
-      finish(false);
-    };
-
-    document.body.appendChild(script);
-  }
-
-  function restartRosterTimer() {
-    if (rosterTimer) clearInterval(rosterTimer);
-
-    rosterTimer = setInterval(
-      loadRoster,
-      rosterRefresh
-    );
-  }
-
-  showMessage();
-  loadRoster();
-  restartSlideTimer();
-  restartRosterTimer();
-
+(function(){
+'use strict';
+var a=document.getElementById('promoA'),b=document.getElementById('promoB'),message=document.getElementById('promoMessage');
+var list=[],index=0,active=null,slideTimer=null,rosterTimer=null,retryTimer=null,loading=false;
+var slideDuration=60000,rosterRefresh=300000,serial=0;
+var bad={},ready={};
+function normalise(input){
+ var out=[],seen={};
+ if(!input||!input.length)return out;
+ for(var i=0;i<input.length;i++){
+  if(typeof input[i]!=='string')continue;
+  try{
+   var u=new URL(input[i],location.href);
+   if(u.origin!==location.origin||!/\.jpe?g$/i.test(u.pathname))continue;
+   /* Image URLs are stable: changing artwork requires a new filename. */
+   var key=u.href;
+   if(!seen[key]){seen[key]=true;out.push(key);}
+  }catch(e){}
+ }
+ return out;
+}
+function showError(){if(!active){message.style.display='flex';}}
+function loadInto(url,target,callback){
+ var finished=false;
+ var timeout=setTimeout(function(){finish(false);},12000);
+ function finish(ok){if(finished)return;finished=true;clearTimeout(timeout);target.onload=null;target.onerror=null;callback(ok);}
+ target.onload=function(){finish(true);};
+ target.onerror=function(){finish(false);};
+ if(target.src!==url)target.src=url;
+ else if(target.complete&&target.naturalWidth>0)finish(true);
+}
+function display(start){
+ var token=++serial;
+ if(!list.length){showError();return;}
+ var tries=0;
+ function attempt(){
+  if(token!==serial)return;
+  if(tries>=list.length){showError();return;}
+  var url=list[index],target=active===a?b:a;
+  if(active&&active.src===url&&active.complete&&active.naturalWidth>0){message.style.display='none';return;}
+  if(bad[url]&&Date.now()-bad[url]<300000){tries++;index=(index+1)%list.length;attempt();return;}
+  loadInto(url,target,function(ok){
+   if(token!==serial)return;
+   if(!ok){bad[url]=Date.now();tries++;index=(index+1)%list.length;attempt();return;}
+   delete bad[url];ready[url]=true;
+   target.className='promoImage visible';
+   if(active&&active!==target)active.className='promoImage';
+   active=target;message.style.display='none';
+  });
+ }
+ attempt();
+}
+function next(){if(!list.length){showError();return;}index=(index+1)%list.length;display();}
+function restartSlide(){if(slideTimer)clearInterval(slideTimer);slideTimer=setInterval(next,slideDuration);}
+function restartRoster(){if(rosterTimer)clearInterval(rosterTimer);rosterTimer=setInterval(fetchRoster,rosterRefresh);}
+function apply(config){
+ if(!config||!config.images||!Array.isArray(config.images))return;
+ var newList=normalise(config.images);
+ var d=Number(config.slideDurationMs),r=Number(config.rosterRefreshMs);
+ if(isFinite(d)&&d>=3000)slideDuration=d;
+ if(isFinite(r)&&r>=60000)rosterRefresh=r;
+ var changed=JSON.stringify(list)!==JSON.stringify(newList);
+ if(changed){
+  var current=list[index];list=newList;
+  var found=list.indexOf(current);index=found>=0?found:0;
+  if(!active||found<0)display();
+ }
+ restartSlide();restartRoster();
+}
+function fetchRoster(){
+ if(loading)return;
+ loading=true;
+ var script=document.createElement('script'),done=false;
+ script.src='promo-list.js?t='+Date.now();
+ var timeout=setTimeout(function(){finish(false);},15000);
+ function finish(ok){
+  if(done)return;done=true;clearTimeout(timeout);loading=false;
+  script.onload=null;script.onerror=null;
+  if(script.parentNode)script.parentNode.removeChild(script);
+  if(ok&&typeof PROMO_CONFIG!=='undefined')apply(PROMO_CONFIG);
+  else showError();
+ }
+ script.onload=function(){finish(true);};script.onerror=function(){finish(false);};
+ document.body.appendChild(script);
+}
+message.style.display='flex';
+fetchRoster();restartSlide();restartRoster();
 })();
 </script>
-
 <script src="shared.js"></script>
 </body>
 </html>
